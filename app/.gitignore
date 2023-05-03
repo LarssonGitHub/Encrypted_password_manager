@@ -27,7 +27,8 @@
 /node_modules
 /.pnp
 .pnp.js
-
+/windows-win32-x64
+windows-win32-x64
 
 # misc
 /server/.env

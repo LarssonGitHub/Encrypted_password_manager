@@ -1,22 +1,33 @@
+// {
+//   "compilerOptions": {
+//     "module": "commonjs",
+//     "strict": true,                                      /* Enable all strict type-checking options. */
+//     "noImplicitAny": true,      
+//     // "sourceMap": true,
+//     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+//     // "preserveSymlinks": true,                         /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
+//     "forceConsistentCasingInFileNames": true,    
+//     "removeComments": false,   
+//     "experimentalDecorators": true,                   /* Enable experimental support for TC39 stage 2 draft decorators. */
+//     "emitDecoratorMetadata": true,   
+//     // "rootDir": "./TS-files",
+//     "outDir": "./src",      
+//   }
+// }
+
 {
   "compilerOptions": {
     "module": "commonjs",
     "strict": true,                                      /* Enable all strict type-checking options. */
     "noImplicitAny": true,      
-    "sourceMap": true,
+    "sourceMap": false,
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
     // "preserveSymlinks": true,                         /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
     "forceConsistentCasingInFileNames": true,    
-    "removeComments": true,   
-    "outDir": "dist",
-    "baseUrl": ".",
+    "removeComments": false,   
     "experimentalDecorators": true,                   /* Enable experimental support for TC39 stage 2 draft decorators. */
     "emitDecoratorMetadata": true,   
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+    "outDir": "./src",     
   },
-  "include": [
-    "src/**/*"
-  ]
+"include": ["./TS-files"]
 }

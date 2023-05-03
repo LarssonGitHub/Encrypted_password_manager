@@ -1,4 +1,6 @@
 "use strict";
+// All of the Node.js APIs are available in the preload process.
+// It has the same sandbox as a Chrome extension.
 window.addEventListener("DOMContentLoaded", function () {
     var replaceText = function (selector, text) {
         var element = document.getElementById(selector);
@@ -8,7 +10,7 @@ window.addEventListener("DOMContentLoaded", function () {
     };
     for (var _i = 0, _a = ["chrome", "node", "electron"]; _i < _a.length; _i++) {
         var type = _a[_i];
+        //@ts-ignore
         replaceText("".concat(type, "-version"), process.versions[type]);
     }
 });
-//# sourceMappingURL=preload.js.map
