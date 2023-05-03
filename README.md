@@ -1,4 +1,4 @@
-# The poor man's password vault**
+# The poor man's password vault
 
 Create an app in node.js that can store chipered passwords, usernames for websites and services, **which must** be able to run as a stand-alone application without the need for a browser.
 
