@@ -1,31 +1,30 @@
 {
-  "name": "app",
-  "productName": "app",
+  "name": "electron-quick-start-typescript",
   "version": "1.0.0",
-  "description": "My Electron application description",
-  "main": "src/index.js",
+  "description": "The poor man's password vault",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "build": "tsc",
+    "watch": "tsc -w",
+    "lint": "eslint -c .eslintrc --ext .ts ./src",
+    "start": "npm run build && electron ./dist/main.js"
   },
-  "keywords": [],
-  "author": {
-    "name": "LarrsonGitHub",
-    "email": "martin.larsson.arbete@outlook.com"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
-  },
+  "repository": "https://github.com/electron/electron-quick-start-typescript",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo",
+    "typescript"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
   "devDependencies": {
-    "@electron-forge/cli": "^6.1.1",
-    "@electron-forge/maker-deb": "^6.1.1",
-    "@electron-forge/maker-rpm": "^6.1.1",
-    "@electron-forge/maker-squirrel": "^6.1.1",
-    "@electron-forge/maker-zip": "^6.1.1",
-    "electron": "24.1.3"
-  }
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "electron": "^22.2.0",
+    "eslint": "^7.32.0",
+    "typescript": "^4.8.3"
+  },
+  "dependencies": {}
 }
