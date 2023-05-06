@@ -1,17 +1,26 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
+import { isString, generateId } from "./utility/utility";
 
 function createWindow() {
+  console.log(__dirname, "preload.js");
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
     webPreferences: {
+      contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),
+      nodeIntegration: false,
     },
     width: 800,
   });
+  // https://www.tabnine.com/code/javascript/functions/electron/IpcMain/handle
+  // https://stackoverflow.com/questions/57807459/how-to-use-preload-js-properly-in-electron#:~:text=The%20proper%20way%20to%20use,here%20for%20more%20explanation%20why).
 
   // and load the index.html of the app.
+  // @ts-ignore
+  ipcMain.handle("isString", (meta, arg) => isString(arg));
+  ipcMain.handle("generateId", () => generateId());
   mainWindow.loadFile(path.join(__dirname, "index.html"));
 
   // Open the DevTools.

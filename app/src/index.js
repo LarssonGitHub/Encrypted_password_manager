@@ -25,16 +25,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
 exports.__esModule = true;
 var electron_1 = require("electron");
 var path = __importStar(require("path"));
+var utility_1 = require("./utility/utility");
 function createWindow() {
+    console.log(__dirname, "preload.js");
     // Create the browser window.
     var mainWindow = new electron_1.BrowserWindow({
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, "preload.js")
+            contextIsolation: true,
+            preload: path.join(__dirname, "preload.js"),
+            nodeIntegration: false
         },
         width: 800
     });
+    // https://www.tabnine.com/code/javascript/functions/electron/IpcMain/handle
+    // https://stackoverflow.com/questions/57807459/how-to-use-preload-js-properly-in-electron#:~:text=The%20proper%20way%20to%20use,here%20for%20more%20explanation%20why).
     // and load the index.html of the app.
+    // @ts-ignore
+    electron_1.ipcMain.handle("isString", function (meta, arg) { return (0, utility_1.isString)(arg); });
+    electron_1.ipcMain.handle("generateId", function () { return (0, utility_1.generateId)(); });
     mainWindow.loadFile(path.join(__dirname, "index.html"));
     // Open the DevTools.
     mainWindow.webContents.openDevTools();

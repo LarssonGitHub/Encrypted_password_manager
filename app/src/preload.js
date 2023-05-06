@@ -10,7 +10,19 @@ window.addEventListener("DOMContentLoaded", function () {
     };
     for (var _i = 0, _a = ["chrome", "node", "electron"]; _i < _a.length; _i++) {
         var type = _a[_i];
+        replaceText("".concat(type, "-version"), 
         //@ts-ignore
-        replaceText("".concat(type, "-version"), process.versions[type]);
+        process.versions[type]);
     }
+});
+var _a = require("electron"), contextBridge = _a.contextBridge, ipcRenderer = _a.ipcRenderer;
+contextBridge.exposeInMainWorld("versions", {
+    node: function () { return process.versions.node; },
+    chrome: function () { return process.versions.chrome; },
+    electron: function () { return process.versions.electron; }
+});
+//  With ipcRender, turns into a promise
+contextBridge.exposeInMainWorld("save", {
+    isString: function (a) { return ipcRenderer.invoke("isString", a); },
+    generateId: function () { return ipcRenderer.invoke("generateId"); }
 });

@@ -9,7 +9,24 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
   for (const type of ["chrome", "node", "electron"]) {
-    //@ts-ignore
-    replaceText(`${type}-version`, process.versions[type as keyof NodeJS.ProcessVersions]);
+    replaceText(
+      `${type}-version`,
+          //@ts-ignore
+      process.versions[type as keyof NodeJS.ProcessVersions]
+    );
   }
+});
+
+const { contextBridge, ipcRenderer } = require("electron");
+
+contextBridge.exposeInMainWorld("versions", {
+  node: (): string => process.versions.node,
+  chrome: (): string => process.versions.chrome,
+  electron: (): string => process.versions.electron,
+});
+
+//  With ipcRender, turns into a promise
+contextBridge.exposeInMainWorld("save", {
+  isString: (a: any) => ipcRenderer.invoke("isString", a),
+  generateId: () => ipcRenderer.invoke("generateId"),
 });

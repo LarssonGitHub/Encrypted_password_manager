@@ -1,2 +1,2 @@
 "use strict";
-console.log("Add salt");
+var salt = "This is a special one..!";
