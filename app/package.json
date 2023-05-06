@@ -8,6 +8,7 @@
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "start": "npm run build && electron ./src/index.js",
+    "startWithoutTS": "electron ./src/index.js",
     "buildForWindows": " electron-packager ./ windows --platform=win32 --arch=x64 --overwrite"
   },
   "repository": "https://github.com/electron/electron-quick-start-typescript",
@@ -22,11 +23,15 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "electron": "^22.2.0",
     "electron-packager": "^17.1.1",
     "eslint": "^7.32.0",
     "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "uuidv4": "^6.2.13"
   }
 }
