@@ -5,10 +5,8 @@
 // Use preload.js to selectively enable features
 // needed in the renderer process.
 
-
 console.log(
-  //@ts-ignore
-  `This app is using Chrome (v${window.versions.chrome()}), Node.js (v${window.versions.node()}), and Electron (v${window.versions.electron()})`
+  `This app is using Chrome (v${window.API.processVersion.chrome()}), Node.js (v${window.API.processVersion.node()}), and Electron (v${window.API.processVersion.electron()})`
 );
 
 // preload attached everything to window.
@@ -19,8 +17,7 @@ const userObject = [{}, {}, {}, {}];
 const applyID = async (array: {}[]): Promise<void> => {
 
   const arrayWithId = await Promise.all(
-      // @ts-ignore
-    array.map(async (x) => await window.save.generateId())
+    array.map(async (x) => await window.API.testFuncs.generateId())
   );
   console.log("Your new array", arrayWithId);
 };
@@ -30,8 +27,7 @@ document.getElementById("test1")?.addEventListener("click", () => {
 });
 
 const checkType = async (value: any): Promise<void> => {
-  // @ts-ignore
-  const isString = await window.save.isString(value);
+  const isString = await window.API.testFuncs.isString(value);
   console.log(isString ? "This is a string!" : "No, this is not a string");
 };
 

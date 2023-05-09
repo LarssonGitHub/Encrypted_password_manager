@@ -19,14 +19,33 @@ window.addEventListener("DOMContentLoaded", () => {
 
 const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld("versions", {
+// contextBridge.exposeInMainWorld("versions", {
+//   node: (): string => process.versions.node,
+//   chrome: (): string => process.versions.chrome,
+//   electron: (): string => process.versions.electron,
+// });
+
+// //  With ipcRender, turns into a promise
+// contextBridge.exposeInMainWorld("save", {
+//   isString: (a: any) => ipcRenderer.invoke("isString", a),
+//   generateId: () => ipcRenderer.invoke("generateId"),
+// });
+
+const processVersion = {
   node: (): string => process.versions.node,
   chrome: (): string => process.versions.chrome,
   electron: (): string => process.versions.electron,
-});
+}
 
-//  With ipcRender, turns into a promise
-contextBridge.exposeInMainWorld("save", {
+const testFuncs = {
   isString: (a: any) => ipcRenderer.invoke("isString", a),
   generateId: () => ipcRenderer.invoke("generateId"),
-});
+}
+
+export const API = {
+  processVersion: processVersion,
+  testFuncs:testFuncs
+
+}
+
+contextBridge.exposeInMainWorld("API", API);

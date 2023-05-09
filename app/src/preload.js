@@ -1,4 +1,6 @@
 "use strict";
+exports.__esModule = true;
+exports.API = void 0;
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
 window.addEventListener("DOMContentLoaded", function () {
@@ -16,13 +18,27 @@ window.addEventListener("DOMContentLoaded", function () {
     }
 });
 var _a = require("electron"), contextBridge = _a.contextBridge, ipcRenderer = _a.ipcRenderer;
-contextBridge.exposeInMainWorld("versions", {
+// contextBridge.exposeInMainWorld("versions", {
+//   node: (): string => process.versions.node,
+//   chrome: (): string => process.versions.chrome,
+//   electron: (): string => process.versions.electron,
+// });
+// //  With ipcRender, turns into a promise
+// contextBridge.exposeInMainWorld("save", {
+//   isString: (a: any) => ipcRenderer.invoke("isString", a),
+//   generateId: () => ipcRenderer.invoke("generateId"),
+// });
+var processVersion = {
     node: function () { return process.versions.node; },
     chrome: function () { return process.versions.chrome; },
     electron: function () { return process.versions.electron; }
-});
-//  With ipcRender, turns into a promise
-contextBridge.exposeInMainWorld("save", {
+};
+var testFuncs = {
     isString: function (a) { return ipcRenderer.invoke("isString", a); },
     generateId: function () { return ipcRenderer.invoke("generateId"); }
-});
+};
+exports.API = {
+    processVersion: processVersion,
+    testFuncs: testFuncs
+};
+contextBridge.exposeInMainWorld("API", exports.API);

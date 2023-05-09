@@ -42,9 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _a, _b;
-console.log(
-//@ts-ignore
-"This app is using Chrome (v".concat(window.versions.chrome(), "), Node.js (v").concat(window.versions.node(), "), and Electron (v").concat(window.versions.electron(), ")"));
+console.log("This app is using Chrome (v".concat(window.API.processVersion.chrome(), "), Node.js (v").concat(window.API.processVersion.node(), "), and Electron (v").concat(window.API.processVersion.electron(), ")"));
 // preload attached everything to window.
 console.log(window);
 var userObject = [{}, {}, {}, {}];
@@ -52,11 +50,9 @@ var applyID = function (array) { return __awaiter(void 0, void 0, void 0, functi
     var arrayWithId;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, Promise.all(
-                // @ts-ignore
-                array.map(function (x) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
+            case 0: return [4 /*yield*/, Promise.all(array.map(function (x) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, window.save.generateId()];
+                        case 0: return [4 /*yield*/, window.API.testFuncs.generateId()];
                         case 1: return [2 /*return*/, _a.sent()];
                     }
                 }); }); }))];
@@ -74,7 +70,7 @@ var checkType = function (value) { return __awaiter(void 0, void 0, void 0, func
     var isString;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, window.save.isString(value)];
+            case 0: return [4 /*yield*/, window.API.testFuncs.isString(value)];
             case 1:
                 isString = _a.sent();
                 console.log(isString ? "This is a string!" : "No, this is not a string");
