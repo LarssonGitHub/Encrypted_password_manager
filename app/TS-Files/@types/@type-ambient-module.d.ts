@@ -10,3 +10,6 @@ interface searchQueryBody {
 }
 
 interface websiteObject {id: string, websiteInput: string, emailInput: string, usernameInput: string, passwordInput: string, additionalDataInput: string}
+
+type arrayOfWebsites = websiteObject[]
+

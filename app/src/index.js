@@ -38,12 +38,14 @@ function createWindow() {
         },
         width: 800
     });
-    // https://www.tabnine.com/code/javascript/functions/electron/IpcMain/handle
-    // https://stackoverflow.com/questions/57807459/how-to-use-preload-js-properly-in-electron#:~:text=The%20proper%20way%20to%20use,here%20for%20more%20explanation%20why).
-    // and load the index.html of the app.
-    // @ts-ignore
     electron_1.ipcMain.handle("isString", function (meta, arg) { return (0, utility_1.isString)(arg); });
     electron_1.ipcMain.handle("generateId", function () { return (0, utility_1.generateId)(); });
+    electron_1.ipcMain.handle("encryptData", function (meta, data, secretKey) {
+        return (0, utility_1.encryptData)(data, secretKey);
+    });
+    electron_1.ipcMain.handle("decryptData", function (meta, data, secretKey) {
+        return (0, utility_1.decryptData)(data, secretKey);
+    });
     mainWindow.loadFile(path.join(__dirname, "index.html"));
     // Open the DevTools.
     mainWindow.webContents.openDevTools();

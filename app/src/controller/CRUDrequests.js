@@ -46,7 +46,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var form = document.getElementById("website-form");
+// TODO handle the key to the decrypt.
+var secretKey = "super-secret";
+// @ts-ignore
+var websites = [];
+var InsertIntoWebsitesArray = function (websiteObject) {
+    // TODO, error handling
+    if (websiteObject.id === "")
+        return "No id was set, throw error";
+    var newWebsitesArray = __spreadArray(__spreadArray([], websites, true), [websiteObject], false);
+    return JSON.stringify(newWebsitesArray);
+};
 var compileFormData = function (form) { return __awaiter(void 0, void 0, void 0, function () {
     var extractedData, dataEntries, createId, compileNewData;
     return __generator(this, function (_a) {
@@ -62,18 +82,26 @@ var compileFormData = function (form) { return __awaiter(void 0, void 0, void 0,
         }
     });
 }); };
-form.addEventListener("submit", function (e) { return __awaiter(void 0, void 0, void 0, function () {
-    var targetForm, compiledFormData;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+// Wrap this in a promise!
+form.addEventListener("submit", function (event) { return __awaiter(void 0, void 0, void 0, function () {
+    var compiledFormData, compiledWebsiteArray, encryptData, _a, _b, _c;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
             case 0:
-                e.preventDefault();
-                targetForm = e.target;
-                return [4 /*yield*/, compileFormData(targetForm)];
+                event.preventDefault();
+                return [4 /*yield*/, compileFormData(event.target)];
             case 1:
-                compiledFormData = _a.sent();
-                // If ID empty, throw
-                console.log("hi", compiledFormData);
+                compiledFormData = _d.sent();
+                compiledWebsiteArray = InsertIntoWebsitesArray(compiledFormData);
+                return [4 /*yield*/, window.API.backend.encryptData(compiledWebsiteArray, secretKey)];
+            case 2:
+                encryptData = _d.sent();
+                console.log("The data is encrypt, save this to database!", encryptData);
+                _b = (_a = console).log;
+                _c = ["This is the d"];
+                return [4 /*yield*/, window.API.backend.decryptData(encryptData, secretKey)];
+            case 3:
+                _b.apply(_a, _c.concat([_d.sent()]));
                 return [2 /*return*/];
         }
     });

@@ -35,7 +35,9 @@ var processVersion = {
 };
 var backend = {
     isString: function (a) { return ipcRenderer.invoke("isString", a); },
-    generateId: function () { return ipcRenderer.invoke("generateId"); }
+    generateId: function () { return ipcRenderer.invoke("generateId"); },
+    encryptData: function (data, secretKey) { return ipcRenderer.invoke("encryptData", data, secretKey); },
+    decryptData: function (data, secretKey) { return ipcRenderer.invoke("decryptData", data, secretKey); }
 };
 exports.API = {
     processVersion: processVersion,

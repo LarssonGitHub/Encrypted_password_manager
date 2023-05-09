@@ -1,5 +1,18 @@
 const form = <HTMLFormElement>document.getElementById("website-form");
 
+// TODO handle the key to the decrypt.
+const secretKey: string = "super-secret";
+
+// @ts-ignore
+const websites: arrayOfWebsites = [];
+
+const InsertIntoWebsitesArray = (websiteObject: websiteObject): string => {
+  // TODO, error handling
+  if (websiteObject.id === "") return "No id was set, throw error";
+  const newWebsitesArray: arrayOfWebsites = [...websites, websiteObject];
+  return JSON.stringify(newWebsitesArray);
+};
+
 const compileFormData = async (
   form: HTMLFormElement
 ): Promise<websiteObject> => {
@@ -15,13 +28,21 @@ const compileFormData = async (
   return compileNewData;
 };
 
-form.addEventListener("submit", async (e: SubmitEvent) => {
-  e.preventDefault();
-  const targetForm: HTMLFormElement = <HTMLFormElement>e.target;
-  const compiledFormData: websiteObject = await compileFormData(targetForm);
-  // If ID empty, throw
-  console.log("hi", compiledFormData);
-  // encryoptData
-  //
-  // Submit data to json.
+// Wrap this in a promise!
+form.addEventListener("submit", async (event: SubmitEvent) => {
+  event.preventDefault();
+  const compiledFormData: websiteObject = await compileFormData(
+    event.target as HTMLFormElement
+  );
+  const compiledWebsiteArray: string =
+    InsertIntoWebsitesArray(compiledFormData);
+  const encryptData: string = await window.API.backend.encryptData(
+    compiledWebsiteArray,
+    secretKey
+  );
+  console.log("The data is encrypt, save this to database!", encryptData);
+  console.log(
+    "This is the d",
+    await window.API.backend.decryptData(encryptData, secretKey)
+  );
 });
