@@ -1,1 +1,0 @@
-const salt: string = "This is a special one..!"
