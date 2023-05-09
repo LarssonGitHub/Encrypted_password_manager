@@ -14,13 +14,45 @@
     />
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <h1>The poor man's password app</h1>
+      <div>
+        <form id="website-form">
+        <ul>
+          <div>
+            <li>Associated Website</li>
+            <li><input type="text" name="website-input" id="website-input"></li>
+          </div>
+          <div>
+          <li>Associated email</li>
+          <li><input type="text" name="email-input" id="email-input"></li>
+        </div>
+        <div>
+          <li>Associated username</li>
+          <li><input type="text" name="username-input" id="username-input"></li>
+        </div>
+        <div>
+          <li>Associated password</li>
+          <li><input type="password" name="password-input" id="password-input"></li>
+        </div>
+        <div>
+          <li>Additional notes</li>
+          <li><textarea name="additional-data-input" id="additional-data-input"></textarea></li>
+        </div>
+        <div>
+          <button type="submit">Add new info</button>
+        </div>
+        </ul>
+
+      </form>
+      </div>
+
       <p>Finally you work</p>
       <button id="test1">get array with ids</button>
       <button id="test2">Is this a string?</button>
     <!-- You can also require other files to run in this process -->
     <script src="./middleware/salt.js"></script>
     <script src="./renderer.js"></script>
+    <script src="./controller//CRUDrequests.js"></script>
 
   </body>
 </html>

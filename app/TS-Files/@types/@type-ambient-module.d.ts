@@ -3,3 +3,10 @@
 interface TBA {
     TBA: string
 }
+
+interface searchQueryBody {
+    title: string,
+        desc: string
+}
+
+interface websiteObject {id: string, websiteInput: string, emailInput: string, usernameInput: string, passwordInput: string, additionalDataInput: string}

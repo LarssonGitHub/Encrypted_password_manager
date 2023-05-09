@@ -37,14 +37,14 @@ const processVersion = {
   electron: (): string => process.versions.electron,
 }
 
-const testFuncs = {
+const backend = {
   isString: (a: any) => ipcRenderer.invoke("isString", a),
   generateId: () => ipcRenderer.invoke("generateId"),
 }
 
 export const API = {
   processVersion: processVersion,
-  testFuncs:testFuncs
+  backend:backend
 
 }
 

@@ -17,7 +17,7 @@ const userObject = [{}, {}, {}, {}];
 const applyID = async (array: {}[]): Promise<void> => {
 
   const arrayWithId = await Promise.all(
-    array.map(async (x) => await window.API.testFuncs.generateId())
+    array.map(async (x) => await window.API.backend.generateId())
   );
   console.log("Your new array", arrayWithId);
 };
@@ -27,7 +27,7 @@ document.getElementById("test1")?.addEventListener("click", () => {
 });
 
 const checkType = async (value: any): Promise<void> => {
-  const isString = await window.API.testFuncs.isString(value);
+  const isString = await window.API.backend.isString(value);
   console.log(isString ? "This is a string!" : "No, this is not a string");
 };
 

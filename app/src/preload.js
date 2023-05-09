@@ -33,12 +33,12 @@ var processVersion = {
     chrome: function () { return process.versions.chrome; },
     electron: function () { return process.versions.electron; }
 };
-var testFuncs = {
+var backend = {
     isString: function (a) { return ipcRenderer.invoke("isString", a); },
     generateId: function () { return ipcRenderer.invoke("generateId"); }
 };
 exports.API = {
     processVersion: processVersion,
-    testFuncs: testFuncs
+    backend: backend
 };
 contextBridge.exposeInMainWorld("API", exports.API);

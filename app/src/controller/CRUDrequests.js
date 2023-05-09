@@ -1,10 +1,15 @@
 "use strict";
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// No Node.js APIs are available in this process unless
-// nodeIntegration is set to true in webPreferences.
-// Use preload.js to selectively enable features
-// needed in the renderer process.
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -41,44 +46,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _a, _b;
-console.log("This app is using Chrome (v".concat(window.API.processVersion.chrome(), "), Node.js (v").concat(window.API.processVersion.node(), "), and Electron (v").concat(window.API.processVersion.electron(), ")"));
-// preload attached everything to window.
-console.log(window);
-var userObject = [{}, {}, {}, {}];
-var applyID = function (array) { return __awaiter(void 0, void 0, void 0, function () {
-    var arrayWithId;
+var form = document.getElementById("website-form");
+var compileFormData = function (form) { return __awaiter(void 0, void 0, void 0, function () {
+    var extractedData, dataEntries, createId, compileNewData;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, Promise.all(array.map(function (x) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0: return [4 /*yield*/, window.API.backend.generateId()];
-                        case 1: return [2 /*return*/, _a.sent()];
-                    }
-                }); }); }))];
+            case 0:
+                extractedData = new FormData(form);
+                dataEntries = Object.fromEntries(extractedData);
+                return [4 /*yield*/, window.API.backend.generateId()];
             case 1:
-                arrayWithId = _a.sent();
-                console.log("Your new array", arrayWithId);
-                return [2 /*return*/];
+                createId = _a.sent();
+                compileNewData = __assign(__assign({}, dataEntries), { id: createId });
+                return [2 /*return*/, compileNewData];
         }
     });
 }); };
-(_a = document.getElementById("test1")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
-    applyID(userObject);
-});
-var checkType = function (value) { return __awaiter(void 0, void 0, void 0, function () {
-    var isString;
+form.addEventListener("submit", function (e) { return __awaiter(void 0, void 0, void 0, function () {
+    var targetForm, compiledFormData;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, window.API.backend.isString(value)];
+            case 0:
+                e.preventDefault();
+                targetForm = e.target;
+                return [4 /*yield*/, compileFormData(targetForm)];
             case 1:
-                isString = _a.sent();
-                console.log(isString ? "This is a string!" : "No, this is not a string");
+                compiledFormData = _a.sent();
+                // If ID empty, throw
+                console.log("hi", compiledFormData);
                 return [2 /*return*/];
         }
     });
-}); };
-// Only for testing purposes of sending a value down to index.js
-(_b = document.getElementById("test2")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
-    checkType("This is a string");
-});
+}); });
