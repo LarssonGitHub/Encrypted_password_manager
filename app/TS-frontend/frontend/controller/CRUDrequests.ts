@@ -18,7 +18,6 @@ const form = <HTMLFormElement>document.getElementById("website-form");
 // TODO handle the key to the decrypt.
 const secretKey: string = "super-secret";
 
-// @ts-ignore
 const websites: arrayOfWebsites = [];
 
 const InsertIntoWebsitesArray = (websiteObject: websiteObject): string => {

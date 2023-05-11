@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { contextBridge, ipcRenderer } from "electron";
 
 window.addEventListener("DOMContentLoaded", () => {
