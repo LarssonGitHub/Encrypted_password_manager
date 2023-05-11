@@ -7,8 +7,7 @@ const secretKey: string = "super-secret";
 const websites: arrayOfWebsites = [];
 
 const InsertIntoWebsitesArray = (websiteObject: websiteObject): string => {
-  // TODO, error handling
-  if (websiteObject.id === "") return "No id was set, throw error";
+  if (websiteObject.id === "") throw "No id was set, canceling event";
   const newWebsitesArray: arrayOfWebsites = [...websites, websiteObject];
   return JSON.stringify(newWebsitesArray);
 };
@@ -28,8 +27,7 @@ const compileFormData = async (
   return compileNewData;
 };
 
-// Wrap this in a promise!
-form.addEventListener("submit", async (event: SubmitEvent) => {
+const postHandler = async (event: SubmitEvent) => {
   event.preventDefault();
   const compiledFormData: websiteObject = await compileFormData(
     event.target as HTMLFormElement
@@ -45,4 +43,13 @@ form.addEventListener("submit", async (event: SubmitEvent) => {
     "This is the d",
     await window.API.backend.decryptData(encryptData, secretKey)
   );
+}
+
+
+// Wrap this in a promise!
+form.addEventListener("submit", async (event: SubmitEvent) => {
+  event.preventDefault();
+  errorHandler(postHandler, event)
 });
+
+

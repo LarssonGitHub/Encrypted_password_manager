@@ -61,9 +61,8 @@ var secretKey = "super-secret";
 // @ts-ignore
 var websites = [];
 var InsertIntoWebsitesArray = function (websiteObject) {
-    // TODO, error handling
     if (websiteObject.id === "")
-        return "No id was set, throw error";
+        throw "No id was set, canceling event";
     var newWebsitesArray = __spreadArray(__spreadArray([], websites, true), [websiteObject], false);
     return JSON.stringify(newWebsitesArray);
 };
@@ -82,8 +81,7 @@ var compileFormData = function (form) { return __awaiter(void 0, void 0, void 0,
         }
     });
 }); };
-// Wrap this in a promise!
-form.addEventListener("submit", function (event) { return __awaiter(void 0, void 0, void 0, function () {
+var postHandler = function (event) { return __awaiter(void 0, void 0, void 0, function () {
     var compiledFormData, compiledWebsiteArray, encryptData, _a, _b, _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -104,5 +102,13 @@ form.addEventListener("submit", function (event) { return __awaiter(void 0, void
                 _b.apply(_a, _c.concat([_d.sent()]));
                 return [2 /*return*/];
         }
+    });
+}); };
+// Wrap this in a promise!
+form.addEventListener("submit", function (event) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        event.preventDefault();
+        errorHandler(postHandler, event);
+        return [2 /*return*/];
     });
 }); });
