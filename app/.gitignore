@@ -32,6 +32,8 @@ windows-win32-x64
 
 # misc
 /server/.env
+/src/backend
+/src/frontend
 .DS_Store
 .env
 .env.local
