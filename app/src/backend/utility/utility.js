@@ -14,7 +14,6 @@ var isString = function (value) {
 };
 exports.isString = isString;
 var encryptData = function (data, secretKey) {
-    throw "crap";
     var encrypt = crypto_js_1["default"].AES.encrypt(JSON.stringify(data), secretKey, {
         iv: crypto_js_1["default"].enc.Hex.parse("be410fea41df7162a679875ec131cf2c"),
         mode: crypto_js_1["default"].mode.CBC,

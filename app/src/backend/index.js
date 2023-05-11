@@ -46,7 +46,7 @@ function createWindow() {
     electron_1.ipcMain.handle("decryptData", function (meta, data, secretKey) {
         return (0, utility_1.decryptData)(data, secretKey);
     });
-    mainWindow.loadFile(path.join(__dirname, "index.html"));
+    mainWindow.loadFile(path.join(__dirname, "../index.html"));
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 }

@@ -2,13 +2,13 @@
   "name": "electron-quick-start-typescript",
   "version": "1.0.0",
   "description": "The poor man's password vault",
-  "main": "src/index.js",
+  "main": "src/backend/index.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron ./src/index.js",
-    "startWithoutTS": "electron ./src/index.js",
+    "start": "npm run build && electron ./src/backend/index.js",
+    "startWithoutTS": "electron ./src/backend/index.js",
     "buildForWindows": " electron-packager ./ windows --platform=win32 --arch=x64 --overwrite"
   },
   "repository": "https://github.com/electron/electron-quick-start-typescript",
