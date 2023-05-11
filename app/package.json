@@ -4,12 +4,13 @@
   "description": "The poor man's password vault",
   "main": "src/backend/index.js",
   "scripts": {
-    "build": "tsc",
+    "buildBackend": "tsc -p ./TS-backend",
+    "buildFrontend": "tsc -p ./TS-frontend",
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron ./src/backend/index.js",
-    "startWithoutTS": "electron ./src/backend/index.js",
-    "buildForWindows": " electron-packager ./ windows --platform=win32 --arch=x64 --overwrite"
+    "start": "npm run buildBackend &&  npm run buildFrontend && electron ./src/backend/index.js",
+    "startWithoutBuild": "electron ./src/backend/index.js",
+    "CreateExeFile": " electron-packager ./ windows --platform=win32 --arch=x64 --overwrite"
   },
   "repository": "https://github.com/electron/electron-quick-start-typescript",
   "keywords": [
