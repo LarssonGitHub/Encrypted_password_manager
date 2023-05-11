@@ -1,10 +1,3 @@
-// Only used where modules can't be imported, like electron's frontend.
-// import {API} from "../TS-backend/backend/preload"
-
-//  interface TBA {
-//   TBA: string;
-// }
-
 interface searchQueryBody {
   title: string;
   desc: string;
