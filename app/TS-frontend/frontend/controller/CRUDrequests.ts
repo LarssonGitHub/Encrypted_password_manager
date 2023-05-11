@@ -1,3 +1,18 @@
+import {
+  arrayOfWebsites,
+  websiteObject,
+  API,
+} from "../../../@types/@type-module";
+
+// TODO, fix this
+declare global {
+  interface Window {
+    API: API;
+  }
+}
+
+import { errorHandler } from "../middleware/errorHandler.js";
+
 const form = <HTMLFormElement>document.getElementById("website-form");
 
 // TODO handle the key to the decrypt.
@@ -43,13 +58,10 @@ const postHandler = async (event: SubmitEvent) => {
     "This is the d",
     await window.API.backend.decryptData(encryptData, secretKey)
   );
-}
-
+};
 
 // Wrap this in a promise!
 form.addEventListener("submit", async (event: SubmitEvent) => {
   event.preventDefault();
-  errorHandler(postHandler, event)
+  errorHandler(postHandler, event);
 });
-
-

@@ -1,5 +1,6 @@
-// All of the Node.js APIs are available in the preload process.
-// It has the same sandbox as a Chrome extension.
+// @ts-nocheck
+import { contextBridge, ipcRenderer } from "electron";
+
 window.addEventListener("DOMContentLoaded", () => {
   const replaceText = (selector: string, text: string) => {
     const element = document.getElementById(selector);
@@ -17,8 +18,6 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-const { contextBridge, ipcRenderer } = require("electron");
-
 // contextBridge.exposeInMainWorld("versions", {
 //   node: (): string => process.versions.node,
 //   chrome: (): string => process.versions.chrome,
@@ -32,9 +31,9 @@ const { contextBridge, ipcRenderer } = require("electron");
 // });
 
 const processVersion = {
-  node: (): string => process.versions.node,
-  chrome: (): string => process.versions.chrome,
-  electron: (): string => process.versions.electron,
+  node: (): string  => process.versions.node,
+  chrome: (): string  => process.versions.chrome,
+  electron: (): string  => process.versions.electron,
 }
 
 const backend = {
@@ -44,10 +43,10 @@ const backend = {
   decryptData: (data: string, secretKey: string) => ipcRenderer.invoke("decryptData", data, secretKey),
 }
 
-export const API = {
-  processVersion: processVersion,
-  backend:backend
 
+const API = {
+  processVersion: processVersion,
+  backend: backend
 }
 
 contextBridge.exposeInMainWorld("API", API);

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ES6",
     "strict": true,        
     "lib": [
       "esnext",
@@ -14,7 +14,7 @@
     "removeComments": false,   
     "experimentalDecorators": true,              
     "emitDecoratorMetadata": true,   
-    "outDir": "./src",     
-  },
-"include": ["./TS-files"]
+    "outDir": "../src",     
+    "rootDir": "./"
+  }
 }

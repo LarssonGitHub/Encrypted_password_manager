@@ -8,9 +8,9 @@ const generateId = () => uuidv4();
 const isString = <T>(value: T): boolean =>
   typeof value === "string" ? true : false;
 
-const encryptData = <T>(data: T, secretKey: string): string => {
+const encryptData = (data: string, secretKey: string): string => {
   const encrypt: CryptoJS.lib.CipherParams = CryptoJS.AES.encrypt(
-    JSON.stringify(data),
+   data,
     secretKey,
     {
       iv: CryptoJS.enc.Hex.parse("be410fea41df7162a679875ec131cf2c"),
@@ -23,10 +23,10 @@ const encryptData = <T>(data: T, secretKey: string): string => {
   return encrypt.toString();
 };
 
-const decryptData = <T>(
+const decryptData = (
   encryptedData: string,
   secretKey: string
-): string | void => {
+): [] | string => {
   let decrypt = CryptoJS.AES.decrypt(encryptedData, secretKey);
   const sanitize = decrypt.toString(CryptoJS.enc.Utf8);
     // TODO, throw Error, wrong key when implementing error handling
