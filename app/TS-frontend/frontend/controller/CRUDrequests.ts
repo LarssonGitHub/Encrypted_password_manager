@@ -44,12 +44,9 @@ const InsertIntoWebsitesArray = (websiteObject: websiteObject): string => {
   return JSON.stringify(newWebsitesArray);
 };
 
-const compileFormData = async (
-  form: HTMLFormElement
-): Promise<websiteObject> => {
-  const extractedData = new FormData(form) as unknown as Iterable<
-    [websiteObject, FormDataEntryValue]
-  >;
+const compileFormData = async (form: HTMLFormElement): Promise<websiteObject> => {
+
+  const extractedData = new FormData(form) as unknown as Iterable<[websiteObject, FormDataEntryValue]>;
   const dataEntries: websiteObject = Object.fromEntries(extractedData);
   const createId: string = await window.API.backend.generateId();
   const compileNewData: websiteObject = {
@@ -61,20 +58,11 @@ const compileFormData = async (
 
 const postHandler = async (event: SubmitEvent) => {
   event.preventDefault();
-  const compiledFormData: websiteObject = await compileFormData(
-    event.target as HTMLFormElement
-  );
-  const compiledWebsiteArray: string =
-    InsertIntoWebsitesArray(compiledFormData);
-  const encryptData: string = await window.API.backend.encryptData(
-    compiledWebsiteArray,
-    secretKey
-  );
+  const compiledFormData: websiteObject = await compileFormData(event.target as HTMLFormElement);
+  const compiledWebsiteArray: string = InsertIntoWebsitesArray(compiledFormData);
+  const encryptData: string = await window.API.backend.encryptData(compiledWebsiteArray, secretKey);
   console.log("The data is encrypt, save this to database!", encryptData);
-  console.log(
-    "This is the d",
-    await window.API.backend.decryptData(encryptData, secretKey)
-  );
+  console.log("This is the d", await window.API.backend.decryptData(encryptData, secretKey));
 };
 
 // Wrap this in a promise!
