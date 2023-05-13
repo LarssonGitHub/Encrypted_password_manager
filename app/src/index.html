@@ -38,13 +38,48 @@
           <button type="submit">Add new info</button>
         </div>
       </ul>
-
     </form>
+  </div>
+
+  <div id="website-listing">
+
   </div>
 
   <script type="module" src="./frontend/view/renderer.js"></script>
   <script type="module" src="./frontend/controller/CRUDrequests.js"></script>
   <script type="module" src="./frontend/middleware/errorHandler.js"></script>
+
+
+  <div>
+    <p>Websites and info</p>
+    <div id="list-data-container">
+    </div>
+    </ul>
+  </div>
+
+  <template id="template-list">
+    <ul id="list-data-unordered-list">
+    <div>
+      <li class="list-id" hidden>This is hidden</li>
+    </div>
+    <div>
+      <li><b>Website:</b> <span class="list-website"></span></li>
+    </div>
+    <div>
+      <li><b>Email:</b> <span class="list-email"></span></li>
+    </div>
+    <div>
+      <li><b>Username:</b> <span class="list-username"></span></li>
+    </div>
+    <div>
+      <li><b>Password:</b> <span class="list-password"></span></li>
+    </div>
+    <div>
+      <!-- TODO, put this into a textarea -->
+      <li><b>Notes:</b> <span class="list-additional-data"></span></li>
+    </div>
+  </ul>
+  </template>
 
 </body>
 
