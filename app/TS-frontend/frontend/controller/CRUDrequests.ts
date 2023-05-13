@@ -3,6 +3,7 @@ import {
   websiteObject,
   API,
 } from "../../../@types/@type-module";
+import { errorHandler } from "../middleware/errorHandler.js";
 
 // TODO, fix this
 declare global {
@@ -11,7 +12,24 @@ declare global {
   }
 }
 
-import { errorHandler } from "../middleware/errorHandler.js";
+const tempJSON: websiteObject[] = [
+  {
+    id: "ID number 1",
+    websiteInput: "name",
+    emailInput: "email",
+    usernameInput: "username",
+    passwordInput: "passwordInput",
+    additionalDataInput: "data input ",
+  },
+  {
+    id: "ID number 2",
+    websiteInput: "name",
+    emailInput: "email",
+    usernameInput: "username",
+    passwordInput: "passwordInput",
+    additionalDataInput: "data input ",
+  }
+]
 
 const form = <HTMLFormElement>document.getElementById("website-form");
 

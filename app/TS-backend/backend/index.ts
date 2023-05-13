@@ -20,17 +20,6 @@ function createWindow() {
     width: 800,
   });
 
-  ipcMain.handle("isString", (meta, arg) => isString(arg));
-
-  ipcMain.handle("generateId", () => generateId());
-
-  ipcMain.handle("encryptData", (meta, data: string, secretKey: string) =>
-    encryptData(data, secretKey)
-  );
-
-  ipcMain.handle("decryptData", (meta, data: string, secretKey: string) =>
-  decryptData(data, secretKey)
-);
 
   mainWindow.loadFile(path.join(__dirname, "../index.html"));
 
@@ -42,6 +31,17 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  ipcMain.handle("isString", (meta, arg) => isString(arg));
+
+  ipcMain.handle("generateId", () => generateId());
+
+  ipcMain.handle("encryptData", (meta, data: string, secretKey: string) =>
+    encryptData(data, secretKey)
+  );
+
+  ipcMain.handle("decryptData", (meta, data: string, secretKey: string) =>
+  decryptData(data, secretKey)
+);
   createWindow();
 
   app.on("activate", function () {

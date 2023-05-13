@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-  </head>
-  <body>
-    <h1>The poor man's password app</h1>
-      <div>
-        <form id="website-form">
-        <ul>
-          <div>
-            <li>Associated Website</li>
-            <li><input type="text" name="website-input" id="website-input"></li>
-          </div>
-          <div>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World!</title>
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+</head>
+
+<body>
+  <h1>The poor man's password app</h1>
+  <div>
+    <form id="website-form">
+      <ul>
+        <div>
+          <li>Associated Website</li>
+          <li><input type="text" name="website-input" id="website-input"></li>
+        </div>
+        <div>
           <li>Associated email</li>
           <li><input type="text" name="email-input" id="email-input"></li>
         </div>
@@ -41,17 +37,15 @@
         <div>
           <button type="submit">Add new info</button>
         </div>
-        </ul>
+      </ul>
 
-      </form>
-      </div>
+    </form>
+  </div>
 
-      <p>Finally you work</p>
-      <button id="test1">get array with ids</button>
-      <button id="test2">Is this a string?</button>
-    <script type="module"src="./frontend/renderer.js"></script>
-    <script type="module" src="./frontend/controller/CRUDrequests.js"></script>
-    <script type="module" src="./frontend/middleware/errorHandler.js"></script>
+  <script type="module" src="./frontend/view/renderer.js"></script>
+  <script type="module" src="./frontend/controller/CRUDrequests.js"></script>
+  <script type="module" src="./frontend/middleware/errorHandler.js"></script>
 
-  </body>
+</body>
+
 </html>
