@@ -9,6 +9,8 @@
   <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
 </head>
 
+<!-- TODO update syntax to follow good semantic html practices  -->
+
 <body>
   <h1>The poor man's password app</h1>
   <div>
@@ -46,9 +48,8 @@
   </div>
 
   <script type="module" src="./frontend/view/renderer.js"></script>
-  <script type="module" src="./frontend/controller/CRUDrequests.js"></script>
-  <script type="module" src="./frontend/middleware/errorHandler.js"></script>
 
+  <button id="get-items">Get websites from DB</button>
 
   <div>
     <p>Websites and info</p>
@@ -57,30 +58,38 @@
     </ul>
   </div>
 
+
   <template id="template-list">
-    <ul id="list-data-unordered-list">
     <div>
-      <li class="list-id" hidden>This is hidden</li>
-    </div>
-    <div>
-      <li><b>Website:</b> <span class="list-website"></span></li>
-    </div>
-    <div>
-      <li><b>Email:</b> <span class="list-email"></span></li>
-    </div>
-    <div>
-      <li><b>Username:</b> <span class="list-username"></span></li>
-    </div>
-    <div>
-      <li><b>Password:</b> <span class="list-password"></span></li>
-    </div>
-    <div>
-      <!-- TODO, put this into a textarea -->
-      <li><b>Notes:</b> <span class="list-additional-data"></span></li>
-    </div>
-  </ul>
+      <ul id="list-data-unordered-list">
+        <div>
+          <!-- <li class="list-id" hidden>This is hidden</li> -->
+          <li class="list-id" hidden>Hide this in production</li>
+        </div>
+        <div>
+          <li><b>Website:</b> <span class="list-website"></span></li>
+        </div>
+        <div>
+          <li><b>Email:</b> <span class="list-email"></span></li>
+        </div>
+        <div>
+          <li><b>Username:</b> <span class="list-username"></span></li>
+        </div>
+        <div>
+          <li><b>Password:</b> <span class="list-password"></span></li>
+        </div>
+        <div>
+          <!-- TODO, put this into a textarea -->
+          <li><b>Notes:</b> <span class="list-additional-data"></span></li>
+        </div>
+        <li> 
+          <button data-website-id="#" class="edit-item-button">Edit</button> 
+          <button data-website-id="#" class="delete-item-button">Delete</button>
+        </li>
+      </ul>
   </template>
 
+  </div>
 </body>
 
 </html>

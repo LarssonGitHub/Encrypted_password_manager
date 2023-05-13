@@ -10,7 +10,7 @@ const showError = (error: unknown): void => {
     console.log("An error occurred: Error", error);
 }
 
- const errorHandler = async (func: Function, args: unknown) => {
+ const errorHandler = async (func: Function, args?: unknown) => {
        try {
         const functionResponse = await func(args);
         showSuccess(functionResponse)
@@ -18,7 +18,6 @@ const showError = (error: unknown): void => {
         showError(error)
     }
 }
-
 
 export {errorHandler}
 
