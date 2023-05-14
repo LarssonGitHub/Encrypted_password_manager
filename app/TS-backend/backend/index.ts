@@ -4,7 +4,8 @@ import {
   generateId,
   encryptData,
   decryptData,
-  getData
+  getData,
+  deleteData
 } from "./utility/utility";
 
 function createWindow() {
@@ -32,6 +33,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   ipcMain.handle("generateId", () => generateId());
+
   ipcMain.handle("encryptData", (meta, data: string, secretKey: string) =>
     encryptData(data, secretKey)
   );
@@ -39,6 +41,9 @@ app.whenReady().then(() => {
   decryptData(data, secretKey)
 );
   ipcMain.handle("getData", () => getData());
+  
+  ipcMain.handle("deleteData", (meta, id: string) => deleteData(id));
+
   createWindow();
 
   app.on("activate", function () {

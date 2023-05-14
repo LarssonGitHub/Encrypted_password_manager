@@ -39,6 +39,7 @@ const backend = {
   isString: (a: any) => ipcRenderer.invoke("isString", a),
   generateId: () => ipcRenderer.invoke("generateId"),
   getData: () => ipcRenderer.invoke("getData"),
+  deleteData: (id: string) => ipcRenderer.invoke("deleteData", id),
   encryptData: (data: string, secretKey: string) => ipcRenderer.invoke("encryptData", data, secretKey),
   decryptData: (data: string, secretKey: string) => ipcRenderer.invoke("decryptData", data, secretKey),
 }

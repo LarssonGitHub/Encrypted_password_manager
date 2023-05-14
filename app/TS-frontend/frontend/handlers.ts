@@ -1,7 +1,7 @@
 import { arrayOfWebsites, websiteObject } from "../../@types/@type-module";
 import { appendListToArrayTemplate,removeListData } from "./renderer.js";
 import { appendEventListeners } from "./listeners.js";
-import { InsertIntoWebsitesArray, compileFormData, getDataSetId, removeItemWebsiteArray, updateItemWebsiteArray } from "./logic.js";
+import { InsertIntoWebsitesArray, compileFormData, getDataSetId, updateItemWebsiteArray } from "./logic.js";
 // TODO, fix this
 
 // TODO handle the key to the decrypt.
@@ -27,14 +27,9 @@ export const deleteItemHandler = async (event: MouseEvent):  Promise<void> => {
     if (!confirm) return;
   const id: string | null = getDataSetId(event.target as HTMLButtonElement)
     if (id === null || id === "") throw "No id was found, canceling event";
-  const websitesArray: string = removeItemWebsiteArray(id)
-  const encryptData: string = await window.API.backend.encryptData(websitesArray, secretKey);
-  console.log("Object deleted", websitesArray)
-  console.log("new encrypted array, save this to database!", encryptData);
+  const websites: arrayOfWebsites = await window.API.backend.deleteData(id);
   removeListData()
- // TODO, remove parse, use real values
- const displayWebsiteList: boolean = appendListToArrayTemplate(JSON.parse(websitesArray));
-  if (!displayWebsiteList) throw "No items in the array";
+  appendListToArrayTemplate(websites);
   appendEventListeners();
 };
 

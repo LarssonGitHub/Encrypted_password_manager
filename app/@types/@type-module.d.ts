@@ -23,6 +23,7 @@ type API = {
   backend: {
     getData: () => Promise<arrayOfWebsites>;
     generateId: () => Promise<string>;
+    deleteData: (id: string) => Promise<arrayOfWebsites>;
     encryptData: (data: string, secretKey: string) => Promise<string>;
     decryptData: (data: string, secretKey: string) => Promise<arrayOfWebsites>;
   };

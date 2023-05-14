@@ -6,12 +6,17 @@ console.log("You shouldn't see this in frontend");
 
 export const generateId = () => uuidv4();
 
+export const removeItemWebsiteArray = (id: string, websitesArray: arrayOfWebsites): arrayOfWebsites => {
+  if (id === "" || id === undefined) throw "No id was found, canceling event";
+  return websitesArray.filter(website => website.id !== id);
+};
+
 export const getData = (): arrayOfWebsites => {
   // Placeholder for db
   return [
     {
       id: "ID number 1",
-      websiteInput: "name",
+      websiteInput: "name 1",
       emailInput: "email",
       usernameInput: "username",
       passwordInput: "passwordInput",
@@ -19,13 +24,68 @@ export const getData = (): arrayOfWebsites => {
     },
     {
       id: "ID number 2",
-      websiteInput: "name",
+      websiteInput: "name 2",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+    {
+      id: "ID number 3",
+      websiteInput: "name 3",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+    {
+      id: "ID number 4",
+      websiteInput: "name 4",
       emailInput: "email",
       usernameInput: "username",
       passwordInput: "passwordInput",
       additionalDataInput: "data input ",
     },
   ];
+}
+
+export const deleteData = (id: string): arrayOfWebsites => {
+  // Placeholder for db
+  const websites = [
+    {
+      id: "ID number 1",
+      websiteInput: "name 1",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+    {
+      id: "ID number 2",
+      websiteInput: "name 2",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+    {
+      id: "ID number 3",
+      websiteInput: "name 3",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+    {
+      id: "ID number 4",
+      websiteInput: "name 4",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+  ];
+  return removeItemWebsiteArray(id, websites)
 }
 
 export const encryptData = (data: string, secretKey: string): string => {
