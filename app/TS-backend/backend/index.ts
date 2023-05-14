@@ -10,9 +10,9 @@ import {
   postData
 } from "./utility/utility";
 import { websiteObject } from "../../@types/@type-module"
+import { db } from "../database/sqliteConfig.js";
 
 function createWindow() {
-  console.log(__dirname, "preload.js");
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
@@ -35,6 +35,8 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  // Connect to DB
+  db
   ipcMain.handle("generateId", () => generateId());
 
   ipcMain.handle("encryptData", (meta, data: string, secretKey: string) =>
