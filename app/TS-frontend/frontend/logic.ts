@@ -7,12 +7,6 @@ export const getDataSetId = (target: HTMLElement) : string | null => {
   return target.getAttribute("data-website-id")
 }
 
-export const updateItemWebsiteArray = (newObject: websiteObject): string => {
-  if (newObject.id === "") throw "No id was found, canceling event";
-  const updatedValuesInObject: arrayOfWebsites = websites.map((website) => (website.id === newObject.id ? { ...website, ...newObject } : website))
-  return JSON.stringify(updatedValuesInObject);
-};
-
 export const InsertIntoWebsitesArray = (websiteObject: websiteObject): string => {
   if (websiteObject.id === "") throw "No id was set, canceling event";
   const newArrayOfWebsites: arrayOfWebsites = [...websites, websiteObject];

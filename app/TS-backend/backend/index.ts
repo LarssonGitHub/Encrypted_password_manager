@@ -5,8 +5,10 @@ import {
   encryptData,
   decryptData,
   getData,
-  deleteData
+  deleteData,
+  updateData
 } from "./utility/utility";
+import { websiteObject } from "../../@types/@type-module"
 
 function createWindow() {
   console.log(__dirname, "preload.js");
@@ -41,8 +43,10 @@ app.whenReady().then(() => {
   decryptData(data, secretKey)
 );
   ipcMain.handle("getData", () => getData());
-  
+
   ipcMain.handle("deleteData", (meta, id: string) => deleteData(id));
+
+  ipcMain.handle("updateData", (meta, id: string, newData: websiteObject) => updateData(id, newData));
 
   createWindow();
 

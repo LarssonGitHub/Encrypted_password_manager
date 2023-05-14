@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from "electron";
+import { websiteObject } from "../../@types/@type-module";
 
 window.addEventListener("DOMContentLoaded", () => {
   const replaceText = (selector: string, text: string) => {
@@ -40,6 +41,7 @@ const backend = {
   generateId: () => ipcRenderer.invoke("generateId"),
   getData: () => ipcRenderer.invoke("getData"),
   deleteData: (id: string) => ipcRenderer.invoke("deleteData", id),
+  updateData: (id: string, newData: websiteObject) => ipcRenderer.invoke("updateData", id, newData),
   encryptData: (data: string, secretKey: string) => ipcRenderer.invoke("encryptData", data, secretKey),
   decryptData: (data: string, secretKey: string) => ipcRenderer.invoke("decryptData", data, secretKey),
 }

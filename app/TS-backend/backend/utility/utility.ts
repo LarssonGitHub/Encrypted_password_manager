@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import CryptoJS from "crypto-js";
-import { arrayOfWebsites } from "../../../@types/@type-module"
+import { arrayOfWebsites, websiteObject } from "../../../@types/@type-module"
 
 console.log("You shouldn't see this in frontend");
 
@@ -9,6 +9,11 @@ export const generateId = () => uuidv4();
 export const removeItemWebsiteArray = (id: string, websitesArray: arrayOfWebsites): arrayOfWebsites => {
   if (id === "" || id === undefined) throw "No id was found, canceling event";
   return websitesArray.filter(website => website.id !== id);
+};
+
+export const updateItemWebsiteArray = (id: string, websitesArray: arrayOfWebsites, newData: websiteObject): arrayOfWebsites => {
+  if (newData.id === "") throw "No id was found, canceling event";
+  return websitesArray.map((websitesArray) => (websitesArray.id === newData.id ? { ...websitesArray, ...newData } : websitesArray))
 };
 
 export const getData = (): arrayOfWebsites => {
@@ -86,6 +91,45 @@ export const deleteData = (id: string): arrayOfWebsites => {
     },
   ];
   return removeItemWebsiteArray(id, websites)
+}
+
+export const updateData = (id: string, newData: websiteObject): arrayOfWebsites => {
+  // Placeholder for db
+  const websites = [
+    {
+      id: "ID number 1",
+      websiteInput: "name 1",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+    {
+      id: "ID number 2",
+      websiteInput: "name 2",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+    {
+      id: "ID number 3",
+      websiteInput: "name 3",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+    {
+      id: "ID number 4",
+      websiteInput: "name 4",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+  ];
+  return updateItemWebsiteArray(id, websites, newData)
 }
 
 export const encryptData = (data: string, secretKey: string): string => {
