@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Hello World!</title>
   <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
-  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
 </head>
 
 <!-- TODO update syntax to follow good semantic html practices  -->
@@ -16,39 +16,32 @@
   <div>
     <form id="website-form">
       <ul>
-        <div>
-          <li>Associated Website</li>
-          <li><input type="text" name="websiteInput" id="website-input"></li>
-        </div>
-        <div>
-          <li>Associated email</li>
-          <li><input type="text" name="emailInput" id="email-input"></li>
-        </div>
-        <div>
-          <li>Associated username</li>
-          <li><input type="text" name="usernameInput" id="username-input"></li>
-        </div>
-        <div>
-          <li>Associated password</li>
-          <li><input type="password" name="passwordInput" id="password-input"></li>
-        </div>
-        <div>
-          <li>Additional notes</li>
-          <li><textarea name="additionalDataInput" id="additional-data-input"></textarea></li>
-        </div>
-        <div>
+        <li>
+          <span>Associated Website</span>
+          <span><input type="text" name="websiteInput" id="website-input"></span>
+        </li>
+        <li>
+          <span>Associated email</span>
+          <span><input type="text" name="emailInput" id="email-input"></span>
+        </li>
+        <li>
+          <span>Associated username</span>
+          <span><input type="text" name="usernameInput" id="username-input"></span>
+        </li>
+        <li>
+          <span>Associated password</span>
+          <span><input type="password" name="passwordInput" id="password-input"></span>
+        </li>
+        <li>
+          <span>Additional notes</span>
+          <span><textarea name="additionalDataInput" id="additional-data-input"></textarea></span>
+        </li>
+        <li>
           <button type="submit">Add new info</button>
-        </div>
+        </li>
       </ul>
     </form>
   </div>
-
-  <div id="website-listing">
-
-  </div>
-
-  <script type="module" src="./frontend/renderer.js"></script>
-  <script type="module" src="./frontend/listeners.js"></script>
 
   <button id="get-items">Get websites from DB</button>
 
@@ -56,41 +49,31 @@
     <p>Websites and info</p>
     <div id="list-data-container">
     </div>
-    </ul>
   </div>
 
 
   <template id="template-list">
     <div>
       <ul id="list-data-unordered-list">
-        <div>
-          <!-- <li class="list-id" hidden>This is hidden</li> -->
-          <li class="list-id" hidden>Hide this in production</li>
-        </div>
-        <div>
-          <li><b>Website:</b> <span class="list-website"></span></li>
-        </div>
-        <div>
-          <li><b>Email:</b> <span class="list-email"></span></li>
-        </div>
-        <div>
-          <li><b>Username:</b> <span class="list-username"></span></li>
-        </div>
-        <div>
-          <li><b>Password:</b> <span class="list-password"></span></li>
-        </div>
-        <div>
-          <!-- TODO, put this into a textarea -->
-          <li><b>Notes:</b> <span class="list-additional-data"></span></li>
-        </div>
+        <!-- <li class="list-id" hidden>This is hidden</li> -->
+        <li class="list-id" hidden>Hide this in production</li>
+        <li><b>Website:</b> <span class="list-website"></span></li>
+        <li><b>Email:</b> <span class="list-email"></span></li>
+        <li><b>Username:</b> <span class="list-username"></span></li>
+        <li><b>Password:</b> <span class="list-password"></span></li>
+        <!-- TODO, put this into a textarea -->
+        <li><b>Notes:</b> <span class="list-additional-data"></span></li>
         <li>
           <button data-website-id="#" class="edit-item-button">Edit</button>
           <button data-website-id="#" class="delete-item-button">Delete</button>
         </li>
       </ul>
+    </div>
   </template>
 
-  </div>
+  <script type="module" src="./frontend/renderer.js"></script>
+  <script type="module" src="./frontend/listeners.js"></script>
+
 </body>
 
 </html>

@@ -2,6 +2,7 @@ import { contextBridge, ipcRenderer } from "electron";
 import { websiteObject } from "../../@types/@type-module";
 
 window.addEventListener("DOMContentLoaded", () => {
+  console.log("hi")
   const replaceText = (selector: string, text: string) => {
     const element = document.getElementById(selector);
     if (element) {
@@ -36,7 +37,6 @@ const processVersion = {
 }
 
 const backend = {
-  isString: (a: any) => ipcRenderer.invoke("isString", a),
   generateId: () => ipcRenderer.invoke("generateId"),
   getData: () => ipcRenderer.invoke("getData"),
   deleteData: (id: string) => ipcRenderer.invoke("deleteData", id),
