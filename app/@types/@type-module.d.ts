@@ -12,6 +12,8 @@ interface websiteObject {
   additionalDataInput: string;
 }
 
+type arrayOfWebsites = websiteObject[];
+
 type API = {
   processVersion: {
     node: () => string;
@@ -22,10 +24,8 @@ type API = {
     isString: (a: any) => Promise<boolean>;
     generateId: () => Promise<string>;
     encryptData: (data: string, secretKey: string) => Promise<string>;
-    decryptData: (data: string, secretKey: string) => Promise<string>;
+    decryptData: (data: string, secretKey: string) => Promise<arrayOfWebsites>;
   };
 }
-
-type arrayOfWebsites = websiteObject[];
 
 export { arrayOfWebsites, API, websiteObject, searchQueryBody };

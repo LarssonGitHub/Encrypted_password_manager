@@ -12,6 +12,12 @@ declare global {
 const listDataContainer = document.getElementById("list-data-container") as HTMLDivElement;
 const template = document.getElementById("template-list") as HTMLTemplateElement;
 
+export const removeListData = () => {
+  while (listDataContainer.firstChild) {
+    listDataContainer.removeChild(listDataContainer.firstChild);
+}
+}
+
 export const appendListToArrayTemplate = ( websiteArray: websiteObject[]): boolean => {
   if (websiteArray.length < 0) return false;
   const clone = template.content.cloneNode(true) as DocumentFragment;
