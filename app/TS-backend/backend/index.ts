@@ -1,5 +1,7 @@
+import { websiteObject } from "../../@types/@type-module"
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
+import { getDatabaseData } from "./fileSystem";
 import {
   generateId,
   encryptData,
@@ -9,7 +11,6 @@ import {
   updateData,
   postData
 } from "./utility/utility";
-import { websiteObject } from "../../@types/@type-module"
 
 function createWindow() {
   console.log(__dirname, "preload.js");
@@ -35,6 +36,9 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+
+  getDatabaseData()
+
   ipcMain.handle("generateId", () => generateId());
 
   ipcMain.handle("encryptData", (meta, data: string, secretKey: string) =>

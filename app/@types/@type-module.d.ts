@@ -12,6 +12,7 @@ interface websiteObject {
   additionalDataInput: string;
 }
 
+
 type arrayOfWebsites = websiteObject[];
 
 type API = {
