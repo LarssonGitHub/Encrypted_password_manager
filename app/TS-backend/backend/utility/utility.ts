@@ -11,9 +11,24 @@ export const removeItemWebsiteArray = (id: string, websitesArray: arrayOfWebsite
   return websitesArray.filter(website => website.id !== id);
 };
 
+export const createAndAppendId = (dataEntries: websiteObject) => {
+  const generatedId: string = uuidv4();
+  return {
+    ...dataEntries,
+    id: generatedId,
+  };
+}
+
 export const updateItemWebsiteArray = (id: string, websitesArray: arrayOfWebsites, newData: websiteObject): arrayOfWebsites => {
   if (newData.id === "") throw "No id was found, canceling event";
   return websitesArray.map((websitesArray) => (websitesArray.id === newData.id ? { ...websitesArray, ...newData } : websitesArray))
+};
+
+export const InsertIntoWebsitesArray = ( websitesArray: arrayOfWebsites, newData: websiteObject): arrayOfWebsites => {
+  if (newData.id === "") throw "No id was set, canceling event";
+  return [...websitesArray, 
+    newData
+  ];
 };
 
 export const getData = (): arrayOfWebsites => {
@@ -52,6 +67,46 @@ export const getData = (): arrayOfWebsites => {
       additionalDataInput: "data input ",
     },
   ];
+}
+
+export const postData = (newData: websiteObject): arrayOfWebsites => {
+  // Placeholder for db
+  const websites = [
+    {
+      id: "ID number 1",
+      websiteInput: "name 1",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+    {
+      id: "ID number 2",
+      websiteInput: "name 2",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+    {
+      id: "ID number 3",
+      websiteInput: "name 3",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+    {
+      id: "ID number 4",
+      websiteInput: "name 4",
+      emailInput: "email",
+      usernameInput: "username",
+      passwordInput: "passwordInput",
+      additionalDataInput: "data input ",
+    },
+  ];
+  const NewDataId: websiteObject = createAndAppendId(newData)
+  return  InsertIntoWebsitesArray(websites, NewDataId)
 }
 
 export const deleteData = (id: string): arrayOfWebsites => {

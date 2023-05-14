@@ -1,18 +1,18 @@
 import { arrayOfWebsites, websiteObject } from "../../@types/@type-module";
 import { appendListToArrayTemplate,removeListData } from "./renderer.js";
 import { appendEventListeners } from "./listeners.js";
-import { InsertIntoWebsitesArray, compileFormData, getDataSetId } from "./logic.js";
+import { compileFormData, getDataSetId } from "./logic.js";
 // TODO, fix this
 
 // TODO handle the key to the decrypt.
 const secretKey: string = "super-secret";
 
 export const postHandler = async (event: SubmitEvent) => {
-  const compiledFormData: websiteObject = await compileFormData(event.target as HTMLFormElement);
-  const compiledWebsiteArray: string = InsertIntoWebsitesArray(compiledFormData);
-  const encryptData: string = await window.API.backend.encryptData(compiledWebsiteArray, secretKey);
-  console.log("The data is encrypt, save this to database!", encryptData);
-  console.log("This is the d", await window.API.backend.decryptData(encryptData, secretKey));
+  const compiledData: websiteObject = await compileFormData(event.target as HTMLFormElement);
+  const websites: arrayOfWebsites = await window.API.backend.postData(compiledData);
+  removeListData()
+  appendListToArrayTemplate(websites);
+  appendEventListeners();
 };
 
 export const getHandler = async (): Promise<void | string> => {

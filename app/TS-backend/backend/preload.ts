@@ -8,7 +8,6 @@ window.addEventListener("DOMContentLoaded", () => {
       element.innerText = text;
     }
   };
-
   for (const type of ["chrome", "node", "electron"]) {
     replaceText(
       `${type}-version`,
@@ -42,6 +41,7 @@ const backend = {
   getData: () => ipcRenderer.invoke("getData"),
   deleteData: (id: string) => ipcRenderer.invoke("deleteData", id),
   updateData: (id: string, newData: websiteObject) => ipcRenderer.invoke("updateData", id, newData),
+  postData: (newData: websiteObject) => ipcRenderer.invoke("postData", newData),
   encryptData: (data: string, secretKey: string) => ipcRenderer.invoke("encryptData", data, secretKey),
   decryptData: (data: string, secretKey: string) => ipcRenderer.invoke("decryptData", data, secretKey),
 }

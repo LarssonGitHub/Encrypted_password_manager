@@ -6,7 +6,8 @@ import {
   decryptData,
   getData,
   deleteData,
-  updateData
+  updateData,
+  postData
 } from "./utility/utility";
 import { websiteObject } from "../../@types/@type-module"
 
@@ -48,6 +49,8 @@ app.whenReady().then(() => {
 
   ipcMain.handle("updateData", (meta, id: string, newData: websiteObject) => updateData(id, newData));
 
+  ipcMain.handle("postData", (meta, newData: websiteObject) => postData(newData));
+  
   createWindow();
 
   app.on("activate", function () {

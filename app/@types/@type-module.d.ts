@@ -25,6 +25,7 @@ type API = {
     generateId: () => Promise<string>;
     deleteData: (id: string) => Promise<arrayOfWebsites>;
     updateData: (id: string, newData: websiteObject) => Promise<arrayOfWebsites>;
+    postData: (newData: websiteObject) => Promise<arrayOfWebsites>;
     encryptData: (data: string, secretKey: string) => Promise<string>;
     decryptData: (data: string, secretKey: string) => Promise<arrayOfWebsites>;
   };
