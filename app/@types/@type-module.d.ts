@@ -21,7 +21,7 @@ type API = {
     electron: () => string;
   };
   backend: {
-    isString: (a: any) => Promise<boolean>;
+    getData: () => Promise<arrayOfWebsites>;
     generateId: () => Promise<string>;
     encryptData: (data: string, secretKey: string) => Promise<string>;
     decryptData: (data: string, secretKey: string) => Promise<arrayOfWebsites>;

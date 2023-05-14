@@ -38,6 +38,7 @@ const processVersion = {
 const backend = {
   isString: (a: any) => ipcRenderer.invoke("isString", a),
   generateId: () => ipcRenderer.invoke("generateId"),
+  getData: () => ipcRenderer.invoke("getData"),
   encryptData: (data: string, secretKey: string) => ipcRenderer.invoke("encryptData", data, secretKey),
   decryptData: (data: string, secretKey: string) => ipcRenderer.invoke("decryptData", data, secretKey),
 }

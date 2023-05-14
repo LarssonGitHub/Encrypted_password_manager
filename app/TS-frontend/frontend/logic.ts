@@ -1,5 +1,7 @@
+// @ts-nocheck
+
 import { arrayOfWebsites, websiteObject, API } from "../../@types/@type-module";
-import { websites } from "./handlers.js";
+
 
 export const getDataSetId = (target: HTMLElement) : string | null => {
   return target.getAttribute("data-website-id")

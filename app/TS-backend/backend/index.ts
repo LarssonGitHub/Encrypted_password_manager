@@ -1,10 +1,10 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import {
-  isString,
   generateId,
   encryptData,
   decryptData,
+  getData
 } from "./utility/utility";
 
 function createWindow() {
@@ -31,17 +31,14 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  ipcMain.handle("isString", (meta, arg) => isString(arg));
-
   ipcMain.handle("generateId", () => generateId());
-
   ipcMain.handle("encryptData", (meta, data: string, secretKey: string) =>
     encryptData(data, secretKey)
   );
-
   ipcMain.handle("decryptData", (meta, data: string, secretKey: string) =>
   decryptData(data, secretKey)
 );
+  ipcMain.handle("getData", () => getData());
   createWindow();
 
   app.on("activate", function () {

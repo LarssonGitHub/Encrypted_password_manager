@@ -4,25 +4,6 @@ import { appendEventListeners } from "./listeners.js";
 import { InsertIntoWebsitesArray, compileFormData, getDataSetId, removeItemWebsiteArray, updateItemWebsiteArray } from "./logic.js";
 // TODO, fix this
 
-export const websites: arrayOfWebsites = [
-  {
-    id: "ID number 1",
-    websiteInput: "name",
-    emailInput: "email",
-    usernameInput: "username",
-    passwordInput: "passwordInput",
-    additionalDataInput: "data input ",
-  },
-  {
-    id: "ID number 2",
-    websiteInput: "name",
-    emailInput: "email",
-    usernameInput: "username",
-    passwordInput: "passwordInput",
-    additionalDataInput: "data input ",
-  },
-];
-
 // TODO handle the key to the decrypt.
 const secretKey: string = "super-secret";
 
@@ -35,7 +16,7 @@ export const postHandler = async (event: SubmitEvent) => {
 };
 
 export const getHandler = async (): Promise<void | string> => {
-  // Get this from database
+  const websites: arrayOfWebsites = await window.API.backend.getData();
   const displayWebsiteList: boolean = appendListToArrayTemplate(websites);
     if (!displayWebsiteList) return "No items in the array";
   appendEventListeners();
