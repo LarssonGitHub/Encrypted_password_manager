@@ -32,7 +32,6 @@ function createWindow() {
       width: 800,
   });
 
-
   mainWindow.loadFile(path.join(__dirname, "../index.html"));
 
   mainWindow.webContents.openDevTools();
@@ -52,9 +51,9 @@ app.whenReady().then(() => {
 
   ipcMain.handle("deleteData", async (meta, objectId: string, key: string) => deleteData(objectId, key));
 
-  ipcMain.handle("updateData", (meta, id: string, newData: websiteObject, key: string) => updateData(id, newData, key));
+  ipcMain.handle("updateData", (meta, data: websiteObject, key: string) => updateData(data, key));
 
-  ipcMain.handle("postData", async (meta, newData: websiteObject, key: string) => postData(newData, key));
+  ipcMain.handle("postData", async (meta, data: websiteObject, key: string) => postData(data, key));
 
   createWindow();
 
