@@ -7,10 +7,9 @@ export const getDatabaseData = async (): Promise<string> => {
    return readfile(path.resolve(__dirname, "./db/data.txt"),"utf8");
 }
 
-export const insertDatabaseData = async (encryptedData: string): Promise<void> => {
-  if (encryptedData.length === 0 || encryptedData === "") throw "No data submitted, canceling post request"
+export const insertDatabaseData = async (encryptedData: string): Promise<boolean> => {
   const writeFile = util.promisify(fs.writeFile);
-  return writeFile(path.resolve(__dirname, "./db/data.txt"), encryptedData);
+  await writeFile(path.resolve(__dirname, "./db/data.txt"), encryptedData);
+  // Custom value, as writeFile returns nothing
+  return true
 }
-
-

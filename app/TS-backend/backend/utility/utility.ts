@@ -7,13 +7,13 @@ import {
   websiteObject,
   customResponse
 } from "../../../@types/@type-module"
+import { insertDatabaseData } from "../fileSystem";
 
 console.log("You shouldn't see this in frontend");
 
 export const generateId = () => uuidv4();
 
 export const removeItemWebsiteArray = (id: string, websitesArray: arrayOfWebsites): arrayOfWebsites => {
-  if (id === "" || id === undefined) throw "No id was found, canceling event";
   return websitesArray.filter(website => website.id !== id);
 };
 
@@ -68,6 +68,16 @@ export const sanitizeEncryptedData = (encryptedData: string, key: string): array
   if (decryptedData.length === 0 || decryptedData === "") throw createResponse(false, "Wrong passkey", null); 
   return JSON.parse(decryptedData);
 };
+
+export const encryptAndInsertDatabaseData = async(encryptedData: string, key: string): Promise<boolean> => {
+  const encryptUpdatedData: string = encryptData(JSON.stringify(encryptedData), key)
+  if ((!encryptUpdatedData || encryptUpdatedData.length === 0 )) 
+      throw createResponse(false, "No data found for writting to db, canceling delete request", null);
+  const updatedDatabase: boolean = await insertDatabaseData(encryptedData)
+  if (!updatedDatabase) 
+      throw createResponse(false, "Couldn't write to Database", null);
+  return true
+}
 
 export const createResponse = (success: boolean, message: string, data ? : string | arrayOfWebsites | websiteObject | null | undefined): customResponse => {
   return {
