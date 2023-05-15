@@ -7,7 +7,7 @@ import {
   websiteObject,
   customResponse
 } from "../../../@types/@type-module"
-import { insertDatabaseData } from "../fileSystem";
+import { insertDatabaseData, getDatabaseData } from "../fileSystem";
 
 console.log("You shouldn't see this in frontend");
 
@@ -26,16 +26,16 @@ export const createAndAppendId = (dataEntries: websiteObject) => {
   };
 }
 
-export const updateItemWebsiteArray = (newData: websiteObject, websitesArray: arrayOfWebsites): arrayOfWebsites => {
-  return websitesArray.map((websitesArray) => (websitesArray.id === newData.id ? {
+export const updateItemWebsiteArray = (data: websiteObject, websitesArray: arrayOfWebsites): arrayOfWebsites => {
+  return websitesArray.map((websitesArray) => (websitesArray.id === data.id ? {
       ...websitesArray,
-      ...newData
+      ...data
   } : websitesArray))
 };
 
-export const InsertIntoWebsitesArray = ( newData: websiteObject, websitesArray: arrayOfWebsites): arrayOfWebsites => {
+export const InsertIntoWebsitesArray = ( data: websiteObject, websitesArray: arrayOfWebsites): arrayOfWebsites => {
   return [...websitesArray,
-      newData
+      data
   ];
 };
 
@@ -70,11 +70,23 @@ export const sanitizeEncryptedData = (encryptedData: string, key: string): array
 export const encryptAndInsertDatabaseData = async(data: arrayOfWebsites, key: string): Promise<boolean> => {
   const encryptedData: string = encryptData(JSON.stringify(data), key)
   if ((!encryptedData || encryptedData.length === 0 )) 
-      throw createResponse(false, "No data found for writing to db, canceling request", null);
+      throw createResponse(false, "No data for database submitted, canceling request", null);
   const updatedDatabase: boolean = await insertDatabaseData(encryptedData)
   if (!updatedDatabase) 
       throw createResponse(false, "Couldn't write to Database", null);
   return true
+}
+
+export const getDataFromDatabaseAndSanitize = async (key :string): Promise<null | arrayOfWebsites> =>  {
+    if (!key || key.length === 0)
+      throw createResponse(false, "No key was submitted")
+  const encryptedData: string = await getDatabaseData();
+    if (!encryptedData || encryptedData.length === 0) 
+      return null
+  const decryptedData: arrayOfWebsites = sanitizeEncryptedData(encryptedData, key);
+    if (!Array.isArray(decryptedData))
+      throw createResponse(false, "The data from database wasn't an array or JSON, canceling put request", null);
+  return decryptedData
 }
 
 export const createResponse = (success: boolean, message: string, data ? : string | arrayOfWebsites | websiteObject | null | undefined): customResponse => {
