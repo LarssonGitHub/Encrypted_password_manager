@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
-import { websiteObject } from "../../@types/@type-module";
+import { customResponse, websiteObject } from "../../@types/@type-module";
+import { promises } from "original-fs";
 
 window.addEventListener("DOMContentLoaded", () => {
   console.log("hi")
@@ -18,18 +19,6 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// contextBridge.exposeInMainWorld("versions", {
-//   node: (): string => process.versions.node,
-//   chrome: (): string => process.versions.chrome,
-//   electron: (): string => process.versions.electron,
-// });
-
-// //  With ipcRender, turns into a promise
-// contextBridge.exposeInMainWorld("save", {
-//   isString: (a: any) => ipcRenderer.invoke("isString", a),
-//   generateId: () => ipcRenderer.invoke("generateId"),
-// });
-
 const processVersion = {
   node: (): string  => process.versions.node,
   chrome: (): string  => process.versions.chrome,
@@ -38,10 +27,10 @@ const processVersion = {
 
 const backend = {
   generateId: () => ipcRenderer.invoke("generateId"),
-  getData: () => ipcRenderer.invoke("getData"),
-  deleteData: (id: string) => ipcRenderer.invoke("deleteData", id),
-  updateData: (id: string, newData: websiteObject) => ipcRenderer.invoke("updateData", id, newData),
-  postData: (newData: websiteObject) => ipcRenderer.invoke("postData", newData),
+  getData: (): Promise<customResponse> => ipcRenderer.invoke("getData"),
+  deleteData: (id: string, key: string): Promise<customResponse> => ipcRenderer.invoke("deleteData", id, key),
+  updateData: (id: string, newData: websiteObject): Promise<customResponse> => ipcRenderer.invoke("updateData", id, newData),
+  postData: (newData: websiteObject, key: string):  Promise<customResponse> => ipcRenderer.invoke("postData", newData, key),
   encryptData: (data: string, secretKey: string) => ipcRenderer.invoke("encryptData", data, secretKey),
   decryptData: (data: string, secretKey: string) => ipcRenderer.invoke("decryptData", data, secretKey),
 }

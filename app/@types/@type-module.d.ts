@@ -27,12 +27,12 @@ export type API = {
     electron: () => string;
   };
   backend: {
+    generateId: () => Promise < any > ;
     getData: () => Promise < customResponse > ;
-    generateId: () => Promise < string > ;
-    deleteData: (id: string) => Promise < customResponse > ;
+    deleteData: (id: string, key: string) => Promise < customResponse > ;
     updateData: (id: string, newData: websiteObject) => Promise < customResponse > ;
-    postData: (newData: websiteObject) => Promise < customResponse > ;
-    encryptData: (data: string, secretKey: string) => Promise < string > ;
-    decryptData: (data: string, secretKey: string) => Promise < arrayOfWebsites > ;
+    postData: (newData: websiteObject, key: string) => Promise < customResponse > ;
+    encryptData: (data: string, secretKey: string) => Promise < customResponse > ;
+    decryptData: (data: string, secretKey: string) => Promise < customResponse > ;
   };
 }

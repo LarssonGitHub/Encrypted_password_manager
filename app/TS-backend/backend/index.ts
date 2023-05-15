@@ -14,7 +14,7 @@ import {
 } from "./utility/utility";
 import {
   getData,
-  updateData,
+  // updateData,
   postData,
   deleteData
 } from "./dataHandlers";
@@ -48,13 +48,13 @@ app.whenReady().then(() => {
   ipcMain.handle("decryptData", (meta, data: string, secretKey: string) =>
       decryptData(data, secretKey)
   );
-  ipcMain.handle("getData", () => getData());
+  ipcMain.handle("getData", async (meta, key: string) => getData(key));
 
-  ipcMain.handle("deleteData", (meta, id: string) => deleteData(id));
+  ipcMain.handle("deleteData", async (meta, objectId: string, key: string) => deleteData(objectId, key));
 
-  ipcMain.handle("updateData", (meta, id: string, newData: websiteObject) => updateData(id, newData));
+  // ipcMain.handle("updateData", (meta, id: string, newData: websiteObject) => updateData(id, newData));
 
-  ipcMain.handle("postData", (meta, newData: websiteObject) => postData(newData));
+  ipcMain.handle("postData", async (meta, newData: websiteObject, key: string) => postData(newData, key));
 
   createWindow();
 
