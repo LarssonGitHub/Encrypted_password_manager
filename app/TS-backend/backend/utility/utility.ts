@@ -34,7 +34,7 @@ export const updateItemWebsiteArray = (websitesArray: arrayOfWebsites, newData: 
   } : websitesArray))
 };
 
-export const InsertIntoWebsitesArray = (websitesArray: arrayOfWebsites, newData: websiteObject): arrayOfWebsites => {
+export const InsertIntoWebsitesArray = ( newData: websiteObject, websitesArray: arrayOfWebsites): arrayOfWebsites => {
   if (newData.id === "") throw "No id was set, canceling event";
   return [...websitesArray,
       newData
@@ -69,10 +69,10 @@ export const sanitizeEncryptedData = (encryptedData: string, key: string): array
   return JSON.parse(decryptedData);
 };
 
-export const encryptAndInsertDatabaseData = async(encryptedData: string, key: string): Promise<boolean> => {
-  const encryptUpdatedData: string = encryptData(JSON.stringify(encryptedData), key)
-  if ((!encryptUpdatedData || encryptUpdatedData.length === 0 )) 
-      throw createResponse(false, "No data found for writting to db, canceling delete request", null);
+export const encryptAndInsertDatabaseData = async(data: arrayOfWebsites, key: string): Promise<boolean> => {
+  const encryptedData: string = encryptData(JSON.stringify(data), key)
+  if ((!encryptedData || encryptedData.length === 0 )) 
+      throw createResponse(false, "No data found for writing to db, canceling request", null);
   const updatedDatabase: boolean = await insertDatabaseData(encryptedData)
   if (!updatedDatabase) 
       throw createResponse(false, "Couldn't write to Database", null);
