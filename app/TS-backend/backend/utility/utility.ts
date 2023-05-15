@@ -1,6 +1,12 @@
-import { v4 as uuidv4 } from "uuid";
+import {
+  v4 as uuidv4
+} from "uuid";
 import CryptoJS from "crypto-js";
-import { arrayOfWebsites, websiteObject, customResponse } from "../../../@types/@type-module"
+import {
+  arrayOfWebsites,
+  websiteObject,
+  customResponse
+} from "../../../@types/@type-module"
 
 console.log("You shouldn't see this in frontend");
 
@@ -13,33 +19,36 @@ export const removeItemWebsiteArray = (id: string, websitesArray: arrayOfWebsite
 
 export const createAndAppendId = (dataEntries: websiteObject) => {
   const generatedId: string = uuidv4();
+  if (generatedId === "") throw "No id could be generated, canceling event";
   return {
-    ...dataEntries,
-    id: generatedId,
+      ...dataEntries,
+      id: generatedId,
   };
 }
 
-export const updateItemWebsiteArray = (id: string, websitesArray: arrayOfWebsites, newData: websiteObject): arrayOfWebsites => {
+export const updateItemWebsiteArray = (websitesArray: arrayOfWebsites, newData: websiteObject): arrayOfWebsites => {
   if (newData.id === "") throw "No id was found, canceling event";
-  return websitesArray.map((websitesArray) => (websitesArray.id === newData.id ? { ...websitesArray, ...newData } : websitesArray))
+  return websitesArray.map((websitesArray) => (websitesArray.id === newData.id ? {
+      ...websitesArray,
+      ...newData
+  } : websitesArray))
 };
 
-export const InsertIntoWebsitesArray = ( websitesArray: arrayOfWebsites, newData: websiteObject): arrayOfWebsites => {
+export const InsertIntoWebsitesArray = (websitesArray: arrayOfWebsites, newData: websiteObject): arrayOfWebsites => {
   if (newData.id === "") throw "No id was set, canceling event";
-  return [...websitesArray, 
-    newData
+  return [...websitesArray,
+      newData
   ];
 };
 
 export const encryptData = (data: string, secretKey: string): string => {
   const encrypt: CryptoJS.lib.CipherParams = CryptoJS.AES.encrypt(
-   data,
-    secretKey,
-    {
-      iv: CryptoJS.enc.Hex.parse("be410fea41df7162a679875ec131cf2c"),
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    }
+      data,
+      secretKey, {
+          iv: CryptoJS.enc.Hex.parse("be410fea41df7162a679875ec131cf2c"),
+          mode: CryptoJS.mode.CBC,
+          padding: CryptoJS.pad.Pkcs7,
+      }
   );
   // TODO, throw Error when implementing error handling
   if (encrypt === undefined) return "ERROR";
@@ -49,18 +58,17 @@ export const encryptData = (data: string, secretKey: string): string => {
 export const decryptData = (
   encryptedData: string,
   secretKey: string
-): arrayOfWebsites => {
+): string => {
   let decrypt = CryptoJS.AES.decrypt(encryptedData, secretKey);
-  const decryptedData = decrypt.toString(CryptoJS.enc.Utf8);
-    // TODO, throw Error, wrong key when implementing error handling
-  if (decryptedData.length === 0 || decryptedData === undefined) throw "Wrong passkey";
-  return JSON.parse(decryptedData);
+  return decrypt.toString(CryptoJS.enc.Utf8);
 };
 
-export const createResponse = (success: boolean, message: string, data?: string | arrayOfWebsites | websiteObject | null | undefined): customResponse => {
+export const createResponse = (success: boolean, message: string, data ? : string | arrayOfWebsites | websiteObject | null | undefined): customResponse => {
   return {
-    success: success,
-    message: message,
-    ...((data !== null && data !== undefined) && {data})
+      success: success,
+      message: message,
+      ...((data !== null && data !== undefined) && {
+          data
+      })
   }
 }
