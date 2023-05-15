@@ -26,8 +26,7 @@ export const createAndAppendId = (dataEntries: websiteObject) => {
   };
 }
 
-export const updateItemWebsiteArray = (websitesArray: arrayOfWebsites, newData: websiteObject): arrayOfWebsites => {
-  if (newData.id === "") throw "No id was found, canceling event";
+export const updateItemWebsiteArray = (newData: websiteObject, websitesArray: arrayOfWebsites): arrayOfWebsites => {
   return websitesArray.map((websitesArray) => (websitesArray.id === newData.id ? {
       ...websitesArray,
       ...newData
@@ -35,7 +34,6 @@ export const updateItemWebsiteArray = (websitesArray: arrayOfWebsites, newData: 
 };
 
 export const InsertIntoWebsitesArray = ( newData: websiteObject, websitesArray: arrayOfWebsites): arrayOfWebsites => {
-  if (newData.id === "") throw "No id was set, canceling event";
   return [...websitesArray,
       newData
   ];
@@ -80,6 +78,7 @@ export const encryptAndInsertDatabaseData = async(data: arrayOfWebsites, key: st
 }
 
 export const createResponse = (success: boolean, message: string, data ? : string | arrayOfWebsites | websiteObject | null | undefined): customResponse => {
+  if (!success) console.log("error ", message) 
   return {
       success: success,
       message: message,
