@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import CryptoJS from "crypto-js";
-import { arrayOfWebsites, websiteObject } from "../../../@types/@type-module"
+import { arrayOfWebsites, websiteObject, customResponse } from "../../../@types/@type-module"
 
 console.log("You shouldn't see this in frontend");
 
@@ -31,162 +31,6 @@ export const InsertIntoWebsitesArray = ( websitesArray: arrayOfWebsites, newData
   ];
 };
 
-export const getData = (): arrayOfWebsites => {
-  // Placeholder for db
-  return [
-    {
-      id: "ID number 1",
-      websiteInput: "name 1",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 2",
-      websiteInput: "name 2",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 3",
-      websiteInput: "name 3",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 4",
-      websiteInput: "name 4",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-  ];
-}
-
-export const postData = (newData: websiteObject): arrayOfWebsites => {
-  // Placeholder for db
-  const websites = [
-    {
-      id: "ID number 1",
-      websiteInput: "name 1",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 2",
-      websiteInput: "name 2",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 3",
-      websiteInput: "name 3",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 4",
-      websiteInput: "name 4",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-  ];
-  const NewDataId: websiteObject = createAndAppendId(newData)
-  return  InsertIntoWebsitesArray(websites, NewDataId)
-}
-
-export const deleteData = (id: string): arrayOfWebsites => {
-  // Placeholder for db
-  const websites = [
-    {
-      id: "ID number 1",
-      websiteInput: "name 1",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 2",
-      websiteInput: "name 2",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 3",
-      websiteInput: "name 3",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 4",
-      websiteInput: "name 4",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-  ];
-  return removeItemWebsiteArray(id, websites)
-}
-
-export const updateData = (id: string, newData: websiteObject): arrayOfWebsites => {
-  // Placeholder for db
-  const websites = [
-    {
-      id: "ID number 1",
-      websiteInput: "name 1",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 2",
-      websiteInput: "name 2",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 3",
-      websiteInput: "name 3",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-    {
-      id: "ID number 4",
-      websiteInput: "name 4",
-      emailInput: "email",
-      usernameInput: "username",
-      passwordInput: "passwordInput",
-      additionalDataInput: "data input ",
-    },
-  ];
-  return updateItemWebsiteArray(id, websites, newData)
-}
-
 export const encryptData = (data: string, secretKey: string): string => {
   const encrypt: CryptoJS.lib.CipherParams = CryptoJS.AES.encrypt(
    data,
@@ -205,10 +49,10 @@ export const encryptData = (data: string, secretKey: string): string => {
 export const decryptData = (
   encryptedData: string,
   secretKey: string
-): [] | string => {
+): arrayOfWebsites => {
   let decrypt = CryptoJS.AES.decrypt(encryptedData, secretKey);
-  const sanitize = decrypt.toString(CryptoJS.enc.Utf8);
+  const decryptedData = decrypt.toString(CryptoJS.enc.Utf8);
     // TODO, throw Error, wrong key when implementing error handling
-  if (sanitize === "" || sanitize === undefined) return "Wrong passkey";
-  return JSON.parse(sanitize);
+  if (decryptedData.length === 0 || decryptedData === undefined) throw "Wrong passkey";
+  return JSON.parse(decryptedData);
 };
