@@ -42,7 +42,7 @@ export const deleteData = async (objectId: string, key: string): Promise < custo
         throw createResponse(false, "Couldn't update the data, canceling delete request", null);
   const updatedDatabase: boolean = await encryptAndInsertDatabaseData(updatedData, key)
     if (!updatedDatabase)
-        throw createResponse(false, "Couldn't write to Database", null);
+        throw createResponse(false, "Couldn't write to database", null);
   return createResponse(true, "Delete request successful", updatedData);
 }
 
@@ -56,11 +56,32 @@ export const postData = async (postData: websiteObject, key: string): Promise < 
   const decryptedData: arrayOfWebsites | [] = encryptedData.length > 0 ? sanitizeEncryptedData(encryptedData, key) : []
     if (!Array.isArray(decryptedData))
         throw createResponse(false, "The data from database wasn't an array, canceling post request", null);
-  const postedData: arrayOfWebsites = InsertIntoWebsitesArray(updatePostDataId, decryptedData)
-    if (!Array.isArray(postedData))
+  const compiledData: arrayOfWebsites = InsertIntoWebsitesArray(updatePostDataId, decryptedData)
+    if (!Array.isArray(compiledData))
         throw createResponse(false, "Couldn't update the data, canceling post request", null);
-  const updatedDatabase: boolean = await encryptAndInsertDatabaseData(postedData, key)
+  const updatedDatabase: boolean = await encryptAndInsertDatabaseData(compiledData, key)
     if (!updatedDatabase)
-        throw createResponse(false, "Couldn't write to Database", null);
-  return createResponse(true, "Post request successful", postedData);
+        throw createResponse(false, "Couldn't write to database", null);
+  return createResponse(true, "Post request successful", compiledData);
+}
+
+export const updateData = async (objectId: string, putData: websiteObject, key: string): Promise < customResponse > => {
+    if (!putData || Object.values(putData).every(x => x === null || x === ''))
+        throw createResponse(false, "No data was submitted")
+  const updatePutDataId: websiteObject = createAndAppendId(putData);
+    if (!key || key.length === 0)
+        throw createResponse(false, "No key was submitted")
+  const encryptedData: string = await getDatabaseData();
+    if (encryptedData.length === 0)
+        throw createResponse(false, "Your database is empty, canceling put request", null);
+  const decryptedData: arrayOfWebsites = sanitizeEncryptedData(encryptedData, key);
+    if (!Array.isArray(decryptedData))
+        throw createResponse(false, "The data from database wasn't an array, canceling put request", null);
+  const compiledData: arrayOfWebsites = updateItemWebsiteArray(updatePutDataId, decryptedData);
+    if (!Array.isArray(compiledData))
+        throw createResponse(false, "Couldn't update the data, canceling put request", null);
+  const updatedDatabase: boolean = await encryptAndInsertDatabaseData(compiledData, key)
+    if (!updatedDatabase)
+        throw createResponse(false, "Couldn't write to database", null);
+  return createResponse(true, "Post request successful", compiledData);
 }

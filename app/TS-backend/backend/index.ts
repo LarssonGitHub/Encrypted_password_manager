@@ -14,7 +14,7 @@ import {
 } from "./utility/utility";
 import {
   getData,
-  // updateData,
+  updateData,
   postData,
   deleteData
 } from "./dataHandlers";
@@ -52,7 +52,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle("deleteData", async (meta, objectId: string, key: string) => deleteData(objectId, key));
 
-  // ipcMain.handle("updateData", (meta, id: string, newData: websiteObject) => updateData(id, newData));
+  ipcMain.handle("updateData", (meta, id: string, newData: websiteObject, key: string) => updateData(id, newData, key));
 
   ipcMain.handle("postData", async (meta, newData: websiteObject, key: string) => postData(newData, key));
 
