@@ -56,3 +56,11 @@ export const decryptData = (
   if (decryptedData.length === 0 || decryptedData === undefined) throw "Wrong passkey";
   return JSON.parse(decryptedData);
 };
+
+export const createResponse = (success: boolean, message: string, data?: string | arrayOfWebsites | websiteObject | null | undefined): customResponse => {
+  return {
+    success: success,
+    message: message,
+    ...((data !== null && data !== undefined) && {data})
+  }
+}
