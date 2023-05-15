@@ -41,10 +41,10 @@ export const InsertIntoWebsitesArray = (websitesArray: arrayOfWebsites, newData:
   ];
 };
 
-export const encryptData = (data: string, secretKey: string): string => {
+export const encryptData = (data: string, key: string): string => {
   const encrypt: CryptoJS.lib.CipherParams = CryptoJS.AES.encrypt(
       data,
-      secretKey, {
+      key, {
           iv: CryptoJS.enc.Hex.parse("be410fea41df7162a679875ec131cf2c"),
           mode: CryptoJS.mode.CBC,
           padding: CryptoJS.pad.Pkcs7,
@@ -57,10 +57,16 @@ export const encryptData = (data: string, secretKey: string): string => {
 
 export const decryptData = (
   encryptedData: string,
-  secretKey: string
+  key: string
 ): string => {
-  let decrypt = CryptoJS.AES.decrypt(encryptedData, secretKey);
+  let decrypt = CryptoJS.AES.decrypt(encryptedData, key);
   return decrypt.toString(CryptoJS.enc.Utf8);
+};
+
+export const sanitizeEncryptedData = (encryptedData: string, key: string): arrayOfWebsites => {
+  const decryptedData: string = decryptData(encryptedData, key)
+  if (decryptedData.length === 0 || decryptedData === "") throw createResponse(false, "Wrong passkey", null); 
+  return JSON.parse(decryptedData);
 };
 
 export const createResponse = (success: boolean, message: string, data ? : string | arrayOfWebsites | websiteObject | null | undefined): customResponse => {
