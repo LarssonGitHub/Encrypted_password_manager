@@ -20,13 +20,13 @@ import {
 } from "./dataHandlers";
 
 function createWindow() {
-  console.log(__dirname, "preload.js");
+  console.log(__dirname, "bridge.js");
   // Create the browser window.
   const mainWindow = new BrowserWindow({
       height: 600,
       webPreferences: {
           contextIsolation: true,
-          preload: path.join(__dirname, "preload.js"),
+          preload: path.join(__dirname, "bridge.js"),
           nodeIntegration: false,
       },
       width: 800,
