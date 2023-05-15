@@ -1,9 +1,9 @@
-interface searchQueryBody {
+export interface searchQueryBody {
   title: string;
   desc: string;
 }
 
-interface websiteObject {
+export interface websiteObject {
   id: string;
   websiteInput: string;
   emailInput: string;
@@ -12,24 +12,27 @@ interface websiteObject {
   additionalDataInput: string;
 }
 
+export interface customResponse {
+  success: boolean;
+  message: string;
+  data ? : string | arrayOfWebsites | websiteObject
+}
 
-type arrayOfWebsites = websiteObject[];
+export type arrayOfWebsites = websiteObject[];
 
-type API = {
+export type API = {
   processVersion: {
     node: () => string;
     chrome: () => string;
     electron: () => string;
   };
   backend: {
-    getData: () => Promise<arrayOfWebsites>;
-    generateId: () => Promise<string>;
-    deleteData: (id: string) => Promise<arrayOfWebsites>;
-    updateData: (id: string, newData: websiteObject) => Promise<arrayOfWebsites>;
-    postData: (newData: websiteObject) => Promise<arrayOfWebsites>;
-    encryptData: (data: string, secretKey: string) => Promise<string>;
-    decryptData: (data: string, secretKey: string) => Promise<arrayOfWebsites>;
+    getData: () => Promise < customResponse > ;
+    generateId: () => Promise < string > ;
+    deleteData: (id: string) => Promise < customResponse > ;
+    updateData: (id: string, newData: websiteObject) => Promise < customResponse > ;
+    postData: (newData: websiteObject) => Promise < customResponse > ;
+    encryptData: (data: string, secretKey: string) => Promise < string > ;
+    decryptData: (data: string, secretKey: string) => Promise < arrayOfWebsites > ;
   };
 }
-
-export { arrayOfWebsites, API, websiteObject, searchQueryBody };
