@@ -27,10 +27,10 @@ const processVersion = {
 
 const backend = {
   generateId: () => ipcRenderer.invoke("generateId"),
-  getData: (): Promise<customResponse> => ipcRenderer.invoke("getData"),
+  getData: (key: string): Promise<customResponse> => ipcRenderer.invoke("getData", key),
   deleteData: (id: string, key: string): Promise<customResponse> => ipcRenderer.invoke("deleteData", id, key),
-  updateData: (id: string, newData: websiteObject): Promise<customResponse> => ipcRenderer.invoke("updateData", id, newData),
-  postData: (newData: websiteObject, key: string):  Promise<customResponse> => ipcRenderer.invoke("postData", newData, key),
+  updateData: (id: string, putData: websiteObject, key: string): Promise<customResponse> => ipcRenderer.invoke("updateData", id, putData, key),
+  postData: (postData: websiteObject, key: string):  Promise<customResponse> => ipcRenderer.invoke("postData", postData, key),
   encryptData: (data: string, secretKey: string) => ipcRenderer.invoke("encryptData", data, secretKey),
   decryptData: (data: string, secretKey: string) => ipcRenderer.invoke("decryptData", data, secretKey),
 }
