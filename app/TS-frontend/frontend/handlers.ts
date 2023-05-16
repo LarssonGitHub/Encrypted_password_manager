@@ -1,4 +1,4 @@
-import { arrayOfWebsites, customResponse, websiteObject } from "../../@types/@type-module";
+import { userCredentialsArray, customResponse, userCredentialObject } from "../../@types/@type-module";
 import { compileFormData, getDataSetId, editDocument } from "./logic.js";
 
 // TODO handle the key to the decrypt.
@@ -8,7 +8,7 @@ const logMessage = (message: string | undefined): void => {
   console.log("The request finished. ", message === undefined ? "" : ` Message: ${message}`)
 }
 
-const sanitizeResponse = (response: customResponse): arrayOfWebsites | void => {
+const sanitizeResponse = (response: customResponse): userCredentialsArray | void => {
   // As of now, response.success will always be reported as true from the backend.
   // The error handler will catch any unsuccessful requests, remove this or change as needed.
   if (!response.success) throw new Error("Undefined error, response couldn't be completed")
@@ -18,7 +18,7 @@ const sanitizeResponse = (response: customResponse): arrayOfWebsites | void => {
 }
 
 export const postHandler = async (event: SubmitEvent) => {
-  const compiledData: websiteObject = await compileFormData(event.target as HTMLFormElement);
+  const compiledData: userCredentialObject = await compileFormData(event.target as HTMLFormElement);
   const backendResponse: customResponse = await window.API.backend.postData(compiledData, key);
   const sanitizedData = sanitizeResponse(backendResponse)
   editDocument(sanitizedData)
@@ -40,7 +40,7 @@ export const deleteItemHandler = async (event: MouseEvent):  Promise<void> => {
 };
 
 // Placeholder
-const updateData: websiteObject = {
+const updateData: userCredentialObject = {
   id: "random id",
   websiteInput: "New name",
   emailInput: "new email",

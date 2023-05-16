@@ -1,7 +1,7 @@
 import { CustomError } from "./middleware/errorListener.js";
 import { removeListData, appendListToArrayTemplate } from "./renderer.js";
 import { appendEventListeners } from "./listeners.js";
-import {arrayOfWebsites, websiteObject } from "../../@types/@type-module";
+import {userCredentialsArray, userCredentialObject } from "../../@types/@type-module";
 
 
 export const getDataSetId = (target: HTMLElement) : string => {
@@ -10,12 +10,12 @@ export const getDataSetId = (target: HTMLElement) : string => {
   return id;
 }
 
-export const compileFormData = async (form: HTMLFormElement): Promise<websiteObject> => {
-  const extractedData = new FormData(form) as unknown as Iterable<[websiteObject, FormDataEntryValue]>;
+export const compileFormData = async (form: HTMLFormElement): Promise<userCredentialObject> => {
+  const extractedData = new FormData(form) as unknown as Iterable<[userCredentialObject, FormDataEntryValue]>;
   return Object.fromEntries(extractedData);
 };
 
-export const editDocument = (data: arrayOfWebsites | void) => {
+export const editDocument = (data: userCredentialsArray | void) => {
   removeListData()
   appendListToArrayTemplate(data);
   appendEventListeners();

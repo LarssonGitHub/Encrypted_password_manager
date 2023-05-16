@@ -3,7 +3,7 @@ export interface searchQueryBody {
   desc: string;
 }
 
-export interface websiteObject {
+export interface userCredentialObject {
   id: string;
   websiteInput: string;
   emailInput: string;
@@ -15,7 +15,7 @@ export interface websiteObject {
 export interface customResponse {
   success: boolean;
   message: string;
-  data ? : arrayOfWebsites 
+  data ? : userCredentialsArray 
 }
 
 // Add more keys to the cause as needed
@@ -23,7 +23,7 @@ export interface customErrorCause {
   data?: any;
 }
 
-export type arrayOfWebsites = websiteObject[];
+export type userCredentialsArray = userCredentialObject[];
 
 export type API = {
   processVersion: {
@@ -35,8 +35,8 @@ export type API = {
     generateId: () => Promise<any>;
     getData: (key: string) => Promise<customResponse>;
     deleteData: (id: string, key: string) => Promise<customResponse>;
-    updateData: (putData: websiteObject, key: string) => Promise<customResponse>;
-    postData: (postData: websiteObject, key: string) => Promise<customResponse>;
+    updateData: (putData: userCredentialObject, key: string) => Promise<customResponse>;
+    postData: (postData: userCredentialObject, key: string) => Promise<customResponse>;
     encryptData: (data: string, secretKey: string) => Promise < customResponse >;
     decryptData: (data: string, secretKey: string) => Promise < customResponse >;
   };

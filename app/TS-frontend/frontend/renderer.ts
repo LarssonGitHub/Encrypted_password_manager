@@ -1,4 +1,4 @@
-import { API, arrayOfWebsites } from "../../@types/@type-module";
+import { API, userCredentialsArray } from "../../@types/@type-module";
 
 console.log(`This app is using Chrome (v${window.API.processVersion.chrome()}), Node.js (v${window.API.processVersion.node()}), and Electron (v${window.API.processVersion.electron()})`);
 
@@ -18,7 +18,7 @@ export const removeListData = () => {
 }
 }
 
-export const appendListToArrayTemplate = ( websites: arrayOfWebsites | void): void => {
+export const appendListToArrayTemplate = ( websites: userCredentialsArray | void): void => {
   if (!websites || typeof websites !== 'object') return;
   const clone = template.content.cloneNode(true) as DocumentFragment;
   const listElement = clone.getElementById("list-data-unordered-list") as HTMLUListElement;

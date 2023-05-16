@@ -1,7 +1,7 @@
 import {
     customResponse,
-    arrayOfWebsites,
-    websiteObject
+    userCredentialsArray,
+    userCredentialObject
 } from "../../../@types/@type-module";
 
 // TODO further develop error handler

@@ -3,8 +3,8 @@ import {
 } from "uuid";
 import CryptoJS from "crypto-js";
 import {
-  arrayOfWebsites,
-  websiteObject,
+  userCredentialsArray,
+  userCredentialObject,
   customResponse
 } from "../../../@types/@type-module"
 import { insertDatabaseData, getDatabaseData } from "../fileSystem";
@@ -13,11 +13,11 @@ console.log("You shouldn't see this in frontend");
 
 export const generateId = () => uuidv4();
 
-export const removeItemWebsiteArray = (id: string, websitesArray: arrayOfWebsites): arrayOfWebsites => {
+export const removeItemWebsiteArray = (id: string, websitesArray: userCredentialsArray): userCredentialsArray => {
   return websitesArray.filter(website => website.id !== id);
 };
 
-export const createAndAppendId = (dataEntries: websiteObject) => {
+export const createAndAppendId = (dataEntries: userCredentialObject) => {
   const generatedId: string = uuidv4();
   if (generatedId === "") throw new Error("No id could be created, canceling request");
   return {
@@ -26,8 +26,8 @@ export const createAndAppendId = (dataEntries: websiteObject) => {
   };
 }
 
-export const updateItemWebsiteArray = (object: websiteObject, websitesArray: arrayOfWebsites): arrayOfWebsites => {
-  const exists: arrayOfWebsites | [] = websitesArray.filter(website => website.id === object.id);
+export const updateItemWebsiteArray = (object: userCredentialObject, websitesArray: userCredentialsArray): userCredentialsArray => {
+  const exists: userCredentialsArray | [] = websitesArray.filter(website => website.id === object.id);
   if (exists.length === 0) throw new Error("No id could be matched, canceling request");
   return websitesArray.map((websitesArray) => (websitesArray.id === object.id ? {
       ...websitesArray,
@@ -35,7 +35,7 @@ export const updateItemWebsiteArray = (object: websiteObject, websitesArray: arr
   } : websitesArray))
 };
 
-export const InsertIntoWebsitesArray = ( data: websiteObject, websitesArray: arrayOfWebsites): arrayOfWebsites => {
+export const InsertIntoWebsitesArray = ( data: userCredentialObject, websitesArray: userCredentialsArray): userCredentialsArray => {
   return [...websitesArray,
       data
   ];
@@ -67,13 +67,13 @@ export const decryptData = (
   return decrypt.toString(CryptoJS.enc.Utf8);
 };
 
-export const sanitizeEncryptedData = (encryptedData: string, key: string): arrayOfWebsites => {
+export const sanitizeEncryptedData = (encryptedData: string, key: string): userCredentialsArray => {
   const decryptedData: string = decryptData(encryptedData, key)
   if (decryptedData.length === 0 || decryptedData === "") throw new Error("Wrong passkey"); 
   return JSON.parse(decryptedData);
 };
 
-export const encryptAndInsertDatabaseData = async(data: arrayOfWebsites, key: string): Promise<boolean> => {
+export const encryptAndInsertDatabaseData = async(data: userCredentialsArray, key: string): Promise<boolean> => {
   const encryptedData: string = encryptData(JSON.stringify(data), key)
   if ((!encryptedData || encryptedData.length === 0 )) 
       throw new Error("No data for database submitted, canceling request");
@@ -83,19 +83,19 @@ export const encryptAndInsertDatabaseData = async(data: arrayOfWebsites, key: st
   return true
 }
 
-export const getDataFromDatabaseAndSanitize = async (key :string): Promise<null | arrayOfWebsites> =>  {
+export const getDataFromDatabaseAndSanitize = async (key :string): Promise<null | userCredentialsArray> =>  {
     if (!key || key.length === 0)
       throw new Error("No key was submitted")
   const encryptedData: string = await getDatabaseData();
     if (!encryptedData || encryptedData.length === 0) 
       return null
-  const decryptedData: arrayOfWebsites = sanitizeEncryptedData(encryptedData, key);
+  const decryptedData: userCredentialsArray = sanitizeEncryptedData(encryptedData, key);
     if (!Array.isArray(decryptedData))
       throw new Error("The data from database wasn't an array or JSON, canceling put request");
   return decryptedData
 }
 
-export const createResponse = (message: string, data: arrayOfWebsites | null): customResponse => {
+export const createResponse = (message: string, data: userCredentialsArray | null): customResponse => {
   return {
       success: true,
       message: message,

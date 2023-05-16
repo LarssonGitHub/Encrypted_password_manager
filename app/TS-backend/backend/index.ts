@@ -1,5 +1,5 @@
 import {
-  websiteObject
+  userCredentialObject
 } from "../../@types/@type-module"
 import {
   app,
@@ -51,9 +51,9 @@ app.whenReady().then(() => {
 
   ipcMain.handle("deleteData", async (meta, objectId: string, key: string) => deleteData(objectId, key));
 
-  ipcMain.handle("updateData", (meta, data: websiteObject, key: string) => updateData(data, key));
+  ipcMain.handle("updateData", (meta, data: userCredentialObject, key: string) => updateData(data, key));
 
-  ipcMain.handle("postData", async (meta, data: websiteObject, key: string) => postData(data, key));
+  ipcMain.handle("postData", async (meta, data: userCredentialObject, key: string) => postData(data, key));
 
   createWindow();
 
