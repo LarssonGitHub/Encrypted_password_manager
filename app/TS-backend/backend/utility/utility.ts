@@ -26,10 +26,12 @@ export const createAndAppendId = (dataEntries: websiteObject) => {
   };
 }
 
-export const updateItemWebsiteArray = (data: websiteObject, websitesArray: arrayOfWebsites): arrayOfWebsites => {
-  return websitesArray.map((websitesArray) => (websitesArray.id === data.id ? {
+export const updateItemWebsiteArray = (object: websiteObject, websitesArray: arrayOfWebsites): arrayOfWebsites => {
+  const exists: arrayOfWebsites | [] = websitesArray.filter(website => website.id === object.id);
+  if (exists.length === 0) throw new Error("No id could be matched, canceling request");
+  return websitesArray.map((websitesArray) => (websitesArray.id === object.id ? {
       ...websitesArray,
-      ...data
+      ...object
   } : websitesArray))
 };
 
@@ -39,6 +41,9 @@ export const InsertIntoWebsitesArray = ( data: websiteObject, websitesArray: arr
   ];
 };
 
+// https://crypto.stackexchange.com/questions/52633/is-there-a-practical-way-to-crack-an-aes-encryption-password
+
+// TODO ID generate hex?
 export const encryptData = (data: string, key: string): string => {
   const encrypt: CryptoJS.lib.CipherParams = CryptoJS.AES.encrypt(
       data,
@@ -58,6 +63,7 @@ export const decryptData = (
   key: string
 ): string => {
   let decrypt = CryptoJS.AES.decrypt(encryptedData, key);
+  // Wrap this in a try catch?
   return decrypt.toString(CryptoJS.enc.Utf8);
 };
 
@@ -98,3 +104,19 @@ export const createResponse = (message: string, data: arrayOfWebsites | null): c
       })
   }
 }
+
+// https://itecnote.com/tecnote/javascript-why-i-get-malformed-utf-8-data-error-on-crypto-js/
+// const a = () => {
+//   const str = `cool string`;
+
+//   const cryptoInfo = CryptoJS.AES.encrypt(JSON.stringify({ str }), 'Dsfjawoidf!"#¤%&/()=?jaiofwoifjhoiwfhoiwrfjqoiwfhofrwofsdfsdfok').toString();
+
+//   console.log({ cryptoInfo });
+//   const info2 = CryptoJS.AES.decrypt(cryptoInfo, 'Dsfjawoidfjaiofwoifjhoiwfhoiwrfjqoiwfhofrwofsdfsdfok')
+
+//   console.log({ info2 });
+
+//   // console.log(info2.toString(CryptoJS.enc.Utf8);)
+
+// }
+// a()
