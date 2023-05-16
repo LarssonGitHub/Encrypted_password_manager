@@ -1,4 +1,4 @@
-import { websiteObject, API } from "../../@types/@type-module";
+import { API, arrayOfWebsites } from "../../@types/@type-module";
 
 console.log(`This app is using Chrome (v${window.API.processVersion.chrome()}), Node.js (v${window.API.processVersion.node()}), and Electron (v${window.API.processVersion.electron()})`);
 
@@ -18,11 +18,11 @@ export const removeListData = () => {
 }
 }
 
-export const appendListToArrayTemplate = ( websiteArray: websiteObject[]): boolean => {
-  if (websiteArray.length < 0) return false;
+export const appendListToArrayTemplate = ( websites: arrayOfWebsites | void): void => {
+  if (!websites || typeof websites !== 'object') return;
   const clone = template.content.cloneNode(true) as DocumentFragment;
   const listElement = clone.getElementById("list-data-unordered-list") as HTMLUListElement;
-  websiteArray.forEach((i) => {
+  websites.forEach((i) => {
     let newClone = listElement.cloneNode(true) as DocumentFragment;
     newClone.querySelector(".list-id")!.textContent = i.id;
     newClone.querySelector(".list-website")!.textContent = i.websiteInput;
@@ -34,5 +34,4 @@ export const appendListToArrayTemplate = ( websiteArray: websiteObject[]): boole
     (newClone.querySelector(".delete-item-button") as HTMLElement).setAttribute("data-website-id", i.id);
     listDataContainer.append(newClone);
   });
-  return true;
 };
