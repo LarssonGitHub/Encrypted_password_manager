@@ -15,7 +15,7 @@ export interface websiteObject {
 export interface customResponse {
   success: boolean;
   message: string;
-  data ? : arrayOfWebsites | websiteObject
+  data ? : arrayOfWebsites 
 }
 
 // Add more keys to the cause as needed

@@ -89,7 +89,7 @@ export const getDataFromDatabaseAndSanitize = async (key :string): Promise<null 
   return decryptedData
 }
 
-export const createResponse = (message: string, data ? : string | arrayOfWebsites | websiteObject | null | undefined): customResponse => {
+export const createResponse = (message: string, data: arrayOfWebsites | null): customResponse => {
   return {
       success: true,
       message: message,
