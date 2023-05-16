@@ -12,19 +12,6 @@ export class CustomError extends Error {
     }
 }
 
-const logMessage = (message: string | undefined): void => {
-    console.log("The request finished. ", message === undefined ? "" : ` Message: ${message}`)
-}
-
-const sanitizeResponse = (response: customResponse): arrayOfWebsites | websiteObject | void => {
-    // As of now, response.success will always be reported as true from the backend.
-    // The error handler will catch any unsuccessful requests, remove this or change as needed.
-    if (!response.success) throw new Error("Undefined error, response couldn't be completed")
-    logMessage(response.message);
-    if (!response.data || typeof response.data !== 'object') return
-    return response.data
-}
-
 const logCustomError = (message: string): void => {
     console.error("The request failed. ", message === undefined ? "" : ` Message: ${message}`)
 }
@@ -38,11 +25,9 @@ const sanitizeError = (error: unknown): void => {
     logError(error)
 }
 
-export const errorHandler = async (func: Function, args ? : unknown): Promise < void | arrayOfWebsites | websiteObject > => {
+export const errorListener = async (func: Function, args ? : unknown): Promise < void  > => {
     try {
-        const response: customResponse = await func(args);
-        const data: arrayOfWebsites | websiteObject | void = sanitizeResponse(response)
-        return data
+        await func(args);
     } catch (error: unknown) {
         sanitizeError(error)
     }
