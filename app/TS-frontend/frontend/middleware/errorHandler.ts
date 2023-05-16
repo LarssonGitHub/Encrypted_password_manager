@@ -1,37 +1,49 @@
-// TODO annotate the types better than unknown once the structure of the responses have been finalized
-// https://www.youtube.com/watch?v=UdekNaCXt6w&ab_channel=DevInfluence
+import {
+    customResponse,
+    arrayOfWebsites,
+    websiteObject
+} from "../../../@types/@type-module";
 
-// Middleware ErrorHandler to minimize use of try / catch
-const showSuccess = (response: unknown): void => {
-    console.log("The action finished. Message: ", response === undefined ? "No message given" : response)
-}
-
-const showError = (error: unknown): void => {
-    console.log("An error occurred: Error", error);
-}
-
-export const errorHandler = async (func: Function, args?: unknown) => {
-       try {
-        const functionResponse = await func(args);
-        showSuccess(functionResponse)
-    } catch (error) {
-        showError(error)
+// TODO further develop error handler
+export class CustomError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'customError';
     }
 }
 
-// TODO debug if this is better than the one above.
-// const errorHandler = (func: Function, args: unknown) => {
-//     const asyncFunction = async (func: Function) =>  {
-//         try {
-//             // Do not remove await, in case the error wrapper's function 
-//             // passed as parameter is a promise
-//             const functionResponse: unknown = await func(args);
-//              console.log("The action finished. Message: ", functionResponse === undefined ? "No message given" : functionResponse)
-//         } catch (error) {
-//              console.log("An error occurred, writing to custom middleware: Error", error);
-//         }
- 
-//     }
-//     // Used to catch the final promise by errorHandler in case promise needs to be caught
-//     asyncFunction(func).then(message => console.log("parent promise", message)).catch(error => console.log("Failure parent promise", error))
-// }
+const logMessage = (message: string | undefined): void => {
+    console.log("The request finished. ", message === undefined ? "" : ` Message: ${message}`)
+}
+
+const sanitizeResponse = (response: customResponse): arrayOfWebsites | websiteObject | void => {
+    // As of now, response.success will always be reported as true from the backend.
+    // The error handler will catch any unsuccessful requests, remove this or change as needed.
+    if (!response.success) throw new Error("Undefined error, response couldn't be completed")
+    logMessage(response.message);
+    if (!response.data || typeof response.data !== 'object') return
+    return response.data
+}
+
+const logCustomError = (message: string): void => {
+    console.error("The request failed. ", message === undefined ? "" : ` Message: ${message}`)
+}
+
+const logError = (error: unknown): void => {
+    console.error("Full Error: ", error)
+}
+
+const sanitizeError = (error: unknown): void => {
+    if (error instanceof CustomError) logCustomError(error.message)
+    logError(error)
+}
+
+export const errorHandler = async (func: Function, args ? : unknown): Promise < void | arrayOfWebsites | websiteObject > => {
+    try {
+        const response: customResponse = await func(args);
+        const data: arrayOfWebsites | websiteObject | void = sanitizeResponse(response)
+        return data
+    } catch (error: unknown) {
+        sanitizeError(error)
+    }
+}
