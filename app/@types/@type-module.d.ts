@@ -18,6 +18,11 @@ export interface customResponse {
   data ? : string | arrayOfWebsites | websiteObject
 }
 
+// Add more keys to the cause as needed
+export interface customErrorCause {
+  data?: any;
+}
+
 export type arrayOfWebsites = websiteObject[];
 
 export type API = {

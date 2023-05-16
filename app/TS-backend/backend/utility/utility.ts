@@ -19,7 +19,7 @@ export const removeItemWebsiteArray = (id: string, websitesArray: arrayOfWebsite
 
 export const createAndAppendId = (dataEntries: websiteObject) => {
   const generatedId: string = uuidv4();
-  if (generatedId === "") throw "No id could be generated, canceling event";
+  if (generatedId === "") throw new Error("No id could be created, canceling request");
   return {
       ...dataEntries,
       id: generatedId,
@@ -48,7 +48,7 @@ export const encryptData = (data: string, key: string): string => {
           padding: CryptoJS.pad.Pkcs7,
       }
   );
-  // TODO, throw Error when implementing error handling
+  // TODO, throw new Error(g error handling
   if (encrypt === undefined) return "ERROR";
   return encrypt.toString();
 };
@@ -63,36 +63,35 @@ export const decryptData = (
 
 export const sanitizeEncryptedData = (encryptedData: string, key: string): arrayOfWebsites => {
   const decryptedData: string = decryptData(encryptedData, key)
-  if (decryptedData.length === 0 || decryptedData === "") throw createResponse(false, "Wrong passkey", null); 
+  if (decryptedData.length === 0 || decryptedData === "") throw new Error("Wrong passkey"); 
   return JSON.parse(decryptedData);
 };
 
 export const encryptAndInsertDatabaseData = async(data: arrayOfWebsites, key: string): Promise<boolean> => {
   const encryptedData: string = encryptData(JSON.stringify(data), key)
   if ((!encryptedData || encryptedData.length === 0 )) 
-      throw createResponse(false, "No data for database submitted, canceling request", null);
+      throw new Error("No data for database submitted, canceling request");
   const updatedDatabase: boolean = await insertDatabaseData(encryptedData)
   if (!updatedDatabase) 
-      throw createResponse(false, "Couldn't write to Database", null);
+      throw new Error("Couldn't write to Database");
   return true
 }
 
 export const getDataFromDatabaseAndSanitize = async (key :string): Promise<null | arrayOfWebsites> =>  {
     if (!key || key.length === 0)
-      throw createResponse(false, "No key was submitted")
+      throw new Error("No key was submitted")
   const encryptedData: string = await getDatabaseData();
     if (!encryptedData || encryptedData.length === 0) 
       return null
   const decryptedData: arrayOfWebsites = sanitizeEncryptedData(encryptedData, key);
     if (!Array.isArray(decryptedData))
-      throw createResponse(false, "The data from database wasn't an array or JSON, canceling put request", null);
+      throw new Error("The data from database wasn't an array or JSON, canceling put request");
   return decryptedData
 }
 
-export const createResponse = (success: boolean, message: string, data ? : string | arrayOfWebsites | websiteObject | null | undefined): customResponse => {
-  if (!success) console.log("error ", message) 
+export const createResponse = (message: string, data ? : string | arrayOfWebsites | websiteObject | null | undefined): customResponse => {
   return {
-      success: success,
+      success: true,
       message: message,
       ...((data !== null && data !== undefined) && {
           data
