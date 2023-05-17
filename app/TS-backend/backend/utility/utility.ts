@@ -48,7 +48,7 @@ export const encryptData = (data: string, key: string): string => {
   const encrypt: CryptoJS.lib.CipherParams = CryptoJS.AES.encrypt(
       data,
       key, {
-          iv: CryptoJS.enc.Hex.parse("be410fea41df7162a679875ec131cf2c"),
+          iv: CryptoJS.enc.Hex.parse(uuidv4()),
           mode: CryptoJS.mode.CBC,
           padding: CryptoJS.pad.Pkcs7,
       }
@@ -63,8 +63,14 @@ export const decryptData = (
   key: string
 ): string => {
   let decrypt = CryptoJS.AES.decrypt(encryptedData, key);
-  // Wrap this in a try catch?
-  return decrypt.toString(CryptoJS.enc.Utf8);
+  try {
+    // TODO: Find a better solution
+    // This code will produce an Utf8 if the key doesn't match
+    return decrypt.toString(CryptoJS.enc.Utf8);
+  } catch (error) {
+    console.log(error)
+    throw new Error("Wrong passkey"); 
+  }
 };
 
 export const sanitizeEncryptedData = (encryptedData: string, key: string): userCredentialsArray => {
