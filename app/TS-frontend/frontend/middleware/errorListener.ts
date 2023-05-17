@@ -1,28 +1,16 @@
-import {
-    customResponse,
-    userCredentialsArray,
-    userCredentialObject
-} from "../../../@types/@type-module";
-
-// TODO further develop error handler
-export class CustomError extends Error {
-    constructor(message: string) {
-        super(message);
-        this.name = 'customError';
-    }
+const logError = (error: Error): void => {
+    console.error(error.message === undefined ? "No error message was given" : error.message)
+    // TODO, develop a way give feedback to user. 
+    // createErrorPopUp()
 }
 
-const logCustomError = (message: string): void => {
-    console.error("The request failed. ", message === undefined ? "" : ` Message: ${message}`)
-}
-
-const logError = (error: unknown): void => {
-    console.error("Full Error: ", error)
+const logUnknownError = (): void => {
+    console.error("An error outside the Error instance occurred")
 }
 
 const sanitizeError = (error: unknown): void => {
-    if (error instanceof CustomError) logCustomError(error.message)
-    logError(error)
+    if (error instanceof Error) return logError(error)
+    logUnknownError()
 }
 
 export const errorListener = async (func: Function, args ? : unknown): Promise < void  > => {
