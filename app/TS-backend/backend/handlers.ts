@@ -63,5 +63,5 @@ export const updateData = async (putData: userCredentialObject, key: string): Pr
     const updatedDatabase: boolean = await encryptAndInsertDatabaseData(compiledDatabaseData, key)
     if (!updatedDatabase)
         throw new Error("Couldn't write to database");
-    return createResponse("Post request successful", compiledDatabaseData);
+    return createResponse("Update request successful", compiledDatabaseData);
 }
