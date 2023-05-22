@@ -29,6 +29,8 @@ const key: string = "supera";
 // supera
 
 export const postHandler = async (event: SubmitEvent): Promise < void > => {
+  const confirm: boolean = window.confirm("Do you want to add or edit this item?");
+  if (!confirm) return;
   const compiledData: userCredentialObject = compileFormData(event.target as HTMLFormElement);
   const GetDataAndSanitize: void | userCredentialsArray = await errorListener(() => window.API.backend.postData(compiledData, key));
   if (!GetDataAndSanitize) return;
