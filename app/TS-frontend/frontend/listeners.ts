@@ -17,7 +17,7 @@ export const appendEventListeners = () => {
   for (const button of deleteItemButtons) {
     button.addEventListener("click", async (event: MouseEvent) => {
       event.preventDefault();
-      errorListener(deleteItemHandler, event);
+      deleteItemHandler(event)
     });
   }
 
@@ -25,19 +25,19 @@ export const appendEventListeners = () => {
   for (const button of editItemButtons) {
     button.addEventListener("click", async (event: MouseEvent) => {
       event.preventDefault();
-      errorListener(editItemHandler, event);
+      editItemHandler(event)
     });
   }
 };
 
 form.addEventListener("submit", async (event: SubmitEvent) => {
   event.preventDefault();
-  errorListener(postHandler, event);
+  postHandler(event)
 });
 
 getItems.addEventListener("click", async (event: MouseEvent) => {
   event.preventDefault();
-  errorListener(getHandler);
+  getHandler();
 });
 
 feedbackCloseButton.addEventListener("click", async () => {

@@ -34,7 +34,7 @@ export type API = {
   backend: {
     generateId: () => Promise<any>;
     getData: (key: string) => Promise<customResponse>;
-    deleteData: (id: string, key: string) => Promise<customResponse>;
+    deleteData: (id: string | null, key: string) => Promise<customResponse>;
     updateData: (putData: userCredentialObject, key: string) => Promise<customResponse>;
     postData: (postData: userCredentialObject, key: string) => Promise<customResponse>;
     encryptData: (data: string, secretKey: string) => Promise < customResponse >;

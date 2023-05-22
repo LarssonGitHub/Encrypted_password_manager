@@ -1,4 +1,13 @@
-import { editDocumentFeedback } from "../renderer.js"
+import {
+    editDocumentFeedback
+} from "../renderer.js"
+import {
+    customResponse,
+    userCredentialsArray
+} from "../../../@types/@type-module";
+import {
+    sanitizeResponse
+} from "../logic.js";
 
 const logError = (error: Error): void => {
     console.error(error)
@@ -15,9 +24,10 @@ const sanitizeError = (error: unknown): void => {
     logUnknownError()
 }
 
-export const errorListener = async (func: Function, args ? : unknown): Promise < void  > => {
+export const errorListener = async (func: Function): Promise < userCredentialsArray | void > => {
     try {
-        await func(args);
+        const response: customResponse = await func();
+        return sanitizeResponse(response);
     } catch (error: unknown) {
         sanitizeError(error)
     }
