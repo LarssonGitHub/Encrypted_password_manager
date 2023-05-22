@@ -1,7 +1,24 @@
-import { deleteItemHandler, editItemHandler } from "./handlers.js";
-import { postHandler, getHandler } from "./handlers.js";
-import { hideFeedbackContainer } from "./renderer.js";
-import { viewElement, hideElement } from "./utilities.js";
+import {
+  deleteItemHandler,
+  editItemHandler
+} from "./handlers.js";
+import {
+  postHandler,
+  getHandler
+} from "./handlers.js";
+import {
+  hideFeedbackContainer
+} from "./renderer.js";
+import {
+  viewElement,
+  hideElement,
+  getDataAction,
+  setDataAction,
+  resetForm
+} from "./utilities.js";
+import {
+  updateHandler
+} from "./handlers.js";
 
 // HTML tags always present, if changed, like the template html tag, remove assertion operator & update guards
 export const listDataContainer = document.getElementById("list-data-container") as HTMLDivElement;
@@ -9,49 +26,49 @@ export const template = document.getElementById("template-list") as HTMLTemplate
 export const feedbackContainer = document.getElementById("feedback-container") as HTMLDivElement;
 export const feedbackMessage = document.getElementById("feedback-message") as HTMLParagraphElement;
 export const feedbackCloseButton = document.getElementById("feedback-close-button") as HTMLButtonElement;
-export const form = document.getElementById("form")! as HTMLFormElement;
-export const formContainer = document.getElementById("form-container")! as HTMLDivElement;
-export const toggleFormButton = document.getElementById("toggle-form-button")! as HTMLButtonElement;
-export const hideFormButton = document.getElementById("hide-form-button")! as HTMLButtonElement;
-export const getItems = document.getElementById("get-items")! as HTMLButtonElement;
+export const form = document.getElementById("form") !as HTMLFormElement;
+export const formContainer = document.getElementById("form-container") !as HTMLDivElement;
+export const postFormButton = document.getElementById("post-form-button") !as HTMLButtonElement;
+export const closeFormButton = document.getElementById("close-form-button") !as HTMLButtonElement;
+export const getItems = document.getElementById("get-items") !as HTMLButtonElement;
 
-export const appendEventListeners = () => {
-  const deleteItemButtons = document.querySelectorAll(".delete-item-button") as NodeListOf<HTMLButtonElement>;
-  for (const button of deleteItemButtons) {
-    button.addEventListener("click", async (event: MouseEvent) => {
-      event.preventDefault();
-      deleteItemHandler(event)
-    });
-  }
-
-  const editItemButtons = document.querySelectorAll(".edit-item-button") as NodeListOf<HTMLButtonElement>;
-  for (const button of editItemButtons) {
-    button.addEventListener("click", async (event: MouseEvent) => {
-      event.preventDefault();
-      editItemHandler(event)
-    });
-  }
-};
-
-form.addEventListener("submit", async (event: SubmitEvent) => {
+form.addEventListener("submit", (event: SubmitEvent) => {
   event.preventDefault();
-  postHandler(event)
-});
+  const actionType: string | null = getDataAction(event.target as HTMLFormElement)
+  if (actionType && actionType === "post") {
+      postHandler(event)
+  }
+  if (actionType && actionType === "update") {
+      updateHandler(event)
+  }
+})
 
-getItems.addEventListener("click", async (event: MouseEvent) => {
+getItems.addEventListener("click", (event: MouseEvent) => {
   event.preventDefault();
   getHandler();
 });
 
-feedbackCloseButton.addEventListener("click", async () => {
-  hideFeedbackContainer()
+feedbackCloseButton.addEventListener("click", () => {
+  hideFeedbackContainer();
 });
 
-toggleFormButton.addEventListener("click", async () => {
-  viewElement(formContainer)
+postFormButton.addEventListener("click", () => {
+  setDataAction("post")
+  viewElement(formContainer);
 });
 
-hideFormButton.addEventListener("click", async () => {
-  hideElement(formContainer)
+closeFormButton.addEventListener("click", () => {
+  hideElement(formContainer);
+  resetForm()
 });
 
+listDataContainer.addEventListener("click", function(event) {
+  event.preventDefault();
+  const target: HTMLElement | null = event.target as HTMLElement;
+  if (target && target.classList.contains("edit-item-button")) {
+      editItemHandler(event);
+  }
+  if (target && target.classList.contains("delete-item-button")) {
+      deleteItemHandler(event);
+  }
+});

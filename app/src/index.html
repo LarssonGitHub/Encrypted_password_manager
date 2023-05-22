@@ -18,13 +18,14 @@
   </div>
 
   <!-- TODO: add icon, like a pencil -->
-  <button id="toggle-form-button">Add new item</button>
+  <button id="post-form-button">Add new item..!</button>
 
   <h1>The poor man's password app</h1>
   <div id="form-container" class="hidden">
-    <button id="hide-form-button">X</button>
-    <form id="form"> 
+    <button id="close-form-button">X</button>
+    <form id="form" data-action="">
       <ul>
+        <li class="list-id" hidden> <input type="hidden" id="id" name="id" value=""></li>
         <li>
           <span>Associated Website</span>
           <span><input type="text" name="websiteInput" id="website-input"></span>
@@ -73,8 +74,8 @@
         <!-- TODO, put this into a textarea -->
         <li><b>Notes:</b> <span class="list-additional-data"></span></li>
         <li>
-          <button data-website-id="#" class="edit-item-button">Edit</button>
-          <button data-website-id="#" class="delete-item-button">Delete</button>
+          <button data-stored-object="#" class="edit-item-button">Edit</button>
+          <button data-credential-id="#" class="delete-item-button">Delete</button>
         </li>
       </ul>
     </div>

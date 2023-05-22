@@ -7,9 +7,11 @@ import {
     template,
     feedbackMessage,
     feedbackContainer,
-    appendEventListeners
 } from "./listeners.js";
-import { viewElement, hideElement } from "./utilities.js";
+import {
+    viewElement,
+    hideElement
+} from "./utilities.js";
 
 console.log(`This app is using Chrome (v${window.API.processVersion.chrome()}), Node.js (v${window.API.processVersion.node()}), and Electron (v${window.API.processVersion.electron()})`);
 
@@ -25,28 +27,30 @@ export const removeListData = () => {
     }
 }
 
-export const appendListToArrayTemplate = (websites: userCredentialsArray | void): void => {
-    if (!websites || typeof websites !== 'object') return;
+export const appendListToArrayTemplate = (userCredentials: userCredentialsArray | void): void => {
+    if (!userCredentials || typeof userCredentials !== 'object') return;
     const clone = template.content.cloneNode(true) as DocumentFragment;
     const listElement = clone.getElementById("list-data-unordered-list") as HTMLUListElement;
-    websites.forEach((i) => {
+    userCredentials.forEach((credential) => {
         let newClone = listElement.cloneNode(true) as DocumentFragment;
-        newClone.querySelector(".list-id") !.textContent = i.id;
-        newClone.querySelector(".list-website") !.textContent = i.websiteInput;
-        newClone.querySelector(".list-username") !.textContent = i.emailInput;
-        newClone.querySelector(".list-email") !.textContent = i.usernameInput;
-        newClone.querySelector(".list-password") !.textContent = i.passwordInput;
-        newClone.querySelector(".list-additional-data") !.textContent = i.additionalDataInput;
-        (newClone.querySelector(".edit-item-button") as HTMLElement).setAttribute("data-website-id", i.id);
-        (newClone.querySelector(".delete-item-button") as HTMLElement).setAttribute("data-website-id", i.id);
+        // Used to easily grab the values when making a put request
+        newClone.querySelector(".list-id") !.textContent = credential.id;
+        newClone.querySelector(".list-website") !.textContent = credential.websiteInput;
+        newClone.querySelector(".list-username") !.textContent = credential.emailInput;
+        newClone.querySelector(".list-email") !.textContent = credential.usernameInput;
+        newClone.querySelector(".list-password") !.textContent = credential.passwordInput;
+        newClone.querySelector(".list-additional-data") !.textContent = credential.additionalDataInput;
+        // Used to easily grab the values when making a put request
+        (newClone.querySelector(".edit-item-button") as HTMLElement).setAttribute("data-stored-object", JSON.stringify(credential));
+        (newClone.querySelector(".delete-item-button") as HTMLElement).setAttribute("data-credential-id", credential.id);
         listDataContainer.append(newClone);
     });
+
 };
 
 export const editDocumentListing = (data: userCredentialsArray) => {
     removeListData()
     appendListToArrayTemplate(data);
-    appendEventListeners();
 }
 
 export const FeedbackResponseType = (error: boolean): void => {
