@@ -7,7 +7,10 @@ import {
   userCredentialObject,
   customResponse
 } from "../../../@types/@type-module"
-import { insertDatabaseData, getDatabaseData } from "../fileSystem";
+import {
+  insertDatabaseData,
+  getDatabaseData
+} from "../fileSystem";
 
 console.log("You shouldn't see this in frontend");
 
@@ -35,7 +38,7 @@ export const updateItemWebsiteArray = (object: userCredentialObject, websitesArr
   } : websitesArray))
 };
 
-export const InsertIntoWebsitesArray = ( data: userCredentialObject, websitesArray: userCredentialsArray): userCredentialsArray => {
+export const InsertIntoWebsitesArray = (data: userCredentialObject, websitesArray: userCredentialsArray): userCredentialsArray => {
   return [...websitesArray,
       data
   ];
@@ -43,7 +46,6 @@ export const InsertIntoWebsitesArray = ( data: userCredentialObject, websitesArr
 
 // https://crypto.stackexchange.com/questions/52633/is-there-a-practical-way-to-crack-an-aes-encryption-password
 
-// TODO ID generate hex?
 export const encryptData = (data: string, key: string): string => {
   const encrypt: CryptoJS.lib.CipherParams = CryptoJS.AES.encrypt(
       data,
@@ -53,8 +55,7 @@ export const encryptData = (data: string, key: string): string => {
           padding: CryptoJS.pad.Pkcs7,
       }
   );
-  // TODO, throw new Error(g error handling
-  if (encrypt === undefined) return "ERROR";
+  if (!encrypt) return "Couldn't decrypt data, canceling request";
   return encrypt.toString();
 };
 
@@ -64,39 +65,39 @@ export const decryptData = (
 ): string => {
   let decrypt = CryptoJS.AES.decrypt(encryptedData, key);
   try {
-    // TODO: Find a better solution
-    // This code will produce an Utf8 if the key doesn't match
-    return decrypt.toString(CryptoJS.enc.Utf8);
+      // TODO: Find a better solution
+      // This code will produce an Utf8 if the key doesn't match
+      return decrypt.toString(CryptoJS.enc.Utf8);
   } catch (error) {
-    console.log(error)
-    throw new Error("Wrong passkey"); 
+      console.log(error)
+      throw new Error("Your key is incorrect");
   }
 };
 
 export const sanitizeEncryptedData = (encryptedData: string, key: string): userCredentialsArray => {
   const decryptedData: string = decryptData(encryptedData, key)
-  if (decryptedData.length === 0 || decryptedData === "") throw new Error("Wrong passkey"); 
+  if (decryptedData.length === 0 || decryptedData === "") throw new Error("Your key is incorrect");
   return JSON.parse(decryptedData);
 };
 
-export const encryptAndInsertDatabaseData = async(data: userCredentialsArray, key: string): Promise<boolean> => {
+export const encryptAndInsertDatabaseData = async (data: userCredentialsArray, key: string): Promise < boolean > => {
   const encryptedData: string = encryptData(JSON.stringify(data), key)
-  if ((!encryptedData || encryptedData.length === 0 )) 
+  if ((!encryptedData || encryptedData.length === 0))
       throw new Error("No data for database submitted, canceling request");
   const updatedDatabase: boolean = await insertDatabaseData(encryptedData)
-  if (!updatedDatabase) 
+  if (!updatedDatabase)
       throw new Error("Couldn't write to Database");
   return true
 }
 
-export const getDataFromDatabaseAndSanitize = async (key :string): Promise<null | userCredentialsArray> =>  {
-    if (!key || key.length === 0)
+export const getDataFromDatabaseAndSanitize = async (key: string): Promise < null | userCredentialsArray > => {
+  if (!key || key.length === 0)
       throw new Error("No key was submitted")
   const encryptedData: string = await getDatabaseData();
-    if (!encryptedData || encryptedData.length === 0) 
+  if (!encryptedData || encryptedData.length === 0)
       return null
   const decryptedData: userCredentialsArray = sanitizeEncryptedData(encryptedData, key);
-    if (!Array.isArray(decryptedData))
+  if (!Array.isArray(decryptedData))
       throw new Error("The data from database wasn't an array or JSON, canceling put request");
   return decryptedData
 }
@@ -109,19 +110,3 @@ export const createResponse = (message: string, data: userCredentialsArray | nul
       })
   }
 }
-
-// https://itecnote.com/tecnote/javascript-why-i-get-malformed-utf-8-data-error-on-crypto-js/
-// const a = () => {
-//   const str = `cool string`;
-
-//   const cryptoInfo = CryptoJS.AES.encrypt(JSON.stringify({ str }), 'Dsfjawoidf!"#¤%&/()=?jaiofwoifjhoiwfhoiwrfjqoiwfhofrwofsdfsdfok').toString();
-
-//   console.log({ cryptoInfo });
-//   const info2 = CryptoJS.AES.decrypt(cryptoInfo, 'Dsfjawoidfjaiofwoifjhoiwfhoiwrfjqoiwfhofrwofsdfsdfok')
-
-//   console.log({ info2 });
-
-//   // console.log(info2.toString(CryptoJS.enc.Utf8);)
-
-// }
-// a()
