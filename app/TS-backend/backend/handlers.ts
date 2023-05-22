@@ -11,7 +11,7 @@ import {
     createResponse,
     encryptAndInsertDatabaseData,
     getDataFromDatabaseAndSanitize
-} from "./utility/utility"
+} from "./utilities.js"
 
 export const getData = async (key: string): Promise < customResponse > => {
     const databaseData: userCredentialsArray | null = await getDataFromDatabaseAndSanitize(key)

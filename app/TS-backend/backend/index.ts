@@ -11,13 +11,13 @@ import {
   generateId,
   encryptData,
   decryptData,
-} from "./utility/utility";
+} from "./utilities.js";
 import {
   getData,
   updateData,
   postData,
   deleteData
-} from "./dataHandlers";
+} from "./handlers";
 
 function createWindow() {
   console.log(__dirname, "bridge.js");

@@ -7,7 +7,7 @@ import {
 } from "../../../@types/@type-module";
 import {
     sanitizeResponse
-} from "../logic.js";
+} from "../utilities.js";
 
 const logError = (error: Error): void => {
     console.error(error)

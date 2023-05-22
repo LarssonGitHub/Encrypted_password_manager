@@ -1,5 +1,4 @@
 import { deleteItemHandler, editItemHandler } from "./handlers.js";
-import { errorListener } from "./middleware/errorListener.js";
 import { postHandler, getHandler } from "./handlers.js";
 import { hideFeedbackContainer } from "./renderer.js";
 

@@ -6,11 +6,11 @@ import {
   userCredentialsArray,
   userCredentialObject,
   customResponse
-} from "../../../@types/@type-module"
+} from "../../@types/@type-module"
 import {
   insertDatabaseData,
   getDatabaseData
-} from "../fileSystem";
+} from "./db/fileSystem";
 
 console.log("You shouldn't see this in frontend");
 

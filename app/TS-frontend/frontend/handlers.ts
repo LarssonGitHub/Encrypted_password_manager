@@ -5,7 +5,7 @@ import {
 import {
   compileFormData,
   getDataSetId
-} from "./logic.js";
+} from "./utilities.js";
 import {
   errorListener
 } from "./middleware/errorListener.js";
