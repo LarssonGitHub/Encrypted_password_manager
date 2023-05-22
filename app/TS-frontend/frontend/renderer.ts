@@ -9,6 +9,7 @@ import {
     feedbackContainer,
     appendEventListeners
 } from "./listeners.js";
+import { viewElement, hideElement } from "./utilities.js";
 
 console.log(`This app is using Chrome (v${window.API.processVersion.chrome()}), Node.js (v${window.API.processVersion.node()}), and Electron (v${window.API.processVersion.electron()})`);
 
@@ -51,15 +52,14 @@ export const editDocumentListing = (data: userCredentialsArray) => {
 export const FeedbackResponseType = (error: boolean): void => {
     feedbackContainer.classList.replace("error-container", "success-container")
     if (error) feedbackContainer.classList.replace("success-container", "error-container")
-    feedbackContainer.classList.replace("hidden", "show");
 }
 
 export const editDocumentFeedback = (message: string, error: boolean): void => {
     FeedbackResponseType(error)
-    feedbackContainer.classList.replace("hidden", "show");
     feedbackMessage.innerText = message;
+    viewElement(feedbackContainer)
 }
 
 export const hideFeedbackContainer = (): void => {
-    feedbackContainer.classList.replace("show", "hidden");
+    hideElement(feedbackContainer)
 }

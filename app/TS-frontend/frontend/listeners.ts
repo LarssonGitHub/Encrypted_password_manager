@@ -1,14 +1,18 @@
 import { deleteItemHandler, editItemHandler } from "./handlers.js";
 import { postHandler, getHandler } from "./handlers.js";
 import { hideFeedbackContainer } from "./renderer.js";
+import { viewElement, hideElement } from "./utilities.js";
 
 // HTML tags always present, if changed, like the template html tag, remove assertion operator & update guards
 export const listDataContainer = document.getElementById("list-data-container") as HTMLDivElement;
 export const template = document.getElementById("template-list") as HTMLTemplateElement;
 export const feedbackContainer = document.getElementById("feedback-container") as HTMLDivElement;
 export const feedbackMessage = document.getElementById("feedback-message") as HTMLParagraphElement;
-export const feedbackCloseButton = document.getElementById("feedback-close-button") as HTMLSpanElement;
-export const form = document.getElementById("website-form")! as HTMLFormElement;
+export const feedbackCloseButton = document.getElementById("feedback-close-button") as HTMLButtonElement;
+export const form = document.getElementById("form")! as HTMLFormElement;
+export const formContainer = document.getElementById("form-container")! as HTMLDivElement;
+export const toggleFormButton = document.getElementById("toggle-form-button")! as HTMLButtonElement;
+export const hideFormButton = document.getElementById("hide-form-button")! as HTMLButtonElement;
 export const getItems = document.getElementById("get-items")! as HTMLButtonElement;
 
 export const appendEventListeners = () => {
@@ -42,3 +46,12 @@ getItems.addEventListener("click", async (event: MouseEvent) => {
 feedbackCloseButton.addEventListener("click", async () => {
   hideFeedbackContainer()
 });
+
+toggleFormButton.addEventListener("click", async () => {
+  viewElement(formContainer)
+});
+
+hideFormButton.addEventListener("click", async () => {
+  hideElement(formContainer)
+});
+

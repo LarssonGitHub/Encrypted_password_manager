@@ -22,3 +22,14 @@ export const sanitizeResponse = (response: customResponse): userCredentialsArray
   if (!response.data || typeof response.data !== 'object') return;
   return response.data
 }
+
+export const hideElement = (element: HTMLElement): void => {
+  if (element.classList.contains("show")) 
+    element.classList.replace("show", "hidden");
+}
+
+export const viewElement = (element: HTMLElement): void => {
+  if (element.classList.contains("hidden")) 
+    element.classList.replace("hidden", "show");
+}
+

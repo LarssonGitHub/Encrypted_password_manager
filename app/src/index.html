@@ -14,12 +14,16 @@
 
   <!-- Do not remove hidden success-container -->
   <div id="feedback-container" class="hidden success-container">
-    <p id="feedback-message"></p><span id="feedback-close-button">X</span>
+    <p id="feedback-message"></p><button id="feedback-close-button">X</button>
   </div>
 
+  <!-- TODO: add icon, like a pencil -->
+  <button id="toggle-form-button">Add new item</button>
+
   <h1>The poor man's password app</h1>
-  <div>
-    <form id="website-form">
+  <div id="form-container" class="hidden">
+    <button id="hide-form-button">X</button>
+    <form id="form"> 
       <ul>
         <li>
           <span>Associated Website</span>

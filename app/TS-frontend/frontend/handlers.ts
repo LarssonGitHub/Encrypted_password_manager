@@ -53,8 +53,17 @@ const updateData: userCredentialObject = {
 }
 
 export const editItemHandler = async (event: MouseEvent): Promise < void > => {
+  
+  // Set values
+  // View popup
+  // get values and send
+
+
   const confirm: boolean = window.confirm("Do you want to edit this item?")
   if (!confirm) return;
+
+  // @ts-ignore
+  console.log(event.target.parentElement.parentElement.nodeName)
   const GetDataAndSanitize: void | userCredentialsArray = await errorListener(() => window.API.backend.updateData(updateData, key))
   if (!GetDataAndSanitize) return;
   editDocumentListing(GetDataAndSanitize)
