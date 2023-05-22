@@ -1,10 +1,16 @@
 import { deleteItemHandler, editItemHandler } from "./handlers.js";
 import { errorListener } from "./middleware/errorListener.js";
 import { postHandler, getHandler } from "./handlers.js";
+import { hideFeedbackContainer } from "./renderer.js";
 
-const form = document.getElementById("website-form")! as HTMLFormElement;
-const getItems = document.getElementById("get-items")! as HTMLButtonElement;
-const tryEvent = document.getElementById("try-event")! as HTMLButtonElement;
+// HTML tags always present, if changed, like the template html tag, remove assertion operator & update guards
+export const listDataContainer = document.getElementById("list-data-container") as HTMLDivElement;
+export const template = document.getElementById("template-list") as HTMLTemplateElement;
+export const feedbackContainer = document.getElementById("feedback-container") as HTMLDivElement;
+export const feedbackMessage = document.getElementById("feedback-message") as HTMLParagraphElement;
+export const feedbackCloseButton = document.getElementById("feedback-close-button") as HTMLSpanElement;
+export const form = document.getElementById("website-form")! as HTMLFormElement;
+export const getItems = document.getElementById("get-items")! as HTMLButtonElement;
 
 export const appendEventListeners = () => {
   const deleteItemButtons = document.querySelectorAll(".delete-item-button") as NodeListOf<HTMLButtonElement>;
@@ -34,17 +40,6 @@ getItems.addEventListener("click", async (event: MouseEvent) => {
   errorListener(getHandler);
 });
 
-
-tryEvent.addEventListener("click", async (event: MouseEvent) => {
-  event.preventDefault();
-  // @ts-ignore
-  errorListener( await window.API.backend.updateData({
-    id: "ID number 2",
-    websiteInput: "New name",
-    emailInput: "new email",
-    usernameInput: "new username",
-    passwordInput: "new password",
-    additionalDataInput: "new data ",
-  }
-  , "super-secret"));
+feedbackCloseButton.addEventListener("click", async () => {
+  hideFeedbackContainer()
 });

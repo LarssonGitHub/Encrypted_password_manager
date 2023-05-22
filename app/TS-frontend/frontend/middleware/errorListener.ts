@@ -1,7 +1,9 @@
+import { editDocumentFeedback } from "../renderer.js"
+
 const logError = (error: Error): void => {
-    console.error(error.message === undefined ? "No error message was given" : error.message)
-    // TODO, develop a way give feedback to user. 
-    // createErrorPopUp()
+    console.error(error)
+    const message = error.message === undefined ? "Error occurred, no message was given" : error.message;
+    editDocumentFeedback(message, true)
 }
 
 const logUnknownError = (): void => {

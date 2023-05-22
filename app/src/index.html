@@ -7,11 +7,16 @@
   <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
   <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <link rel="stylesheet" href="./index.css">
 </head>
 
-<!-- TODO update syntax to follow good semantic html practices  -->
-
 <body>
+
+  <!-- Do not remove hidden success-container -->
+  <div id="feedback-container" class="hidden success-container">
+    <p id="feedback-message"></p><span id="feedback-close-button">X</span>
+  </div>
+
   <h1>The poor man's password app</h1>
   <div>
     <form id="website-form">
@@ -71,8 +76,8 @@
     </div>
   </template>
 
-  <script type="module" src="./frontend/renderer.js"></script>
-  <script type="module" src="./frontend/listeners.js"></script>
+  <script type="module" src="./frontend/renderer.js" defer></script>
+  <script type="module" src="./frontend/listeners.js" defer></script>
 
 </body>
 

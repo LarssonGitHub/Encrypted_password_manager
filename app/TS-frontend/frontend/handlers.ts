@@ -1,18 +1,21 @@
 import { userCredentialsArray, customResponse, userCredentialObject } from "../../@types/@type-module";
-import { compileFormData, getDataSetId, editDocument } from "./logic.js";
-
+import { compileFormData, getDataSetId } from "./logic.js";
+import { editDocumentFeedback, editDocumentListing } from "./renderer.js";
 // TODO handle the key to the decrypt.
-const key: string = "super.åö";
+const key: string = "supera";
+// supera
 
 const logMessage = (message: string | undefined): void => {
   console.log("The request finished. ", message === undefined ? "" : ` Message: ${message}`)
 }
 
 const sanitizeResponse = (response: customResponse): userCredentialsArray | void => {
+  // TODO remove this!!
   // As of now, response.success will always be reported as true from the backend.
   // The error handler will catch any unsuccessful requests, remove this or change as needed.
   if (!response.success) throw new Error("Undefined error, response couldn't be completed")
-  logMessage(response.message);
+  const message = response.message === undefined ? "Action completed, no message given" : response.message; 
+  editDocumentFeedback(message, false)
   if (!response.data || typeof response.data !== 'object') return
   return response.data
 }
@@ -21,13 +24,13 @@ export const postHandler = async (event: SubmitEvent) => {
   const compiledData: userCredentialObject = await compileFormData(event.target as HTMLFormElement);
   const backendResponse: customResponse = await window.API.backend.postData(compiledData, key);
   const sanitizedData = sanitizeResponse(backendResponse)
-  editDocument(sanitizedData)
+  editDocumentListing(sanitizedData)
 };
 
 export const getHandler = async (): Promise<void | string> => {
   const backendResponse: customResponse = await window.API.backend.getData(key);
   const sanitizedData = sanitizeResponse(backendResponse)
-  editDocument(sanitizedData)
+  editDocumentListing(sanitizedData)
 };
 
 export const deleteItemHandler = async (event: MouseEvent):  Promise<void> => {
@@ -36,7 +39,7 @@ export const deleteItemHandler = async (event: MouseEvent):  Promise<void> => {
   const id: string = getDataSetId(event.target as HTMLButtonElement)
   const backendResponse: customResponse = await window.API.backend.deleteData(id, key);
   const sanitizedData = sanitizeResponse(backendResponse)
-  editDocument(sanitizedData)
+  editDocumentListing(sanitizedData)
 };
 
 // Placeholder
@@ -54,5 +57,5 @@ export const editItemHandler  = async (event: MouseEvent):  Promise<void> => {
     if (!confirm) return;
   const backendResponse: customResponse = await window.API.backend.updateData(updateData, key);
   const sanitizedData = sanitizeResponse(backendResponse)
-  editDocument(sanitizedData)
+  editDocumentListing(sanitizedData)
 };

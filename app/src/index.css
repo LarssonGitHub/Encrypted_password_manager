@@ -4,5 +4,25 @@ body {
   margin: auto;
   max-width: 38rem;
   padding: 2rem;
-  background-color: lightblue;
+}
+
+.show {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+#feedback-close-button {
+  cursor: pointer;
+}
+
+.error-container {
+  background-color: red;
+  color: white;
+}
+
+.success-container {
+  background-color: lightgreen;
 }

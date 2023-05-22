@@ -1,7 +1,4 @@
-import { removeListData, appendListToArrayTemplate } from "./renderer.js";
-import { appendEventListeners } from "./listeners.js";
-import {userCredentialsArray, userCredentialObject } from "../../@types/@type-module";
-
+import { userCredentialObject } from "../../@types/@type-module";
 
 export const getDataSetId = (target: HTMLElement) : string => {
   const id: string | null = target.getAttribute("data-website-id")
@@ -13,9 +10,3 @@ export const compileFormData = async (form: HTMLFormElement): Promise<userCreden
   const extractedData = new FormData(form) as unknown as Iterable<[userCredentialObject, FormDataEntryValue]>;
   return Object.fromEntries(extractedData);
 };
-
-export const editDocument = (data: userCredentialsArray | void) => {
-  removeListData()
-  appendListToArrayTemplate(data);
-  appendEventListeners();
-}
