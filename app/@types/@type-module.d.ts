@@ -13,7 +13,6 @@ export interface userCredentialObject {
 }
 
 export interface customResponse {
-  success: boolean;
   message: string;
   data ? : userCredentialsArray 
 }

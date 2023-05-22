@@ -103,7 +103,6 @@ export const getDataFromDatabaseAndSanitize = async (key :string): Promise<null 
 
 export const createResponse = (message: string, data: userCredentialsArray | null): customResponse => {
   return {
-      success: true,
       message: message,
       ...((data !== null && data !== undefined) && {
           data
