@@ -23,6 +23,7 @@ import {
 import {
   formContainer
 } from "./listeners.js";
+import { hideElement } from "./utilities.js";
 
 // TODO handle the key to the decrypt.
 const key: string = "supera";
@@ -34,8 +35,10 @@ export const postHandler = async (event: SubmitEvent): Promise < void > => {
   const compiledData: userCredentialObject = compileFormData(event.target as HTMLFormElement);
   const GetDataAndSanitize: void | userCredentialsArray = await errorListener(() => window.API.backend.postData(compiledData, key));
   if (!GetDataAndSanitize) return;
+  hideElement(formContainer)
   resetForm()
   removeDataAction()
+
   editDocumentListing(GetDataAndSanitize)
 };
 
