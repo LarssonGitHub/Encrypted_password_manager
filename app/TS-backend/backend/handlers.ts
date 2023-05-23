@@ -18,20 +18,20 @@ import {
 } from "./db/fileSystem"
 
 export const checkDatabase = async (): Promise < customResponse > => {
-    const isEmpty: string | null = await getDatabaseData()
+    const isEmpty: string | null = await getDatabaseData();
     if (!isEmpty) return createResponse("Your database is empty", false)
     return createResponse("Your database is not empty", true)
 }
 
 export const getData = async (key: string): Promise < customResponse > => {
     const databaseData: userCredentialsArray | null = await getDataFromDatabaseAndSanitize(key)
-    if (databaseData)
+    if (!databaseData)
         return createResponse("Your database is empty", null)
     return createResponse("Get request successful", databaseData)
 }
 
 export const deleteData = async (objectId: string, key: string): Promise < customResponse > => {
-    if (!objectId || objectId.length === 0)
+    if (!objectId)
         throw new Error("No id was given, canceling event");
     const databaseData: null | userCredentialsArray = await getDataFromDatabaseAndSanitize(key);
     if (databaseData === null)
@@ -67,7 +67,7 @@ export const postData = async (postData: userCredentialObject, key: string): Pro
 }
 
 export const updateData = async (putData: userCredentialObject, key: string): Promise < customResponse > => {
-    if (!putData || Object.values(putData).every(x => x === null || x === ''))
+    if (!putData || Object.values(putData).every(value => value === null || value === ''))
         throw new Error("No data was submitted");
     const databaseData: userCredentialsArray | null = await getDataFromDatabaseAndSanitize(key)
     if (databaseData === null)
