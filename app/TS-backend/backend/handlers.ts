@@ -12,10 +12,20 @@ import {
     encryptAndInsertDatabaseData,
     getDataFromDatabaseAndSanitize
 } from "./utilities.js"
+import {
+    insertEmptyDatabaseData,
+    getDatabaseData
+} from "./db/fileSystem"
+
+export const checkDatabase = async (): Promise < customResponse > => {
+    const isEmpty: string | null = await getDatabaseData()
+    if (!isEmpty) return createResponse("Your database is empty", false)
+    return createResponse("Your database is not empty", true)
+}
 
 export const getData = async (key: string): Promise < customResponse > => {
     const databaseData: userCredentialsArray | null = await getDataFromDatabaseAndSanitize(key)
-    if (databaseData === null)
+    if (databaseData)
         return createResponse("Your database is empty", null)
     return createResponse("Get request successful", databaseData)
 }
@@ -27,8 +37,13 @@ export const deleteData = async (objectId: string, key: string): Promise < custo
     if (databaseData === null)
         throw new Error("Your database is empty, canceling delete request");
     const compiledDatabaseData: userCredentialsArray = removeItemWebsiteArray(objectId, databaseData);
-    if (!Array.isArray(compiledDatabaseData))
-        throw new Error("Couldn't update the data, canceling delete request");
+    // A validation is used to clean the entire database if no items remain.
+    // Used to make sure no residue, which requires a key, remains in the database so it can return as empty.
+    if (compiledDatabaseData.length > 0) {
+        const updatedDatabase: boolean = await insertEmptyDatabaseData();
+        if (!updatedDatabase) throw new Error("Couldn't update the data, canceling delete request");
+        return createResponse("Delete request successful, no more items in database", null);
+    }
     const updatedDatabase: boolean = await encryptAndInsertDatabaseData(compiledDatabaseData, key)
     if (!updatedDatabase)
         throw new Error("Couldn't write to database");

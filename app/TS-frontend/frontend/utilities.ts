@@ -53,6 +53,7 @@ export const compileFormData = (form: HTMLFormElement): userCredentialObject => 
 };
 
 export const sanitizeResponse = (response: customResponse): userCredentialsArray | void => {
+  console.log(response)
   const message = response.message === undefined ? "Action completed, no message given" : response.message;
   editDocumentFeedback(message, false)
   if (!response.data || typeof response.data !== 'object') return;

@@ -17,7 +17,10 @@ console.log("You shouldn't see this in frontend");
 export const generateId = () => uuidv4();
 
 export const removeItemWebsiteArray = (id: string, websitesArray: userCredentialsArray): userCredentialsArray => {
-  return websitesArray.filter(website => website.id !== id);
+  const credentialsArray: userCredentialsArray = websitesArray.filter(website => website.id !== id);
+  if (!Array.isArray(credentialsArray))
+      throw new Error("An error occurred during compiling of data, canceling request");
+  return credentialsArray;
 };
 
 export const createAndAppendId = (dataEntries: userCredentialObject) => {
@@ -40,8 +43,8 @@ export const updateItemWebsiteArray = (object: userCredentialObject, websitesArr
 
 export const InsertIntoWebsitesArray = (data: userCredentialObject, websitesArray: userCredentialsArray): userCredentialsArray => {
   return [...websitesArray,
-      data
-  ];
+    data
+];
 };
 
 // https://crypto.stackexchange.com/questions/52633/is-there-a-practical-way-to-crack-an-aes-encryption-password
@@ -102,7 +105,7 @@ export const getDataFromDatabaseAndSanitize = async (key: string): Promise < nul
   return decryptedData
 }
 
-export const createResponse = (message: string, data: userCredentialsArray | null): customResponse => {
+export const createResponse = (message: string, data: userCredentialsArray | boolean | null): customResponse => {
   return {
       message: message,
       ...((data !== null && data !== undefined) && {

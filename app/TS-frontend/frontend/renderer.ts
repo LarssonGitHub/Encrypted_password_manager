@@ -67,3 +67,14 @@ export const editDocumentFeedback = (message: string, error: boolean): void => {
 export const hideFeedbackContainer = (): void => {
     hideElement(feedbackContainer)
 }
+
+// TODO
+document.onreadystatechange = async function () {
+    // let key = prompt("Key needed", "");
+
+    // if (person == null || person == "") {
+    //   text = "User cancelled the prompt.";
+    // } else {
+    //   text = "Hello " + person + "! How are you today?";
+    // }
+  };

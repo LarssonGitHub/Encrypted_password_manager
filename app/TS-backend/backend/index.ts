@@ -16,7 +16,8 @@ import {
   getData,
   updateData,
   postData,
-  deleteData
+  deleteData,
+  checkDatabase
 } from "./handlers";
 
 function createWindow() {
@@ -40,6 +41,8 @@ function createWindow() {
 app.whenReady().then(() => {
 
   ipcMain.handle("generateId", () => generateId());
+
+  ipcMain.handle("checkDatabase", async () => checkDatabase());
 
   ipcMain.handle("encryptData", (meta, data: string, secretKey: string) =>
       encryptData(data, secretKey)

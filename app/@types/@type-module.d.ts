@@ -14,7 +14,7 @@ export interface userCredentialObject {
 
 export interface customResponse {
   message: string;
-  data ? : userCredentialsArray 
+  data ? : userCredentialsArray | boolean
 }
 
 // Add more keys to the cause as needed
@@ -38,5 +38,6 @@ export type API = {
     postData: (postData: userCredentialObject, key: string) => Promise<customResponse>;
     encryptData: (data: string, secretKey: string) => Promise < customResponse >;
     decryptData: (data: string, secretKey: string) => Promise < customResponse >;
+    checkDatabase: () =>  Promise < customResponse >;
   };
 }

@@ -37,6 +37,7 @@ const backend = {
   postData: (postData: userCredentialObject, key: string): Promise < customResponse > => ipcRenderer.invoke("postData", postData, key),
   encryptData: (data: string, secretKey: string) => ipcRenderer.invoke("encryptData", data, secretKey),
   decryptData: (data: string, secretKey: string) => ipcRenderer.invoke("decryptData", data, secretKey),
+  checkDatabase: () => ipcRenderer.invoke("checkDatabase"),
 }
 
 const API = {
