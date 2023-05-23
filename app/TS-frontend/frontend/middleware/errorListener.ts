@@ -3,11 +3,7 @@ import {
 } from "../renderer.js"
 import {
     customResponse,
-    userCredentialsArray
 } from "../../../@types/@type-module";
-import {
-    sanitizeResponse
-} from "../utilities.js";
 
 const logError = (error: Error): void => {
     console.error(error)
@@ -24,10 +20,9 @@ const sanitizeError = (error: unknown): void => {
     logUnknownError()
 }
 
-export const errorListener = async (func: Function): Promise < userCredentialsArray | void > => {
+export const errorListener = async (func: Function): Promise < void | customResponse > => {
     try {
-        const response: customResponse = await func();
-        return sanitizeResponse(response);
+        return await func();
     } catch (error: unknown) {
         sanitizeError(error)
     }

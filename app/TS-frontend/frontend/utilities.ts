@@ -1,11 +1,6 @@
 import {
   userCredentialObject,
-  customResponse,
-  userCredentialsArray
 } from "../../@types/@type-module";
-import {
-  editDocumentFeedback,
-} from "./renderer.js";
 import {
   form
 } from "./listeners.js";
@@ -51,14 +46,6 @@ export const compileFormData = (form: HTMLFormElement): userCredentialObject => 
   const extractedData = new FormData(form) as unknown as Iterable < [userCredentialObject, FormDataEntryValue] > ;
   return Object.fromEntries(extractedData);
 };
-
-export const sanitizeResponse = (response: customResponse): userCredentialsArray | void => {
-  console.log(response)
-  const message = response.message === undefined ? "Action completed, no message given" : response.message;
-  editDocumentFeedback(message, false)
-  if (!response.data || typeof response.data !== 'object') return;
-  return response.data
-}
 
 export const hideElement = (element: HTMLElement): void => {
   if (element.classList.contains("show"))

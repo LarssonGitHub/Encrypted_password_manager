@@ -19,8 +19,8 @@ import {
 
 export const checkDatabase = async (): Promise < customResponse > => {
     const isEmpty: string | null = await getDatabaseData();
-    if (!isEmpty) return createResponse("Your database is empty", false)
-    return createResponse("Your database is not empty", true)
+    if (!isEmpty) return createResponse("Your database is empty", null, true)
+    return createResponse("Your database is not empty", null, false)
 }
 
 export const getData = async (key: string): Promise < customResponse > => {
@@ -39,10 +39,10 @@ export const deleteData = async (objectId: string, key: string): Promise < custo
     const compiledDatabaseData: userCredentialsArray = removeItemWebsiteArray(objectId, databaseData);
     // A validation is used to clean the entire database if no items remain.
     // Used to make sure no residue, which requires a key, remains in the database so it can return as empty.
-    if (compiledDatabaseData.length > 0) {
+    if (compiledDatabaseData.length === 0) {
         const updatedDatabase: boolean = await insertEmptyDatabaseData();
         if (!updatedDatabase) throw new Error("Couldn't update the data, canceling delete request");
-        return createResponse("Delete request successful, no more items in database", null);
+        return createResponse("Delete request successful, no more items in database", []);
     }
     const updatedDatabase: boolean = await encryptAndInsertDatabaseData(compiledDatabaseData, key)
     if (!updatedDatabase)

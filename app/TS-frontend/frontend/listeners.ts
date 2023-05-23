@@ -4,7 +4,10 @@ import {
 } from "./handlers.js";
 import {
   postHandler,
-  getHandler
+  getHandler,
+  CryptoKeyHandler,
+  keyCreationHandler,
+  CreationHandler
 } from "./handlers.js";
 import {
   hideFeedbackContainer
@@ -31,6 +34,14 @@ export const formContainer = document.getElementById("form-container") !as HTMLD
 export const postFormButton = document.getElementById("post-form-button") !as HTMLButtonElement;
 export const closeFormButton = document.getElementById("close-form-button") !as HTMLButtonElement;
 export const getItems = document.getElementById("get-items") !as HTMLButtonElement;
+export const createKeyContainer = document.getElementById("create-key-container") as HTMLDivElement;
+export const validateKeyContainer = document.getElementById("validate-key-container") as HTMLDivElement;
+export const createKeyButton = document.getElementById("create-key-button") !as HTMLButtonElement;
+export const validateKeyButton = document.getElementById("validate-key-button") !as HTMLButtonElement;
+
+
+
+
 
 form.addEventListener("submit", (event: SubmitEvent) => {
   event.preventDefault();
@@ -71,4 +82,17 @@ listDataContainer.addEventListener("click", function(event) {
   if (target && target.classList.contains("delete-item-button")) {
       deleteItemHandler(event);
   }
+});
+
+// TODO find another, more electron related solution to run a function at startup
+document.onreadystatechange = function() {
+  CryptoKeyHandler()
+};
+
+createKeyButton.addEventListener("click", () => {
+  keyCreationHandler()
+});
+
+validateKeyButton.addEventListener("click", () => {
+  CreationHandler()
 });

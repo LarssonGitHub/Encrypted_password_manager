@@ -60,21 +60,10 @@ export const FeedbackResponseType = (error: boolean): void => {
 
 export const editDocumentFeedback = (message: string, error: boolean): void => {
     FeedbackResponseType(error)
-    feedbackMessage.innerText = message;
+    feedbackMessage.innerText = message === undefined ? "No message given" : message;
     viewElement(feedbackContainer)
 }
 
 export const hideFeedbackContainer = (): void => {
     hideElement(feedbackContainer)
 }
-
-// TODO
-document.onreadystatechange = async function () {
-    // let key = prompt("Key needed", "");
-
-    // if (person == null || person == "") {
-    //   text = "User cancelled the prompt.";
-    // } else {
-    //   text = "Hello " + person + "! How are you today?";
-    // }
-  };

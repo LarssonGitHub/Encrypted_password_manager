@@ -17,6 +17,32 @@
     <p id="feedback-message"></p><button id="feedback-close-button">X</button>
   </div>
 
+  <div id="create-key-container" class="hidden">
+    <p>Create a key you will use during encryption</p>
+    <ul>
+      <li>
+        <span>Choose a key</span>
+        <span><input type="password" name="createKeyInput" id="create-key-input"></span>
+      </li>
+      <li>
+        <span>Repeat key</span>
+        <span><input type="password" name="repeatKeyInput" id="repeat-key-input"></span>
+      </li>
+      <li><button id="create-key-button">Create key</button></li>
+    </ul>
+  </div>
+
+  <div id="validate-key-container" class="hidden">
+    <p>Enter key for decryption of your items</p>
+    <ul>
+      <li>
+        <span>key</span>
+        <span><input type="password" name="validateKeyInput" id="validate-key-input"></span>
+      </li>
+      <li><button id="validate-key-button">Try key</button></li>
+    </ul>
+  </div>
+
   <!-- TODO: add icon, like a pencil -->
   <button id="post-form-button">Add new item..!</button>
 
@@ -40,7 +66,7 @@
         </li>
         <li>
           <span>Associated password</span>
-          <span><input type="password" name="passwordInput" id="password-input"></span>
+          <span><input type="text" name="passwordInput" id="password-input"></span>
         </li>
         <li>
           <span>Additional notes</span>
