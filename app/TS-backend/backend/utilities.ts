@@ -43,7 +43,7 @@ export const updateItemWebsiteArray = (object: userCredentialObject, websitesArr
 
 export const InsertIntoWebsitesArray = (data: userCredentialObject, websitesArray: userCredentialsArray): userCredentialsArray => {
   return [...websitesArray,
-    data
+  data
 ];
 };
 
@@ -105,11 +105,13 @@ export const getDataFromDatabaseAndSanitize = async (key: string): Promise < nul
   return decryptedData
 }
 
-export const createResponse = (message: string, data: userCredentialsArray | boolean | null): customResponse => {
+export const createResponse = (message: string, data: userCredentialsArray | null, databaseEmpty ? : boolean): customResponse => {
   return {
+      ok: true,
       message: message,
-      ...((data !== null && data !== undefined) && {
-          data
+      data: data === null && data !== undefined ? [] : data,
+      ...((databaseEmpty !== null && databaseEmpty !== undefined) && {
+          databaseEmpty
       })
   }
 }

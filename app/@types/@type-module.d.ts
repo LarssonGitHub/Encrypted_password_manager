@@ -13,13 +13,15 @@ export interface userCredentialObject {
 }
 
 export interface customResponse {
+  ok: true;
   message: string;
-  data ? : userCredentialsArray | boolean
+  data: userCredentialsArray | [];
+  databaseEmpty?: boolean;
 }
 
-// Add more keys to the cause as needed
-export interface customErrorCause {
-  data?: any;
+export interface errorResponse {
+  ok: false;
+  error: unknown;
 }
 
 export type userCredentialsArray = userCredentialObject[];

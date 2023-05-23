@@ -3,6 +3,7 @@ import {
 } from "../renderer.js"
 import {
     customResponse,
+    errorResponse
 } from "../../../@types/@type-module";
 
 const logError = (error: Error): void => {
@@ -15,15 +16,22 @@ const logUnknownError = (): void => {
     console.error("An error outside the Error instance occurred")
 }
 
-const sanitizeError = (error: unknown): void => {
+export const sanitizeError = (error: unknown): void => {
     if (error instanceof Error) return logError(error)
     logUnknownError()
 }
 
-export const errorListener = async (func: Function): Promise < void | customResponse > => {
+const createErrorResponse = (error: unknown): errorResponse => {
+    return {
+        ok: false,
+        error: error
+    }
+}
+
+export const errorListener = async (func: Function): Promise < errorResponse | customResponse > => {
     try {
         return await func();
     } catch (error: unknown) {
-        sanitizeError(error)
+        return createErrorResponse(error)
     }
 }
