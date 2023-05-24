@@ -12,6 +12,10 @@ export interface userCredentialObject {
   additionalDataInput: string;
 }
 
+interface romanType {
+  [key: number]: string;
+}
+
 export interface customResponse {
   ok: true;
   message: string;

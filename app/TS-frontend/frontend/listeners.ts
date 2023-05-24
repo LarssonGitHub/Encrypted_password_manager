@@ -1,27 +1,26 @@
 import {
-  deleteItemHandler,
-  editItemHandler
-} from "./handlers.js";
-import {
-  postHandler,
+  editItemHandler,
   getHandler,
   CryptoKeyHandler,
   keyCreationHandler,
-  CreationHandler
+  creationHandler,
+  confirmHandler,
+  deleteItemHandler
 } from "./handlers.js";
 import {
-  hideFeedbackContainer
+  hideFeedbackContainer,
 } from "./renderer.js";
 import {
   viewElement,
   hideElement,
   getDataAction,
   setDataAction,
-  resetForm
+  resetForm,
+  postConfirm,
+  deleteConfirm,
+  updateConfirm,
+  resetConfirm
 } from "./utilities.js";
-import {
-  updateHandler
-} from "./handlers.js";
 
 // HTML tags always present, if changed, like the template html tag, remove assertion operator & update guards
 export const listDataContainer = document.getElementById("list-data-container") as HTMLDivElement;
@@ -29,28 +28,28 @@ export const template = document.getElementById("template-list") as HTMLTemplate
 export const feedbackContainer = document.getElementById("feedback-container") as HTMLDivElement;
 export const feedbackMessage = document.getElementById("feedback-message") as HTMLParagraphElement;
 export const feedbackCloseButton = document.getElementById("feedback-close-button") as HTMLButtonElement;
-export const form = document.getElementById("form") !as HTMLFormElement;
-export const formContainer = document.getElementById("form-container") !as HTMLDivElement;
-export const postFormButton = document.getElementById("post-form-button") !as HTMLButtonElement;
-export const closeFormButton = document.getElementById("close-form-button") !as HTMLButtonElement;
-export const getItems = document.getElementById("get-items") !as HTMLButtonElement;
+export const form = document.getElementById("form") as HTMLFormElement;
+export const formContainer = document.getElementById("form-container") as HTMLDivElement;
+export const postFormButton = document.getElementById("post-form-button") as HTMLButtonElement;
+export const closeFormButton = document.getElementById("close-form-button") as HTMLButtonElement;
+export const getItems = document.getElementById("get-items") as HTMLButtonElement;
 export const createKeyContainer = document.getElementById("create-key-container") as HTMLDivElement;
 export const validateKeyContainer = document.getElementById("validate-key-container") as HTMLDivElement;
-export const createKeyButton = document.getElementById("create-key-button") !as HTMLButtonElement;
-export const validateKeyButton = document.getElementById("validate-key-button") !as HTMLButtonElement;
-
-
-
-
+export const createKeyButton = document.getElementById("create-key-button") as HTMLButtonElement;
+export const validateKeyButton = document.getElementById("validate-key-button") as HTMLButtonElement;
+export const confirmContainer = document.getElementById("confirm-container") as HTMLDivElement;
+export const confirmMessage = document.getElementById("confirm-message") as HTMLParagraphElement;
+export const confirmYesButton = document.getElementById("confirm-yes-button") as HTMLButtonElement;
+export const confirmNoButton = document.getElementById("confirm-no-button") as HTMLButtonElement;
 
 form.addEventListener("submit", (event: SubmitEvent) => {
   event.preventDefault();
-  const actionType: string | null = getDataAction(event.target as HTMLFormElement)
-  if (actionType && actionType === "post") {
-      postHandler(event)
+  const action: string | null = getDataAction(event.target as HTMLFormElement)
+  if (action && action === "post") {
+      postConfirm()
   }
-  if (actionType && actionType === "update") {
-      updateHandler(event)
+  if (action && action === "update") {
+      updateConfirm()
   }
 })
 
@@ -73,26 +72,35 @@ closeFormButton.addEventListener("click", () => {
   resetForm()
 });
 
-listDataContainer.addEventListener("click", function(event) {
+listDataContainer.addEventListener("click", function(event: MouseEvent) {
   event.preventDefault();
-  const target: HTMLElement | null = event.target as HTMLElement;
+  const target: HTMLButtonElement | null = event.target as HTMLButtonElement;
   if (target && target.classList.contains("edit-item-button")) {
-      editItemHandler(event);
+      editItemHandler(target);
   }
   if (target && target.classList.contains("delete-item-button")) {
-      deleteItemHandler(event);
+      deleteItemHandler(target);
+      deleteConfirm()
   }
 });
-
-// TODO find another, more electron related solution to run a function at startup
-document.onreadystatechange = function() {
-  CryptoKeyHandler()
-};
 
 createKeyButton.addEventListener("click", () => {
   keyCreationHandler()
 });
 
 validateKeyButton.addEventListener("click", () => {
-  CreationHandler()
+  creationHandler()
 });
+
+confirmYesButton.addEventListener("click", (event: MouseEvent) => {
+  confirmHandler(event.target as HTMLButtonElement);
+});
+
+confirmNoButton.addEventListener("click", () => {
+  resetConfirm()
+});
+
+// TODO find another, more electron related solution to run a function at startup
+document.onreadystatechange = function() {
+  CryptoKeyHandler()
+};

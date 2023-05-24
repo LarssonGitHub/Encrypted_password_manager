@@ -43,6 +43,16 @@
     </ul>
   </div>
 
+  <div id="confirm-container" class="hidden">
+    <p id="confirm-message"></p>
+    <ul>
+      <li>
+        <button data-event="#" id="confirm-yes-button">Yes</button>
+      </li>
+      <li><button id="confirm-no-button">No</button></li>
+    </ul>
+  </div>
+
   <!-- TODO: add icon, like a pencil -->
   <button id="post-form-button">Add new item..!</button>
 
@@ -101,7 +111,7 @@
         <li><b>Notes:</b> <span class="list-additional-data"></span></li>
         <li>
           <button data-stored-object="#" class="edit-item-button">Edit</button>
-          <button data-credential-id="#" class="delete-item-button">Delete</button>
+          <button data-delete-validation-id="#" data-delete-id="#" class="delete-item-button">Delete</button>
         </li>
       </ul>
     </div>

@@ -7,6 +7,8 @@ import {
     template,
     feedbackMessage,
     feedbackContainer,
+    confirmMessage,
+    confirmYesButton
 } from "./listeners.js";
 import {
     viewElement,
@@ -42,13 +44,13 @@ export const appendListToArrayTemplate = (userCredentials: userCredentialsArray 
         newClone.querySelector(".list-additional-data") !.textContent = credential.additionalDataInput;
         // Used to easily grab the values when making a put request
         (newClone.querySelector(".edit-item-button") as HTMLElement).setAttribute("data-stored-object", JSON.stringify(credential));
-        (newClone.querySelector(".delete-item-button") as HTMLElement).setAttribute("data-credential-id", credential.id);
+        (newClone.querySelector(".delete-item-button") as HTMLElement).setAttribute("data-delete-validation-id", credential.id);
         listDataContainer.append(newClone);
     });
 
 };
 
-export const editDocumentListing = (data: userCredentialsArray) => {
+export const updateDocumentList = (data: userCredentialsArray) => {
     removeListData()
     appendListToArrayTemplate(data);
 }
@@ -66,4 +68,9 @@ export const editDocumentFeedback = (message: string, error: boolean): void => {
 
 export const hideFeedbackContainer = (): void => {
     hideElement(feedbackContainer)
+}
+
+export const editDocumentConfirm = (text: string, eventName: string) => {
+    confirmMessage.innerText = text;
+    confirmYesButton.setAttribute("data-event", eventName);
 }
