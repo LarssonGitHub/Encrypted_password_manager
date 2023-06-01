@@ -1,12 +1,11 @@
 import {
-  editItemHandler,
-  getHandler,
+  getDatabaseData,
   checkDatabaseStatus,
-  keyCreationHandler,
-  keyValidationHandler,
-  confirmHandler,
-  itemHandler,
-  formSubmitHandler
+  createKey,
+  validateKey,
+  confirmRequest,
+  readyHandler,
+  submitFormAction
 } from "./handlers.js";
 import {
   hideFeedbackContainer,
@@ -53,13 +52,13 @@ export const repeatKeyInput = document.getElementById("repeat-key-input") as HTM
 
 form.addEventListener("submit", async (event: SubmitEvent) => {
   event.preventDefault();
-  const submittedForm: errorResponse | eventResponse = await eventErrorListener(() => formSubmitHandler(event));
-  if (!submittedForm.success) return sanitizeError(submittedForm.error);
+  const submitEvent: errorResponse | eventResponse = await eventErrorListener(() => submitFormAction(event));
+  if (!submitEvent.success) return sanitizeError(submitEvent.error);
 })
 
 getItems.addEventListener("click", async () => {
-  const getEvent: errorResponse | eventResponse = await eventErrorListener(() => getHandler());
-  if (!getEvent.success) sanitizeError(getEvent.error);
+  const getDataEvent: errorResponse | eventResponse = await eventErrorListener(() => getDatabaseData());
+  if (!getDataEvent.success) sanitizeError(getDataEvent.error);
 });
 
 feedbackCloseButton.addEventListener("click", () => {
@@ -78,42 +77,43 @@ closeFormButton.addEventListener("click", () => {
 
 listDataContainer.addEventListener("click", async (event: MouseEvent) => {
   event.preventDefault();
-  const updatedItemsInList: errorResponse | eventResponse = await eventErrorListener(() => itemHandler(event));
-  if (!updatedItemsInList.success) {
+  const readyEvent: errorResponse | eventResponse = await eventErrorListener(() => readyHandler(event));
+  if (!readyEvent.success) {
       resetConfirm()
-      return sanitizeError(updatedItemsInList.error);
+      return sanitizeError(readyEvent.error);
   }
 });
 
 createKeyButton.addEventListener("click", async () => {
-  const getKey: errorResponse | eventResponse = await eventErrorListener(() => keyCreationHandler());
-  if (!getKey.success) return sanitizeError(getKey.error);
-  const getData: errorResponse | eventResponse = await eventErrorListener(() => getHandler());
-  if (!getData.success) return sanitizeError(getData.error)
+  const getKeyEvent: errorResponse | eventResponse = await eventErrorListener(() => createKey());
+  if (!getKeyEvent.success) return sanitizeError(getKeyEvent.error);
+  const getDataEvent: errorResponse | eventResponse = await eventErrorListener(() => getDatabaseData());
+  if (!getDataEvent.success) return sanitizeError(getDataEvent.error)
   hideElement(createKeyContainer);
 });
 
 
 validateKeyButton.addEventListener("click", async () => {
-  const getKey: errorResponse | eventResponse = await eventErrorListener(() => keyValidationHandler());
-  if (!getKey.success) return sanitizeError(getKey.error);
-  const getData: errorResponse | eventResponse = await eventErrorListener(() => getHandler());
+  const validateKeyEvent: errorResponse | eventResponse = await eventErrorListener(() => validateKey());
+  if (!validateKeyEvent.success) return sanitizeError(validateKeyEvent.error);
+  const getData: errorResponse | eventResponse = await eventErrorListener(() => getDatabaseData());
   if (!getData.success) return sanitizeError(getData.error);
   hideElement(validateKeyContainer);
 });
 
 confirmYesButton.addEventListener("click", async (event: MouseEvent) => {
   event.preventDefault();
-  const updatedItemsInList: errorResponse | eventResponse = await eventErrorListener(() => confirmHandler(event));
+  const requestEvent: errorResponse | eventResponse = await eventErrorListener(() => confirmRequest(event));
   resetConfirm()
-  if (!updatedItemsInList.success) return sanitizeError(updatedItemsInList.error);
+  if (!requestEvent.success) return sanitizeError(requestEvent.error);
 });
+
 confirmNoButton.addEventListener("click", async () => {
   resetConfirm();
 });
 
 // TODO find another, more electron related solution to run a function at startup
 document.onreadystatechange = async function() {
-  const getDatabase: errorResponse | eventResponse = await eventErrorListener(() => checkDatabaseStatus());
-  if (!getDatabase.success) return sanitizeError(getDatabase.error);
+  const checkDatabaseEvent: errorResponse | eventResponse = await eventErrorListener(() => checkDatabaseStatus());
+  if (!checkDatabaseEvent.success) return sanitizeError(checkDatabaseEvent.error);
 };

@@ -50,7 +50,7 @@ export const appendListToArrayTemplate = (userCredentials: userCredentialsArray 
 
 };
 
-export const updateDocumentList = (data: userCredentialsArray) => {
+export const updateList = (data: userCredentialsArray) => {
     removeListData()
     appendListToArrayTemplate(data);
 }
@@ -60,7 +60,7 @@ export const FeedbackResponseType = (error: boolean): void => {
     if (error) feedbackContainer.classList.replace("success-container", "error-container")
 }
 
-export const editDocumentFeedback = (message: string, error: boolean): void => {
+export const editFeedback = (message: string, error: boolean): void => {
     FeedbackResponseType(error)
     feedbackMessage.innerText = message === undefined ? "No message given" : message;
     viewElement(feedbackContainer)

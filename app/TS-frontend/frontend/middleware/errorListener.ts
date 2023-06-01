@@ -1,5 +1,5 @@
 import {
-    editDocumentFeedback
+    editFeedback
 } from "../renderer.js"
 import {
     backendResponse,
@@ -13,7 +13,7 @@ import {
 const logError = (error: Error): void => {
     console.error(error)
     const message = error.message === undefined ? "Error occurred, no message was given" : error.message;
-    editDocumentFeedback(message, true)
+    editFeedback(message, true)
 }
 
 const logUnknownError = (): void => {

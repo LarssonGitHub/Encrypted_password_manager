@@ -10,7 +10,6 @@ import {
   createKeyInput
 } from "./listeners.js";
 import {
-  editDocumentFeedback,
   editDocumentConfirm
 } from "./renderer.js";
 
@@ -50,7 +49,6 @@ export const setNewDataDeleteId = (deleteButton: HTMLButtonElement, id: string):
   // Used to validate that the right is stored when deletion is confirmed by user
   deleteButton.setAttribute("data-delete-id", id);
 }
-
 
 export const removeDataAction = (): void => {
   form.setAttribute("data-action", "");
@@ -143,12 +141,12 @@ export const getFormValues = (): userCredentialObject => {
 }
 
 export const getAndValidateKeys = (): string => {
-  const keyValueOne: string = createKeyInput.value;
-  const keyValueTwo: string = repeatKeyInput.value;
-  if (keyValueOne !== keyValueTwo) {
+  const keyOne: string = createKeyInput.value;
+  const keyTwo: string = repeatKeyInput.value;
+  if (keyOne !== keyTwo) {
       throw new Error("Keys didn't match");
   }
-  return keyValueOne
+  return keyOne
 }
 
 export const getKey = (): string => {

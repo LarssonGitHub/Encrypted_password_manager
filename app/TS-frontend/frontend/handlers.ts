@@ -28,8 +28,8 @@ import {
   backendErrorListener,
 } from "./middleware/errorListener.js";
 import {
-  updateDocumentList,
-  editDocumentFeedback,
+  updateList,
+  editFeedback,
 } from "./renderer.js";
 import {
   formContainer,
@@ -41,9 +41,9 @@ import {
 // Must only be stored as a local variable for safety
 let secretKey: string;
 
-export const confirmHandler = async (event: MouseEvent) => {
+export const confirmRequest = async (event: MouseEvent) => {
   const target: HTMLButtonElement | null = event.target as HTMLButtonElement;
-  if (!target) throw new Error("Problem occurred when getting target")
+  if (!target) throw new Error("Couldn't find target")
   const handler: string = getDataEvent(target);
   switch (handler) {
       case "postHandler":
@@ -56,26 +56,26 @@ export const confirmHandler = async (event: MouseEvent) => {
           await deleteHandler()
           break;
       default:
-          throw new Error("Couldn't match request to a handler")
+          throw new Error("Couldn't match a request")
   }
 }
 
-export const itemHandler = (event: MouseEvent) => {
+export const readyHandler = (event: MouseEvent) => {
   const target: HTMLButtonElement | null = event.target as HTMLButtonElement;
-  if (!target) throw new Error("Problem occurred when getting target");
+  if (!target) throw new Error("Couldn't find target")
   if (target && target.classList.contains("edit-item-button")) {
-      editItemHandler(target);
+      readyUpdateHandler(target);
       return
   }
   if (target && target.classList.contains("delete-item-button")) {
-      deleteItemHandler(target);
+      readyDeleteHandler(target);
       deleteConfirm();
       return
   }
-  throw new Error("Problem occurred when trying to get handler")
+  throw new Error("Couldn't match a handler")
 }
 
-export const formSubmitHandler = (event: SubmitEvent) => {
+export const submitFormAction = (event: SubmitEvent) => {
   const action: string = getDataAction(event.target as HTMLFormElement)
   switch (action) {
       case "post":
@@ -85,7 +85,7 @@ export const formSubmitHandler = (event: SubmitEvent) => {
           updateConfirm()
           break;
       default:
-          throw new Error("Couldn't locate any form action")
+          throw new Error("Couldn't locate any action from the form")
   }
 }
 
@@ -100,18 +100,18 @@ export const postHandler = async (): Promise < void > => {
   hideElement(formContainer);
   resetForm();
   removeDataAction();
-  editDocumentFeedback(postData.message, false)
-  updateDocumentList(postData.data);
+  editFeedback(postData.message, false)
+  updateList(postData.data);
 };
 
-export const getHandler = async (): Promise < void | string > => {
+export const getDatabaseData = async (): Promise < void | string > => {
   if (!secretKey) throw new Error("No key was submitted")
   const getData: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.getData(secretKey));
   if (!getData.success) {
       throw getData.error
   }
-  editDocumentFeedback(getData.message, false)
-  updateDocumentList(getData.data);
+  editFeedback(getData.message, false)
+  updateList(getData.data);
 };
 
 export const deleteHandler = async (): Promise < void > => {
@@ -121,18 +121,18 @@ export const deleteHandler = async (): Promise < void > => {
   if (!deleteData.success) {
       throw deleteData.error
   }
-  editDocumentFeedback(deleteData.message, false)
-  updateDocumentList(deleteData.data);
+  editFeedback(deleteData.message, false)
+  updateList(deleteData.data);
 };
 
-export const editItemHandler = (updateButton: HTMLButtonElement): void => {
+export const readyUpdateHandler = (updateButton: HTMLButtonElement): void => {
   const data: userCredentialObject = getDataStoredObject(updateButton);
   setDataAction("update")
   updateFormValues(data);
   viewElement(formContainer);
 };
 
-export const deleteItemHandler = (deleteButton: HTMLButtonElement): void => {
+export const readyDeleteHandler = (deleteButton: HTMLButtonElement): void => {
   const id: string = getDataDeleteValidationId(deleteButton);
   setNewDataDeleteId(deleteButton, id)
 };
@@ -149,17 +149,17 @@ export const updateHandler = async (): Promise < void > => {
   hideElement(formContainer);
   resetForm()
   removeDataAction();
-  editDocumentFeedback(updateData.message, false);
-  updateDocumentList(updateData.data);
+  editFeedback(updateData.message, false);
+  updateList(updateData.data);
 };
 
-export const keyCreationHandler = (): void => {
-  const userKey: string = getAndValidateKeys();
-  if (!userKey) throw new Error("Problem occurred when creating new key");
-  secretKey = userKey;
+export const createKey = (): void => {
+  const key: string = getAndValidateKeys();
+  if (!key) throw new Error("Problem occurred when creating new key");
+  secretKey = key;
 }
 
-export const keyValidationHandler = async () => {
+export const validateKey = async () => {
   const userKey: string = getKey();
   if (!userKey) throw new Error("Problem occurred when fetching key");
   secretKey = userKey;
