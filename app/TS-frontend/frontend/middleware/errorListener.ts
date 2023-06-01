@@ -2,9 +2,13 @@ import {
     editDocumentFeedback
 } from "../renderer.js"
 import {
-    customResponse,
-    errorResponse
+    backendResponse,
+    errorResponse, 
+    eventResponse
 } from "../../../@types/@type-module";
+import {
+    createResponse
+} from "../utilities.js"
 
 const logError = (error: Error): void => {
     console.error(error)
@@ -23,14 +27,25 @@ export const sanitizeError = (error: unknown): void => {
 
 const createErrorResponse = (error: unknown): errorResponse => {
     return {
-        ok: false,
+        success: false,
         error: error
     }
 }
 
-export const errorListener = async (func: Function): Promise < errorResponse | customResponse > => {
+// Only used for backend requests. 
+export const backendErrorListener = async (func: Function): Promise < errorResponse | backendResponse > => {
     try {
         return await func();
+    } catch (error: unknown) {
+        return createErrorResponse(error)
+    }
+}
+
+// Only used in frontend for called events
+export const eventErrorListener = async (func: Function): Promise <  errorResponse | eventResponse  > => {
+    try {
+        await func();
+        return createResponse()
     } catch (error: unknown) {
         return createErrorResponse(error)
     }

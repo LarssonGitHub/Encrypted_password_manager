@@ -16,17 +16,21 @@ interface romanType {
   [key: number]: string;
 }
 
-export interface customResponse {
-  ok: true;
+export interface backendResponse {
+  success: true;
   message: string;
   data: userCredentialsArray | [];
   databaseEmpty?: boolean;
 }
-
 export interface errorResponse {
-  ok: false;
+  success: false;
   error: unknown;
 }
+
+export interface eventResponse {
+  success: true;
+}
+
 
 export type userCredentialsArray = userCredentialObject[];
 
@@ -38,12 +42,12 @@ export type API = {
   };
   backend: {
     generateId: () => Promise<any>;
-    getData: (key: string) => Promise<customResponse>;
-    deleteData: (id: string | null, key: string) => Promise<customResponse>;
-    updateData: (putData: userCredentialObject, key: string) => Promise<customResponse>;
-    postData: (postData: userCredentialObject, key: string) => Promise<customResponse>;
-    encryptData: (data: string, secretKey: string) => Promise < customResponse >;
-    decryptData: (data: string, secretKey: string) => Promise < customResponse >;
-    checkDatabase: () =>  Promise < customResponse >;
+    getData: (key: string) => Promise<backendResponse>;
+    deleteData: (id: string | null, key: string) => Promise<backendResponse>;
+    updateData: (putData: userCredentialObject, key: string) => Promise<backendResponse>;
+    postData: (postData: userCredentialObject, key: string) => Promise<backendResponse>;
+    encryptData: (data: string, secretKey: string) => Promise < backendResponse >;
+    decryptData: (data: string, secretKey: string) => Promise < backendResponse >;
+    checkDatabase: () =>  Promise < backendResponse >;
   };
 }

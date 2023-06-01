@@ -61,26 +61,26 @@
     <button id="close-form-button">X</button>
     <form id="form" data-action="">
       <ul>
-        <li class="list-id" hidden> <input type="hidden" id="id" name="id" value=""></li>
+        <li class="list-id" hidden> <input type="hidden" id="id" name="id" value="#"></li>
         <li>
           <span>Associated Website</span>
-          <span><input type="text" name="websiteInput" id="website-input"></span>
+          <span><input type="text" name="websiteInput" id="website-input" required></span>
         </li>
         <li>
           <span>Associated email</span>
-          <span><input type="text" name="emailInput" id="email-input"></span>
+          <span><input type="text" name="emailInput" id="email-input" required></span>
         </li>
         <li>
           <span>Associated username</span>
-          <span><input type="text" name="usernameInput" id="username-input"></span>
+          <span><input type="text" name="usernameInput" id="username-input" required></span>
         </li>
         <li>
           <span>Associated password</span>
-          <span><input type="text" name="passwordInput" id="password-input"></span>
+          <span><input type="text" name="passwordInput" id="password-input" required></span>
         </li>
         <li>
           <span>Additional notes</span>
-          <span><textarea name="additionalDataInput" id="additional-data-input"></textarea></span>
+          <span><textarea name="additionalDataInput" id="additional-data-input" required>No notes given</textarea></span>
         </li>
         <li>
           <button type="submit">Add new info</button>
@@ -101,8 +101,7 @@
   <template id="template-list">
     <div>
       <ul id="list-data-unordered-list">
-        <!-- <li class="list-id" hidden>This is hidden</li> -->
-        <li class="list-id" hidden>Hide this in production</li>
+        <li class="list-id" hidden></li>
         <li><b>Website:</b> <span class="list-website"></span></li>
         <li><b>Email:</b> <span class="list-email"></span></li>
         <li><b>Username:</b> <span class="list-username"></span></li>

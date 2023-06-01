@@ -1,6 +1,7 @@
 import {
   userCredentialObject,
-  customResponse,
+  backendResponse,
+  eventResponse,
   errorResponse
 } from "../../@types/@type-module";
 import {
@@ -13,15 +14,18 @@ import {
   removeDataAction,
   viewElement,
   hideElement,
-  extractAndValidateKey,
+  getKey,
+  getAndValidateKeys,
   getFormValues,
   getDataEvent,
-  resetConfirm,
   getDataDeleteValidationId,
-  removeDataDeleteId
+  deleteConfirm,
+  getDataAction,
+  postConfirm,
+  updateConfirm
 } from "./utilities.js";
 import {
-  errorListener
+  backendErrorListener,
 } from "./middleware/errorListener.js";
 import {
   updateDocumentList,
@@ -32,125 +36,141 @@ import {
   validateKeyContainer,
   createKeyContainer,
 } from "./listeners.js";
-import {
-  sanitizeError
-} from "./middleware/errorListener.js";
 
 // The key for decryption/encryption
+// Must only be stored as a local variable for safety
 let secretKey: string;
 
-export const confirmHandler = (target: HTMLButtonElement) => {
-  const event: string | null = getDataEvent(target);
-  switch (event) {
+export const confirmHandler = async (event: MouseEvent) => {
+  const target: HTMLButtonElement | null = event.target as HTMLButtonElement;
+  if (!target) throw new Error("Problem occurred when getting target")
+  const handler: string = getDataEvent(target);
+  switch (handler) {
       case "postHandler":
-          postHandler()
-          resetConfirm()
+          await postHandler()
           break;
       case "updateHandler":
-          updateHandler()
-          resetConfirm()
+          await updateHandler()
           break;
       case "deleteHandler":
-          deleteHandler()
-          resetConfirm()
+          await deleteHandler()
           break;
       default:
+          throw new Error("Couldn't match request to a handler")
+  }
+}
+
+export const itemHandler = (event: MouseEvent) => {
+  const target: HTMLButtonElement | null = event.target as HTMLButtonElement;
+  if (!target) throw new Error("Problem occurred when getting target");
+  if (target && target.classList.contains("edit-item-button")) {
+      editItemHandler(target);
+      return
+  }
+  if (target && target.classList.contains("delete-item-button")) {
+      deleteItemHandler(target);
+      deleteConfirm();
+      return
+  }
+  throw new Error("Problem occurred when trying to get handler")
+}
+
+export const formSubmitHandler = (event: SubmitEvent) => {
+  const action: string = getDataAction(event.target as HTMLFormElement)
+  switch (action) {
+      case "post":
+          postConfirm()
           break;
-          // TODO throw error
+      case "update":
+          updateConfirm()
+          break;
+      default:
+          throw new Error("Couldn't locate any form action")
   }
 }
 
 export const postHandler = async (): Promise < void > => {
-  if (!secretKey) return
+  if (!secretKey) throw new Error("No key submitted");
   const compiledObject: userCredentialObject = getFormValues();
-  const response: errorResponse | customResponse = await errorListener(() => window.API.backend.postData(compiledObject, secretKey));
-  if (!response.ok) {
-      sanitizeError(response.error)
-      return
+  if (Object.values(compiledObject).includes("")) throw new Error("Please, do not leave any felids empty")
+  const postData: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.postData(compiledObject, secretKey));
+  if (!postData.success) {
+      throw postData.error
   }
   hideElement(formContainer);
   resetForm();
   removeDataAction();
-  editDocumentFeedback(response.message, false)
-  updateDocumentList(response.data);
+  editDocumentFeedback(postData.message, false)
+  updateDocumentList(postData.data);
 };
 
 export const getHandler = async (): Promise < void | string > => {
-  const response: errorResponse | customResponse = await errorListener(() => window.API.backend.getData(secretKey));
-  if (!response.ok) {
-      sanitizeError(response.error)
-      return
+  if (!secretKey) throw new Error("No key was submitted")
+  const getData: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.getData(secretKey));
+  if (!getData.success) {
+      throw getData.error
   }
-  hideElement(validateKeyContainer);
-  editDocumentFeedback(response.message, false)
-  updateDocumentList(response.data);
+  editDocumentFeedback(getData.message, false)
+  updateDocumentList(getData.data);
 };
 
 export const deleteHandler = async (): Promise < void > => {
-  if (!secretKey) return;
-  const id: string | undefined = getDeleteId();
-  if (!id) return
-  const response: errorResponse | customResponse = await errorListener(() => window.API.backend.deleteData(id, secretKey));
-  if (!response.ok) {
-      sanitizeError(response.error)
-      removeDataDeleteId()
-      return
+  if (!secretKey) throw new Error("No key was submitted")
+  const id: string = getDeleteId();
+  const deleteData: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.deleteData(id, secretKey));
+  if (!deleteData.success) {
+      throw deleteData.error
   }
-  editDocumentFeedback(response.message, false)
-  updateDocumentList(response.data);
+  editDocumentFeedback(deleteData.message, false)
+  updateDocumentList(deleteData.data);
 };
 
-export const editItemHandler = async (target: HTMLButtonElement): Promise < void > => {
-  if (!target) return
-  const data: void | userCredentialObject = getDataStoredObject(target);
-  if (!data) return
+export const editItemHandler = (updateButton: HTMLButtonElement): void => {
+  const data: userCredentialObject = getDataStoredObject(updateButton);
   setDataAction("update")
   updateFormValues(data);
-  viewElement(formContainer)
+  viewElement(formContainer);
 };
 
-export const deleteItemHandler = async (target: HTMLButtonElement): Promise < void > => {
-  if (!target) return
-  const id: null | string = getDataDeleteValidationId(target)
-  if (!id) return
-  setNewDataDeleteId(target, id)
+export const deleteItemHandler = (deleteButton: HTMLButtonElement): void => {
+  const id: string = getDataDeleteValidationId(deleteButton);
+  setNewDataDeleteId(deleteButton, id)
 };
 
 export const updateHandler = async (): Promise < void > => {
-  if (!secretKey) return
+  if (!secretKey) throw new Error("No key was submitted")
   const compiledObject: userCredentialObject = getFormValues();
-  const response: errorResponse | customResponse = await errorListener(() => window.API.backend.updateData(compiledObject, secretKey))
-  if (!response.ok) {
-      sanitizeError(response.error)
-      return
+  if (Object.values(compiledObject).includes("")) throw new Error("Please, do not leave any felids empty")
+  const updateData: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.updateData(compiledObject, secretKey))
+  if (!updateData.success) {
+      throw updateData.error;
+
   }
-  hideElement(formContainer)
+  hideElement(formContainer);
   resetForm()
-  removeDataAction()
-  editDocumentFeedback(response.message, false)
-  updateDocumentList(response.data);
+  removeDataAction();
+  editDocumentFeedback(updateData.message, false);
+  updateDocumentList(updateData.data);
 };
 
 export const keyCreationHandler = (): void => {
-  const userKey: string | void = extractAndValidateKey();
-  if (!userKey) return;
-  hideElement(createKeyContainer);
+  const userKey: string = getAndValidateKeys();
+  if (!userKey) throw new Error("Problem occurred when creating new key");
   secretKey = userKey;
 }
 
-export const creationHandler = (): void => {
-  const userKey: string = (document.getElementById("validate-key-input") as HTMLInputElement).value;
+export const keyValidationHandler = async () => {
+  const userKey: string = getKey();
+  if (!userKey) throw new Error("Problem occurred when fetching key");
   secretKey = userKey;
-  getHandler()
 }
 
-export const CryptoKeyHandler = async (): Promise < void > => {
-  const response: errorResponse | customResponse = await errorListener(() => window.API.backend.checkDatabase());
-  if (!response.ok) {
-      sanitizeError(response.error)
-      return
+export const checkDatabaseStatus = async (): Promise < void > => {
+  const getStatus: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.checkDatabase());
+  if (!getStatus.success) {
+      throw getStatus.error
   }
-  if (!response.databaseEmpty) {
+  if (!getStatus.databaseEmpty) {
       viewElement(validateKeyContainer);
       return;
   }

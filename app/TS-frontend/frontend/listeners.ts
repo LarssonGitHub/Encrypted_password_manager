@@ -1,11 +1,12 @@
 import {
   editItemHandler,
   getHandler,
-  CryptoKeyHandler,
+  checkDatabaseStatus,
   keyCreationHandler,
-  creationHandler,
+  keyValidationHandler,
   confirmHandler,
-  deleteItemHandler
+  itemHandler,
+  formSubmitHandler
 } from "./handlers.js";
 import {
   hideFeedbackContainer,
@@ -13,16 +14,21 @@ import {
 import {
   viewElement,
   hideElement,
-  getDataAction,
   setDataAction,
   resetForm,
-  postConfirm,
-  deleteConfirm,
-  updateConfirm,
   resetConfirm
 } from "./utilities.js";
+import {
+  eventErrorListener,
+  sanitizeError
+} from "./middleware/errorListener.js";
+import {
+  errorResponse,
+  eventResponse
+} from "../../@types/@type-module";
 
-// HTML tags always present, if changed, like the template html tag, remove assertion operator & update guards
+// Shows static tags are always present in the DOM 
+// Dynamic tags are handled and validated in their respective function
 export const listDataContainer = document.getElementById("list-data-container") as HTMLDivElement;
 export const template = document.getElementById("template-list") as HTMLTemplateElement;
 export const feedbackContainer = document.getElementById("feedback-container") as HTMLDivElement;
@@ -41,21 +47,19 @@ export const confirmContainer = document.getElementById("confirm-container") as 
 export const confirmMessage = document.getElementById("confirm-message") as HTMLParagraphElement;
 export const confirmYesButton = document.getElementById("confirm-yes-button") as HTMLButtonElement;
 export const confirmNoButton = document.getElementById("confirm-no-button") as HTMLButtonElement;
+export const validateKeyInput = document.getElementById("validate-key-input") as HTMLInputElement;
+export const createKeyInput = document.getElementById("create-key-input") as HTMLInputElement;
+export const repeatKeyInput = document.getElementById("repeat-key-input") as HTMLInputElement;
 
-form.addEventListener("submit", (event: SubmitEvent) => {
+form.addEventListener("submit", async (event: SubmitEvent) => {
   event.preventDefault();
-  const action: string | null = getDataAction(event.target as HTMLFormElement)
-  if (action && action === "post") {
-      postConfirm()
-  }
-  if (action && action === "update") {
-      updateConfirm()
-  }
+  const submittedForm: errorResponse | eventResponse = await eventErrorListener(() => formSubmitHandler(event));
+  if (!submittedForm.success) return sanitizeError(submittedForm.error);
 })
 
-getItems.addEventListener("click", (event: MouseEvent) => {
-  event.preventDefault();
-  getHandler();
+getItems.addEventListener("click", async () => {
+  const getEvent: errorResponse | eventResponse = await eventErrorListener(() => getHandler());
+  if (!getEvent.success) sanitizeError(getEvent.error);
 });
 
 feedbackCloseButton.addEventListener("click", () => {
@@ -72,35 +76,44 @@ closeFormButton.addEventListener("click", () => {
   resetForm()
 });
 
-listDataContainer.addEventListener("click", function(event: MouseEvent) {
+listDataContainer.addEventListener("click", async (event: MouseEvent) => {
   event.preventDefault();
-  const target: HTMLButtonElement | null = event.target as HTMLButtonElement;
-  if (target && target.classList.contains("edit-item-button")) {
-      editItemHandler(target);
-  }
-  if (target && target.classList.contains("delete-item-button")) {
-      deleteItemHandler(target);
-      deleteConfirm()
+  const updatedItemsInList: errorResponse | eventResponse = await eventErrorListener(() => itemHandler(event));
+  if (!updatedItemsInList.success) {
+      resetConfirm()
+      return sanitizeError(updatedItemsInList.error);
   }
 });
 
-createKeyButton.addEventListener("click", () => {
-  keyCreationHandler()
+createKeyButton.addEventListener("click", async () => {
+  const getKey: errorResponse | eventResponse = await eventErrorListener(() => keyCreationHandler());
+  if (!getKey.success) return sanitizeError(getKey.error);
+  const getData: errorResponse | eventResponse = await eventErrorListener(() => getHandler());
+  if (!getData.success) return sanitizeError(getData.error)
+  hideElement(createKeyContainer);
 });
 
-validateKeyButton.addEventListener("click", () => {
-  creationHandler()
+
+validateKeyButton.addEventListener("click", async () => {
+  const getKey: errorResponse | eventResponse = await eventErrorListener(() => keyValidationHandler());
+  if (!getKey.success) return sanitizeError(getKey.error);
+  const getData: errorResponse | eventResponse = await eventErrorListener(() => getHandler());
+  if (!getData.success) return sanitizeError(getData.error);
+  hideElement(validateKeyContainer);
 });
 
-confirmYesButton.addEventListener("click", (event: MouseEvent) => {
-  confirmHandler(event.target as HTMLButtonElement);
-});
-
-confirmNoButton.addEventListener("click", () => {
+confirmYesButton.addEventListener("click", async (event: MouseEvent) => {
+  event.preventDefault();
+  const updatedItemsInList: errorResponse | eventResponse = await eventErrorListener(() => confirmHandler(event));
   resetConfirm()
+  if (!updatedItemsInList.success) return sanitizeError(updatedItemsInList.error);
+});
+confirmNoButton.addEventListener("click", async () => {
+  resetConfirm();
 });
 
 // TODO find another, more electron related solution to run a function at startup
-document.onreadystatechange = function() {
-  CryptoKeyHandler()
+document.onreadystatechange = async function() {
+  const getDatabase: errorResponse | eventResponse = await eventErrorListener(() => checkDatabaseStatus());
+  if (!getDatabase.success) return sanitizeError(getDatabase.error);
 };
