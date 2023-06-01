@@ -41,13 +41,10 @@ export type API = {
     electron: () => string;
   };
   backend: {
-    generateId: () => Promise<any>;
     getData: (key: string) => Promise<backendResponse>;
     deleteData: (id: string | null, key: string) => Promise<backendResponse>;
     updateData: (putData: userCredentialObject, key: string) => Promise<backendResponse>;
     postData: (postData: userCredentialObject, key: string) => Promise<backendResponse>;
-    encryptData: (data: string, secretKey: string) => Promise < backendResponse >;
-    decryptData: (data: string, secretKey: string) => Promise < backendResponse >;
     checkDatabase: () =>  Promise < backendResponse >;
   };
 }
