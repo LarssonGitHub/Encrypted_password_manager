@@ -1,11 +1,10 @@
 import {
   userCredentialObject,
   backendResponse,
-  eventResponse,
   errorResponse
 } from "../../@types/@type-module";
 import {
-  getDeleteId,
+  getAndValidateId,
   resetForm,
   updateFormValues,
   getDataStoredObject,
@@ -46,29 +45,29 @@ export const confirmRequest = async (event: MouseEvent) => {
   if (!target) throw new Error("Couldn't find target")
   const handler: string = getDataEvent(target);
   switch (handler) {
-      case "postHandler":
-          await postHandler()
+      case "postDatabaseData":
+          await postDatabaseData()
           break;
-      case "updateHandler":
-          await updateHandler()
+      case "UpdateDatabaseData":
+          await UpdateDatabaseData()
           break;
-      case "deleteHandler":
-          await deleteHandler()
+      case "deleteDatabaseData":
+          await deleteDatabaseData()
           break;
       default:
           throw new Error("Couldn't match a request")
   }
 }
 
-export const readyHandler = (event: MouseEvent) => {
+export const readyRequest = (event: MouseEvent) => {
   const target: HTMLButtonElement | null = event.target as HTMLButtonElement;
   if (!target) throw new Error("Couldn't find target")
   if (target && target.classList.contains("edit-item-button")) {
-      readyUpdateHandler(target);
+      readyUpdateDatabaseData(target);
       return
   }
   if (target && target.classList.contains("delete-item-button")) {
-      readyDeleteHandler(target);
+      readyDeleteDatabaseData(target);
       deleteConfirm();
       return
   }
@@ -89,68 +88,67 @@ export const submitFormAction = (event: SubmitEvent) => {
   }
 }
 
-export const postHandler = async (): Promise < void > => {
+export const postDatabaseData = async (): Promise < void > => {
   if (!secretKey) throw new Error("No key submitted");
-  const compiledObject: userCredentialObject = getFormValues();
-  if (Object.values(compiledObject).includes("")) throw new Error("Please, do not leave any felids empty")
-  const postData: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.postData(compiledObject, secretKey));
-  if (!postData.success) {
-      throw postData.error
+  const compiledFormData: userCredentialObject = getFormValues();
+  if (Object.values(compiledFormData).includes("")) throw new Error("Please, do not leave any felids empty")
+  const postRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.postData(compiledFormData, secretKey));
+  if (!postRequest.success) {
+      throw postRequest.error
   }
   hideElement(formContainer);
   resetForm();
   removeDataAction();
-  editFeedback(postData.message, false)
-  updateList(postData.data);
+  editFeedback(postRequest.message, false)
+  updateList(postRequest.data);
 };
 
 export const getDatabaseData = async (): Promise < void | string > => {
   if (!secretKey) throw new Error("No key was submitted")
-  const getData: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.getData(secretKey));
-  if (!getData.success) {
-      throw getData.error
+  const getRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.getData(secretKey));
+  if (!getRequest.success) {
+      throw getRequest.error
   }
-  editFeedback(getData.message, false)
-  updateList(getData.data);
+  editFeedback(getRequest.message, false)
+  updateList(getRequest.data);
 };
 
-export const deleteHandler = async (): Promise < void > => {
+export const deleteDatabaseData = async (): Promise < void > => {
   if (!secretKey) throw new Error("No key was submitted")
-  const id: string = getDeleteId();
-  const deleteData: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.deleteData(id, secretKey));
-  if (!deleteData.success) {
-      throw deleteData.error
+  const id: string = getAndValidateId();
+  const deleteRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.deleteData(id, secretKey));
+  if (!deleteRequest.success) {
+      throw deleteRequest.error
   }
-  editFeedback(deleteData.message, false)
-  updateList(deleteData.data);
+  editFeedback(deleteRequest.message, false)
+  updateList(deleteRequest.data);
 };
 
-export const readyUpdateHandler = (updateButton: HTMLButtonElement): void => {
-  const data: userCredentialObject = getDataStoredObject(updateButton);
-  setDataAction("update")
-  updateFormValues(data);
-  viewElement(formContainer);
-};
-
-export const readyDeleteHandler = (deleteButton: HTMLButtonElement): void => {
-  const id: string = getDataDeleteValidationId(deleteButton);
-  setNewDataDeleteId(deleteButton, id)
-};
-
-export const updateHandler = async (): Promise < void > => {
+export const UpdateDatabaseData = async (): Promise < void > => {
   if (!secretKey) throw new Error("No key was submitted")
-  const compiledObject: userCredentialObject = getFormValues();
-  if (Object.values(compiledObject).includes("")) throw new Error("Please, do not leave any felids empty")
-  const updateData: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.updateData(compiledObject, secretKey))
-  if (!updateData.success) {
-      throw updateData.error;
-
+  const compiledFormData: userCredentialObject = getFormValues();
+  if (Object.values(compiledFormData).includes("")) throw new Error("Please, do not leave any felids empty")
+  const updateRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.updateData(compiledFormData, secretKey))
+  if (!updateRequest.success) {
+      throw updateRequest.error;
   }
   hideElement(formContainer);
   resetForm()
   removeDataAction();
-  editFeedback(updateData.message, false);
-  updateList(updateData.data);
+  editFeedback(updateRequest.message, false);
+  updateList(updateRequest.data);
+};
+
+export const readyUpdateDatabaseData = (updateButton: HTMLButtonElement): void => {
+  const compiledData: userCredentialObject = getDataStoredObject(updateButton);
+  setDataAction("update")
+  updateFormValues(compiledData);
+  viewElement(formContainer);
+};
+
+export const readyDeleteDatabaseData = (deleteButton: HTMLButtonElement): void => {
+  const id: string = getDataDeleteValidationId(deleteButton);
+  setNewDataDeleteId(deleteButton, id)
 };
 
 export const createKey = (): void => {
@@ -160,9 +158,9 @@ export const createKey = (): void => {
 }
 
 export const validateKey = async () => {
-  const userKey: string = getKey();
-  if (!userKey) throw new Error("Problem occurred when fetching key");
-  secretKey = userKey;
+  const key: string = getKey();
+  if (!key) throw new Error("Problem occurred when fetching key");
+  secretKey = key;
 }
 
 export const checkDatabaseStatus = async (): Promise < void > => {

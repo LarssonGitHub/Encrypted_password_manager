@@ -29,39 +29,38 @@ export const removeListData = () => {
     }
 }
 
-export const appendListToArrayTemplate = (userCredentials: userCredentialsArray | void): void => {
-    if (!userCredentials || typeof userCredentials !== 'object') return;
+export const InsertDataIntoTemplate = (data: userCredentialsArray | void): void => {
+    if (!data || !Array.isArray(data)) throw new Error("Couldn't insert data into document");
     const clone = template.content.cloneNode(true) as DocumentFragment;
     const listElement = clone.getElementById("list-data-unordered-list") as HTMLUListElement;
-    userCredentials.forEach((credential) => {
-        let newClone = listElement.cloneNode(true) as DocumentFragment;
-        // Used to easily grab the values when making a put request
-        newClone.querySelector(".list-id") !.textContent = credential.id;
-        newClone.querySelector(".list-website") !.textContent = credential.websiteInput;
-        newClone.querySelector(".list-username") !.textContent = credential.emailInput;
-        newClone.querySelector(".list-email") !.textContent = credential.usernameInput;
-        newClone.querySelector(".list-password") !.textContent = credential.passwordInput;
-        newClone.querySelector(".list-additional-data") !.textContent = credential.additionalDataInput;
-        // Used to easily grab the values when making a put request
-        (newClone.querySelector(".edit-item-button") as HTMLElement).setAttribute("data-stored-object", JSON.stringify(credential));
-        (newClone.querySelector(".delete-item-button") as HTMLElement).setAttribute("data-delete-validation-id", credential.id);
-        listDataContainer.append(newClone);
+    data.forEach((key) => {
+        let insertedCloneText = listElement.cloneNode(true) as DocumentFragment;
+        // TODO, update once HTML has been finalized  
+        insertedCloneText.querySelector(".list-id") !.textContent = key.id;
+        insertedCloneText.querySelector(".list-website") !.textContent = key.websiteInput;
+        insertedCloneText.querySelector(".list-username") !.textContent = key.emailInput;
+        insertedCloneText.querySelector(".list-email") !.textContent = key.usernameInput;
+        insertedCloneText.querySelector(".list-password") !.textContent = key.passwordInput;
+        insertedCloneText.querySelector(".list-additional-data") !.textContent = key.additionalDataInput;
+        (insertedCloneText.querySelector(".edit-item-button") as HTMLElement).setAttribute("data-stored-object", JSON.stringify(key));
+        (insertedCloneText.querySelector(".delete-item-button") as HTMLElement).setAttribute("data-delete-validation-id", key.id);
+        listDataContainer.append(insertedCloneText);
     });
 
 };
 
 export const updateList = (data: userCredentialsArray) => {
     removeListData()
-    appendListToArrayTemplate(data);
+    InsertDataIntoTemplate(data);
 }
 
-export const FeedbackResponseType = (error: boolean): void => {
+export const FeedbackResponseType = (responseStatus: boolean): void => {
     feedbackContainer.classList.replace("error-container", "success-container")
-    if (error) feedbackContainer.classList.replace("success-container", "error-container")
+    if (responseStatus) feedbackContainer.classList.replace("success-container", "error-container")
 }
 
-export const editFeedback = (message: string, error: boolean): void => {
-    FeedbackResponseType(error)
+export const editFeedback = (message: string, responseStatus: boolean): void => {
+    FeedbackResponseType(responseStatus)
     feedbackMessage.innerText = message === undefined ? "No message given" : message;
     viewElement(feedbackContainer)
 }

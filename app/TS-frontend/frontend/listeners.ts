@@ -4,7 +4,7 @@ import {
   createKey,
   validateKey,
   confirmRequest,
-  readyHandler,
+  readyRequest,
   submitFormAction
 } from "./handlers.js";
 import {
@@ -77,7 +77,7 @@ closeFormButton.addEventListener("click", () => {
 
 listDataContainer.addEventListener("click", async (event: MouseEvent) => {
   event.preventDefault();
-  const readyEvent: errorResponse | eventResponse = await eventErrorListener(() => readyHandler(event));
+  const readyEvent: errorResponse | eventResponse = await eventErrorListener(() => readyRequest(event));
   if (!readyEvent.success) {
       resetConfirm()
       return sanitizeError(readyEvent.error);

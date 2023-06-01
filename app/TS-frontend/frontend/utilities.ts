@@ -21,6 +21,7 @@ export const isJsonString = (str: string) => {
   }
   return true;
 }
+
 export const getDataDeleteValidationId = (target: HTMLButtonElement): string => {
   const value: string | null = target.getAttribute("data-delete-validation-id")
   if (!value) throw "Couldn't get data action attribute";
@@ -85,15 +86,15 @@ export const resetForm = (): void => {
   form.reset();
 }
 
-export const getDeleteId = (): string => {
+export const getAndValidateId = (): string => {
   const deleteButtons: NodeListOf < HTMLButtonElement > = document.querySelectorAll(".delete-item-button");
   let id;
   for (let i = 0; i < deleteButtons.length; i++) {
-      const deleteId: string | null = deleteButtons[i].getAttribute("data-delete-id");
-      if (!deleteId) continue;
-      const deleteIdMatch: string | null = deleteButtons[i].getAttribute("data-delete-validation-id");
-      if (deleteId !== deleteIdMatch) continue;
-      id = deleteId
+      const dataIdOne: string | null = deleteButtons[i].getAttribute("data-delete-id");
+      if (!dataIdOne) continue;
+      const dataIdTwo: string | null = deleteButtons[i].getAttribute("data-delete-validation-id");
+      if (dataIdOne !== dataIdTwo) continue;
+      id = dataIdOne
       break;
   }
   if (!id) throw new Error("Couldn't locate an id for delete")
@@ -133,7 +134,7 @@ export const getFormValues = (): userCredentialObject => {
   for (let i = 0; i < formCollection.length; i++) {
       if (formCollection[i].nodeName === "INPUT" || formCollection[i].nodeName === "TEXTAREA") {
           Object.assign(obj, {
-        [(formCollection[i] as HTMLInputElement | HTMLTextAreaElement).name]: (formCollection[i] as HTMLInputElement | HTMLTextAreaElement).value
+      [(formCollection[i] as HTMLInputElement | HTMLTextAreaElement).name]: (formCollection[i] as HTMLInputElement | HTMLTextAreaElement).value
           });
       }
   }
@@ -159,15 +160,15 @@ export const confirm = (text: string, eventName: string) => {
 }
 
 export const postConfirm = (): void => {
-  confirm("Do you want to add a new item?", "postHandler");
+  confirm("Do you want to add a new item?", "postDatabaseData");
 }
 
 export const updateConfirm = (): void => {
-  confirm("Do you want to edit this item?", "updateHandler");
+  confirm("Do you want to edit this item?", "UpdateDatabaseData");
 }
 
 export const deleteConfirm = (): void => {
-  confirm("Do you want to delete this item?", "deleteHandler");
+  confirm("Do you want to delete this item?", "deleteDatabaseData");
 }
 
 export const resetConfirm = (): void => {
