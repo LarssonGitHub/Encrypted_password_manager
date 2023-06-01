@@ -14,7 +14,7 @@ export const insertDatabaseData = async (encryptedData: string): Promise < boole
     return true
 }
 
-export const insertEmptyDatabaseData = async (): Promise < boolean > => {
+export const cleanDatabase = async (): Promise < boolean > => {
     const writeFile = util.promisify(fs.writeFile);
     await writeFile(path.resolve(__dirname, "./data.txt"), "");
     // Custom value, as writeFile returns nothing

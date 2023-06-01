@@ -5,7 +5,7 @@ import CryptoJS from "crypto-js";
 import {
   userCredentialsArray,
   userCredentialObject,
-  customResponse
+  backendResponse
 } from "../../@types/@type-module"
 import {
   insertDatabaseData,
@@ -14,42 +14,53 @@ import {
 
 console.log("You shouldn't see this in frontend");
 
+// TODO find if javascript offers another way to see true objects
+export const isObject = (value: unknown): boolean => {
+  return (
+      typeof value === 'object' &&
+      value !== null &&
+      !Array.isArray(value)
+  );
+}
+
 export const generateId = () => uuidv4();
 
-export const removeItemWebsiteArray = (id: string, websitesArray: userCredentialsArray): userCredentialsArray => {
-  const credentialsArray: userCredentialsArray = websitesArray.filter(website => website.id !== id);
-  if (!Array.isArray(credentialsArray))
-      throw new Error("An error occurred during compiling of data, canceling request");
-  return credentialsArray;
+export const removeItem = (id: string, data: userCredentialsArray): userCredentialsArray => {
+  if (!id)
+      throw new Error("No id was submitted");
+  if (!Array.isArray(data))
+      throw new Error("Couldn't compile and delete data");
+  return data.filter(obj => obj.id !== id);
 };
 
 export const createAndAppendId = (dataEntries: userCredentialObject) => {
   const generatedId: string = uuidv4();
-  if (generatedId === "") throw new Error("No id could be created, canceling request");
+  if (!generatedId || typeof generatedId !== "string") throw new Error("No id could be created");
   return {
       ...dataEntries,
       id: generatedId,
   };
 }
 
-export const updateItemWebsiteArray = (object: userCredentialObject, websitesArray: userCredentialsArray): userCredentialsArray => {
-  const exists: userCredentialsArray | [] = websitesArray.filter(website => website.id === object.id);
-  if (exists.length === 0) throw new Error("No id could be matched, canceling request");
-  return websitesArray.map((websitesArray) => (websitesArray.id === object.id ? {
-      ...websitesArray,
-      ...object
-  } : websitesArray))
+export const updateItem = (newData: userCredentialObject, data: userCredentialsArray): userCredentialsArray => {
+  if (!isObject(newData) || !Array.isArray(data)) throw new Error("Couldn't compile or create data")
+  const idExists: userCredentialsArray = data.filter(obj => obj.id === newData.id);
+  if (idExists.length <= 0) throw new Error("No id could be matched");
+  return data.map((data) => (data.id === newData.id ? {
+      ...data,
+      ...newData
+  } : data))
 };
 
-export const InsertIntoWebsitesArray = (data: userCredentialObject, websitesArray: userCredentialsArray): userCredentialsArray => {
-  return [...websitesArray,
-  data
+export const InsertItem = (newData: userCredentialObject, data: userCredentialsArray): userCredentialsArray => {
+  if (!isObject(newData) || !Array.isArray(data)) throw new Error("Couldn't compile or create data")
+  return [...data,
+  newData
 ];
 };
 
-// https://crypto.stackexchange.com/questions/52633/is-there-a-practical-way-to-crack-an-aes-encryption-password
-
 export const encryptData = (data: string, key: string): string => {
+  // More info on encrypt safety: https://crypto.stackexchange.com/questions/52633/is-there-a-practical-way-to-crack-an-aes-encryption-password
   const encrypt: CryptoJS.lib.CipherParams = CryptoJS.AES.encrypt(
       data,
       key, {
@@ -62,52 +73,46 @@ export const encryptData = (data: string, key: string): string => {
   return encrypt.toString();
 };
 
-export const decryptData = (
-  encryptedData: string,
-  key: string
-): string => {
+export const decryptData = (encryptedData: string, key: string): string => {
   let decrypt = CryptoJS.AES.decrypt(encryptedData, key);
   try {
-      // TODO: Find a better solution
-      // This code will produce an Utf8 if the key doesn't match
       return decrypt.toString(CryptoJS.enc.Utf8);
   } catch (error) {
-      console.log(error)
       throw new Error("Your key is incorrect");
   }
 };
 
 export const sanitizeEncryptedData = (encryptedData: string, key: string): userCredentialsArray => {
+  if (!key)
+      throw new Error("No key was submitted")
   const decryptedData: string = decryptData(encryptedData, key)
-  if (decryptedData.length === 0 || decryptedData === "") throw new Error("Your key is incorrect");
+  if (!decryptedData || typeof decryptedData !== "string") throw new Error("Your key is incorrect");
   return JSON.parse(decryptedData);
 };
 
 export const encryptAndInsertDatabaseData = async (data: userCredentialsArray, key: string): Promise < boolean > => {
-  const encryptedData: string = encryptData(JSON.stringify(data), key)
-  if ((!encryptedData || encryptedData.length === 0))
-      throw new Error("No data for database submitted, canceling request");
+  if (!key)
+      throw new Error("No key was submitted")
+  const stringifiedData: string = JSON.stringify(data)
+  if (typeof stringifiedData !== "string") throw new Error("Couldn't compile data into database")
+  const encryptedData: string = encryptData(stringifiedData, key)
+  if ((!encryptedData))
+      throw new Error("No data for database submitted");
   const updatedDatabase: boolean = await insertDatabaseData(encryptedData)
   if (!updatedDatabase)
-      throw new Error("Couldn't write to Database");
-  return true
+      throw new Error("Couldn't write encrypted data to database");
+  return updatedDatabase
 }
 
 export const getDataFromDatabaseAndSanitize = async (key: string): Promise < null | userCredentialsArray > => {
-  if (!key || key.length === 0)
-      throw new Error("No key was submitted")
   const encryptedData: string = await getDatabaseData();
-  if (!encryptedData || encryptedData.length === 0)
-      return null
-  const decryptedData: userCredentialsArray = sanitizeEncryptedData(encryptedData, key);
-  if (!Array.isArray(decryptedData))
-      throw new Error("The data from database wasn't an array or JSON, canceling put request");
-  return decryptedData
+  if (!encryptedData) return null
+  return sanitizeEncryptedData(encryptedData, key);
 }
 
-export const createResponse = (message: string, data: userCredentialsArray | null, databaseEmpty ? : boolean): customResponse => {
+export const createResponse = (message: string, data: userCredentialsArray | null, databaseEmpty ? : boolean): backendResponse => {
   return {
-      ok: true,
+      success: true,
       message: message,
       data: data === null && data !== undefined ? [] : data,
       ...((databaseEmpty !== null && databaseEmpty !== undefined) && {

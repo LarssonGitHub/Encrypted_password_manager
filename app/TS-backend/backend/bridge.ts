@@ -3,7 +3,7 @@ import {
   ipcRenderer
 } from "electron";
 import {
-  customResponse,
+  backendResponse,
   userCredentialObject
 } from "../../@types/@type-module";
 
@@ -31,10 +31,10 @@ const processVersion = {
 
 const backend = {
   generateId: () => ipcRenderer.invoke("generateId"),
-  getData: (key: string): Promise < customResponse > => ipcRenderer.invoke("getData", key),
-  deleteData: (id: string, key: string): Promise < customResponse > => ipcRenderer.invoke("deleteData", id, key),
-  updateData: (id: string, putData: userCredentialObject, key: string): Promise < customResponse > => ipcRenderer.invoke("updateData", id, putData, key),
-  postData: (postData: userCredentialObject, key: string): Promise < customResponse > => ipcRenderer.invoke("postData", postData, key),
+  getData: (key: string): Promise < backendResponse > => ipcRenderer.invoke("getData", key),
+  deleteData: (id: string, key: string): Promise < backendResponse > => ipcRenderer.invoke("deleteData", id, key),
+  updateData: (id: string, putData: userCredentialObject, key: string): Promise < backendResponse > => ipcRenderer.invoke("updateData", id, putData, key),
+  postData: (postData: userCredentialObject, key: string): Promise < backendResponse > => ipcRenderer.invoke("postData", postData, key),
   encryptData: (data: string, secretKey: string) => ipcRenderer.invoke("encryptData", data, secretKey),
   decryptData: (data: string, secretKey: string) => ipcRenderer.invoke("decryptData", data, secretKey),
   checkDatabase: () => ipcRenderer.invoke("checkDatabase"),

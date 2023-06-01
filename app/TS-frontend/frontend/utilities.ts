@@ -1,10 +1,13 @@
 import {
   userCredentialObject,
-
+  eventResponse
 } from "../../@types/@type-module";
 import {
   form,
-  confirmContainer
+  confirmContainer,
+  validateKeyInput,
+  repeatKeyInput,
+  createKeyInput
 } from "./listeners.js";
 import {
   editDocumentFeedback,
@@ -19,13 +22,15 @@ export const isJsonString = (str: string) => {
   }
   return true;
 }
-export const getDataDeleteValidationId = (target: HTMLButtonElement): string | null => {
-  return target.getAttribute("data-delete-validation-id")
+export const getDataDeleteValidationId = (target: HTMLButtonElement): string => {
+  const value: string | null = target.getAttribute("data-delete-validation-id")
+  if (!value) throw "Couldn't get data action attribute";
+  return value
 }
 
-export const getDataStoredObject = (target: HTMLButtonElement): userCredentialObject | void => {
+export const getDataStoredObject = (target: HTMLButtonElement): userCredentialObject => {
   const dataObject: string | null = target.getAttribute("data-stored-object");
-  if (!dataObject || !isJsonString(dataObject)) return
+  if (!dataObject || !isJsonString(dataObject)) throw new Error("Error occurred when trying to get stored data")
   return JSON.parse(dataObject)
 }
 
@@ -38,13 +43,12 @@ export const setDataAction = (action: string): void => {
           form.setAttribute("data-action", "update");
           break;
       default:
-          return
   }
 }
 
-export const setNewDataDeleteId = (target: HTMLButtonElement, id: string): void => {
+export const setNewDataDeleteId = (deleteButton: HTMLButtonElement, id: string): void => {
   // Used to validate that the right is stored when deletion is confirmed by user
-  target.setAttribute("data-delete-id", id);
+  deleteButton.setAttribute("data-delete-id", id);
 }
 
 
@@ -52,12 +56,16 @@ export const removeDataAction = (): void => {
   form.setAttribute("data-action", "");
 }
 
-export const getDataAction = (target: HTMLFormElement): string | null => {
-  return target.getAttribute("data-action")
+export const getDataAction = (target: HTMLFormElement): string => {
+  const value: string | null = target.getAttribute("data-action");
+  if (!value) throw "Couldn't get data action attribute";
+  return value
 }
 
-export const getDataEvent = (target: HTMLButtonElement): string | null => {
-  return target.getAttribute("data-event")
+export const getDataEvent = (target: HTMLButtonElement): string => {
+  const value: string | null = target.getAttribute("data-event")
+  if (!value) throw "Couldn't get data event attribute";
+  return value
 }
 
 export const compileFormData = (form: HTMLFormElement): userCredentialObject => {
@@ -79,38 +87,35 @@ export const resetForm = (): void => {
   form.reset();
 }
 
-export const getDeleteId = (): string | undefined => {
-  const deleteButtons: NodeListOf < HTMLButtonElement > = document.querySelectorAll(".delete-item-button")
-  if (deleteButtons.length <= 0) return
-  let id: string = "";
+export const getDeleteId = (): string => {
+  const deleteButtons: NodeListOf < HTMLButtonElement > = document.querySelectorAll(".delete-item-button");
+  let id;
   for (let i = 0; i < deleteButtons.length; i++) {
       const deleteId: string | null = deleteButtons[i].getAttribute("data-delete-id");
       if (!deleteId) continue;
       const deleteIdMatch: string | null = deleteButtons[i].getAttribute("data-delete-validation-id");
-      if (deleteId !== deleteIdMatch) return;
+      if (deleteId !== deleteIdMatch) continue;
       id = deleteId
       break;
-
   }
+  if (!id) throw new Error("Couldn't locate an id for delete")
   return id
 }
 
-export const removeDataDeleteId = (): undefined => {
+export const removeDataDeleteId = (): void => {
   const deleteButtons: NodeListOf < HTMLButtonElement > = document.querySelectorAll(".delete-item-button")
-  // Throw in error
-  if (deleteButtons.length <= 0) return
   for (let i = 0; i < deleteButtons.length; i++) {
       deleteButtons[i].setAttribute("data-delete-id", "#");
   }
 }
 
 export const updateFormValues = (data: userCredentialObject): void => {
-  const FormCollection: HTMLFormControlsCollection = form.elements;
+  const formCollection: HTMLFormControlsCollection = form.elements;
   for (const property in data) {
-      for (let i = 0; i < FormCollection.length; i++) {
-          if (FormCollection[i].nodeName === "INPUT" || FormCollection[i].nodeName === "TEXTAREA") {
-              if ((FormCollection[i] as HTMLInputElement | HTMLTextAreaElement).name === property) {
-                  (FormCollection[i] as HTMLInputElement | HTMLTextAreaElement).value = data[property as keyof typeof data]
+      for (let i = 0; i < formCollection.length; i++) {
+          if (formCollection[i].nodeName === "INPUT" || formCollection[i].nodeName === "TEXTAREA") {
+              if ((formCollection[i] as HTMLInputElement | HTMLTextAreaElement).name === property) {
+                  (formCollection[i] as HTMLInputElement | HTMLTextAreaElement).value = data[property as keyof typeof data]
               }
           }
       }
@@ -118,32 +123,36 @@ export const updateFormValues = (data: userCredentialObject): void => {
 }
 
 export const getFormValues = (): userCredentialObject => {
-  const FormCollection: HTMLFormControlsCollection = form.elements;
+  const formCollection: HTMLFormControlsCollection = form.elements;
   const obj: userCredentialObject = {
-      id: "",
+      id: "#",
       websiteInput: "",
       emailInput: "",
       usernameInput: "",
       passwordInput: "",
       additionalDataInput: ""
   };
-  for (let i = 0; i < FormCollection.length; i++) {
-      if (FormCollection[i].nodeName === "INPUT" || FormCollection[i].nodeName === "TEXTAREA") {
+  for (let i = 0; i < formCollection.length; i++) {
+      if (formCollection[i].nodeName === "INPUT" || formCollection[i].nodeName === "TEXTAREA") {
           Object.assign(obj, {
-          [(FormCollection[i] as HTMLInputElement | HTMLTextAreaElement).name]: (FormCollection[i] as HTMLInputElement | HTMLTextAreaElement).value
+        [(formCollection[i] as HTMLInputElement | HTMLTextAreaElement).name]: (formCollection[i] as HTMLInputElement | HTMLTextAreaElement).value
           });
       }
   }
   return obj
 }
-export const extractAndValidateKey = (): string | void => {
-  const keyValueOne: string = (document.getElementById("create-key-input") as HTMLInputElement).value;
-  const keyValueTwo: string = (document.getElementById("repeat-key-input") as HTMLInputElement).value;
+
+export const getAndValidateKeys = (): string => {
+  const keyValueOne: string = createKeyInput.value;
+  const keyValueTwo: string = repeatKeyInput.value;
   if (keyValueOne !== keyValueTwo) {
-      editDocumentFeedback("Keys doesn't match", true);
-      return
+      throw new Error("Keys didn't match");
   }
   return keyValueOne
+}
+
+export const getKey = (): string => {
+  return validateKeyInput.value;
 }
 
 export const confirm = (text: string, eventName: string) => {
@@ -167,4 +176,10 @@ export const resetConfirm = (): void => {
   editDocumentConfirm("", "#")
   removeDataDeleteId()
   hideElement(confirmContainer);
+}
+
+export const createResponse = (): eventResponse => {
+  return {
+      success: true,
+  }
 }
