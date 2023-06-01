@@ -69,7 +69,7 @@ export const encryptData = (data: string, key: string): string => {
           padding: CryptoJS.pad.Pkcs7,
       }
   );
-  if (!encrypt) return "Couldn't decrypt data, canceling request";
+  if (!encrypt) return "Couldn't decrypt data";
   return encrypt.toString();
 };
 
