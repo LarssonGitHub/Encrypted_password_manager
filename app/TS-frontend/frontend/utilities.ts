@@ -4,7 +4,7 @@ import {
 } from "../../@types/@type-module";
 import {
   form,
-  confirmContainer,
+  confirmDialog,
   validateKeyInput,
   repeatKeyInput,
   createKeyInput
@@ -156,7 +156,7 @@ export const getKey = (): string => {
 
 export const confirm = (text: string, eventName: string) => {
   editDocumentConfirm(text, eventName)
-  viewElement(confirmContainer);
+  confirmDialog.showModal()
 }
 
 export const postConfirm = (): void => {
@@ -174,7 +174,7 @@ export const deleteConfirm = (): void => {
 export const resetConfirm = (): void => {
   editDocumentConfirm("", "#")
   removeDataDeleteId()
-  hideElement(confirmContainer);
+  confirmDialog.close()
 }
 
 export const createResponse = (): eventResponse => {

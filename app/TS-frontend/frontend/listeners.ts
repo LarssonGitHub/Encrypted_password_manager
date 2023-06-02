@@ -11,8 +11,6 @@ import {
   hideFeedbackContainer,
 } from "./renderer.js";
 import {
-  viewElement,
-  hideElement,
   setDataAction,
   resetForm,
   resetConfirm
@@ -30,25 +28,30 @@ import {
 // Dynamic tags are handled and validated in their respective function
 export const listDataContainer = document.getElementById("list-data-container") as HTMLDivElement;
 export const template = document.getElementById("template-list") as HTMLTemplateElement;
-export const feedbackContainer = document.getElementById("feedback-container") as HTMLDivElement;
+// export const feedbackContainer = document.getElementById("feedback-container") as HTMLDivElement;
 export const feedbackMessage = document.getElementById("feedback-message") as HTMLParagraphElement;
 export const feedbackCloseButton = document.getElementById("feedback-close-button") as HTMLButtonElement;
 export const form = document.getElementById("form") as HTMLFormElement;
-export const formContainer = document.getElementById("form-container") as HTMLDivElement;
+// export const formContainer = document.getElementById("form-container") as HTMLDivElement;
 export const postFormButton = document.getElementById("post-form-button") as HTMLButtonElement;
 export const closeFormButton = document.getElementById("close-form-button") as HTMLButtonElement;
 export const getItems = document.getElementById("get-items") as HTMLButtonElement;
-export const createKeyContainer = document.getElementById("create-key-container") as HTMLDivElement;
-export const validateKeyContainer = document.getElementById("validate-key-container") as HTMLDivElement;
+// export const createKeyContainer = document.getElementById("create-key-container") as HTMLDivElement;
+// export const validateKeyContainer = document.getElementById("validate-key-container") as HTMLDivElement;
 export const createKeyButton = document.getElementById("create-key-button") as HTMLButtonElement;
 export const validateKeyButton = document.getElementById("validate-key-button") as HTMLButtonElement;
-export const confirmContainer = document.getElementById("confirm-container") as HTMLDivElement;
+// export const confirmContainer = document.getElementById("confirm-container") as HTMLDivElement;
 export const confirmMessage = document.getElementById("confirm-message") as HTMLParagraphElement;
 export const confirmYesButton = document.getElementById("confirm-yes-button") as HTMLButtonElement;
 export const confirmNoButton = document.getElementById("confirm-no-button") as HTMLButtonElement;
 export const validateKeyInput = document.getElementById("validate-key-input") as HTMLInputElement;
 export const createKeyInput = document.getElementById("create-key-input") as HTMLInputElement;
 export const repeatKeyInput = document.getElementById("repeat-key-input") as HTMLInputElement;
+export const feedbackDialog = document.getElementById("feedback-dialog") as HTMLDialogElement;
+export const createKeyDialog = document.getElementById("create-key-dialog") as HTMLDialogElement;
+export const validateKeyDialog = document.getElementById("validate-key-dialog") as HTMLDialogElement;
+export const formDialog = document.getElementById("form-dialog") as HTMLDialogElement;
+export const confirmDialog = document.getElementById("confirm-dialog") as HTMLDialogElement;
 
 form.addEventListener("submit", async (event: SubmitEvent) => {
   event.preventDefault();
@@ -62,16 +65,16 @@ getItems.addEventListener("click", async () => {
 });
 
 feedbackCloseButton.addEventListener("click", () => {
-  hideFeedbackContainer();
+  feedbackDialog.close()
 });
 
 postFormButton.addEventListener("click", () => {
   setDataAction("post")
-  viewElement(formContainer);
+  formDialog.showModal()
 });
 
 closeFormButton.addEventListener("click", () => {
-  hideElement(formContainer);
+  formDialog.close()
   resetForm()
 });
 
@@ -84,12 +87,13 @@ listDataContainer.addEventListener("click", async (event: MouseEvent) => {
   }
 });
 
+// 
 createKeyButton.addEventListener("click", async () => {
   const getKeyEvent: errorResponse | eventResponse = await eventErrorListener(() => createKey());
   if (!getKeyEvent.success) return sanitizeError(getKeyEvent.error);
   const getDataEvent: errorResponse | eventResponse = await eventErrorListener(() => getDatabaseData());
   if (!getDataEvent.success) return sanitizeError(getDataEvent.error)
-  hideElement(createKeyContainer);
+  createKeyDialog.close()
 });
 
 
@@ -98,7 +102,7 @@ validateKeyButton.addEventListener("click", async () => {
   if (!validateKeyEvent.success) return sanitizeError(validateKeyEvent.error);
   const getData: errorResponse | eventResponse = await eventErrorListener(() => getDatabaseData());
   if (!getData.success) return sanitizeError(getData.error);
-  hideElement(validateKeyContainer);
+  validateKeyDialog.close()
 });
 
 confirmYesButton.addEventListener("click", async (event: MouseEvent) => {

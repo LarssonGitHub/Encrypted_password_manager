@@ -11,8 +11,6 @@ import {
   setDataAction,
   setNewDataDeleteId,
   removeDataAction,
-  viewElement,
-  hideElement,
   getKey,
   getAndValidateKeys,
   getFormValues,
@@ -31,9 +29,9 @@ import {
   editFeedback,
 } from "./renderer.js";
 import {
-  formContainer,
-  validateKeyContainer,
-  createKeyContainer,
+ validateKeyDialog,
+ createKeyDialog,
+ formDialog
 } from "./listeners.js";
 
 // The key for decryption/encryption
@@ -96,7 +94,7 @@ export const postDatabaseData = async (): Promise < void > => {
   if (!postRequest.success) {
       throw postRequest.error
   }
-  hideElement(formContainer);
+  formDialog.close()
   resetForm();
   removeDataAction();
   editFeedback(postRequest.message, false)
@@ -132,7 +130,7 @@ export const UpdateDatabaseData = async (): Promise < void > => {
   if (!updateRequest.success) {
       throw updateRequest.error;
   }
-  hideElement(formContainer);
+  formDialog.close()
   resetForm()
   removeDataAction();
   editFeedback(updateRequest.message, false);
@@ -143,7 +141,7 @@ export const readyUpdateDatabaseData = (updateButton: HTMLButtonElement): void =
   const compiledData: userCredentialObject = getDataStoredObject(updateButton);
   setDataAction("update")
   updateFormValues(compiledData);
-  viewElement(formContainer);
+  formDialog.showModal()
 };
 
 export const readyDeleteDatabaseData = (deleteButton: HTMLButtonElement): void => {
@@ -169,9 +167,9 @@ export const checkDatabaseStatus = async (): Promise < void > => {
       throw getStatus.error
   }
   if (!getStatus.databaseEmpty) {
-      viewElement(validateKeyContainer);
+      validateKeyDialog.showModal()
       return;
   }
-  viewElement(createKeyContainer);
+  createKeyDialog.showModal()
   return;
 };

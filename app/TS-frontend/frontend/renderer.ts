@@ -6,13 +6,11 @@ import {
     listDataContainer,
     template,
     feedbackMessage,
-    feedbackContainer,
     confirmMessage,
-    confirmYesButton
+    confirmYesButton,
+    feedbackDialog
 } from "./listeners.js";
 import {
-    viewElement,
-    hideElement
 } from "./utilities.js";
 
 console.log(`This app is using Chrome (v${window.API.processVersion.chrome()}), Node.js (v${window.API.processVersion.node()}), and Electron (v${window.API.processVersion.electron()})`);
@@ -55,18 +53,18 @@ export const updateList = (data: userCredentialsArray) => {
 }
 
 export const FeedbackResponseType = (responseStatus: boolean): void => {
-    feedbackContainer.classList.replace("error-container", "success-container")
-    if (responseStatus) feedbackContainer.classList.replace("success-container", "error-container")
+    feedbackDialog.classList.replace("error-container", "success-container")
+    if (responseStatus) feedbackDialog.classList.replace("success-container", "error-container")
 }
 
 export const editFeedback = (message: string, responseStatus: boolean): void => {
     FeedbackResponseType(responseStatus)
     feedbackMessage.innerText = message === undefined ? "No message given" : message;
-    viewElement(feedbackContainer)
+    feedbackDialog.show()
 }
 
-export const hideFeedbackContainer = (): void => {
-    hideElement(feedbackContainer)
+export const hideFeedbackContainer = (element: HTMLDialogElement): void => {
+    element.close()
 }
 
 export const editDocumentConfirm = (text: string, eventName: string) => {
