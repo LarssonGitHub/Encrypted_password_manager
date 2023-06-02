@@ -165,3 +165,6 @@ textarea {
 }
 
 
+#template-additional-data {
+  white-space: pre-wrap;
+}
