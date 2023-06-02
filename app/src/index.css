@@ -6,6 +6,10 @@ body {
   padding: 2rem;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .show {
   display: block;
 }
@@ -140,3 +144,24 @@ top: 1rem;
   justify-content: space-between;
   justify-content: center;
 }
+
+#form-dialog {
+  position: relative;
+}
+
+#close-form-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+input, textarea, #validate-key-button, #submit-button, #create-key-button {
+  width: 100%;
+}
+
+textarea {
+  height: auto;
+  resize: none;
+}
+
+
