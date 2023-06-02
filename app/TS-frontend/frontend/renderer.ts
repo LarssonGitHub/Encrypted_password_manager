@@ -30,7 +30,7 @@ export const removeListData = () => {
 export const InsertDataIntoTemplate = (data: userCredentialsArray | void): void => {
     if (!data || !Array.isArray(data)) throw new Error("Couldn't insert data into document");
     const clone = template.content.cloneNode(true) as DocumentFragment;
-    const listElement = clone.getElementById("list-data-unordered-list") as HTMLUListElement;
+    const listElement = clone.querySelector('[data-list-item]') as HTMLUListElement;
     data.forEach((key) => {
         let insertedCloneText = listElement.cloneNode(true) as DocumentFragment;
         // TODO, update once HTML has been finalized  

@@ -2,7 +2,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
   margin: auto;
-  max-width: 38rem;
+  max-width: 600px;
   padding: 2rem;
 }
 
@@ -31,24 +31,112 @@ dialog {
   border: none !important;
   border-radius: 5px;
   box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  width: 100%;
-  max-width: 400px;
+  width: 80%;
+  /* TODO fix problem, element and margin ends up outside viewport, only this element */
+  max-width: 250px;
 }
 
-.svg-button-container {
+.svg-add-button, .svg-item-button, .svg-close-button  {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
 }
 
-.svg-button-container svg {
+.svg-add-button svg {
   width: 20px;
   height: 20px;
 }
 
-.svg-button-container small {
- font-size: 0.5rem;
+.svg-add-button small {
+  font-size: 0.5rem;
+ }
+
+.svg-close-button svg {
+  width: 15px;
+  height: 15px;
+}
+
+.svg-item-button svg {
+  width: 15px;
+  height: 15px;
+}
+
+.svg-item-button small {
+  font-size: 0.5rem;
+ }
+
+.reset-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 
+.list-data-item {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  background-color: lightgray;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.list-data-item::before {
+  content: " ";
+  position: relative;
+}
+
+.item-button-container {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.list-data-item h3 {
+  display:inline;
+}
+
+/* TODO Find the cheat code for min-max grid */
+#list-data-container {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+#post-form-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+}
+
+#feedback-dialog {
+    /* TODO place feedback doalig at top level */
+    position: fixed;
+  top: 2rem;
+  z-index: 999999;
+}
+
+#feedback-close-button {
+position: absolute;
+right: 1rem;
+top: 1rem;
+}
+
+#feedback-message {
+  padding-right: 3rem;
+}
+
+#confirm-button-container {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: space-between;
+  justify-content: center;
+}

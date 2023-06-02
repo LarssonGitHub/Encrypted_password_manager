@@ -61,8 +61,7 @@ export const readyRequest = (event: MouseEvent) => {
   const unknownHTMLTarget: HTMLElement = event.target as HTMLElement;
   if (!unknownHTMLTarget) throw new Error("Couldn't find target")
   const getButton: HTMLButtonElement = unknownHTMLTarget.closest('.list-button') as HTMLButtonElement
-  if (!getButton) throw new Error("Couldn't get parent of target")
-
+  if (!getButton) return
   if (getButton && getButton.classList.contains("edit-item-button")) {
       readyUpdateDatabaseData(getButton);
       return
