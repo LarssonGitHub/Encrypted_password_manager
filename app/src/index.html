@@ -1,124 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Hello World!</title>
-  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-  <link rel="stylesheet" href="./index.css">
-</head>
-
-<body>
-
-  <!-- Do not remove hidden success-container -->
-  <div id="feedback-container" class="hidden success-container">
-    <p id="feedback-message"></p><button id="feedback-close-button">X</button>
-  </div>
-
-  <div id="create-key-container" class="hidden">
-    <p>Create a key you will use during encryption</p>
-    <ul>
-      <li>
-        <span>Choose a key</span>
-        <span><input type="password" name="createKeyInput" id="create-key-input"></span>
-      </li>
-      <li>
-        <span>Repeat key</span>
-        <span><input type="password" name="repeatKeyInput" id="repeat-key-input"></span>
-      </li>
-      <li><button id="create-key-button">Create key</button></li>
-    </ul>
-  </div>
-
-  <div id="validate-key-container" class="hidden">
-    <p>Enter key for decryption of your items</p>
-    <ul>
-      <li>
-        <span>key</span>
-        <span><input type="password" name="validateKeyInput" id="validate-key-input"></span>
-      </li>
-      <li><button id="validate-key-button">Try key</button></li>
-    </ul>
-  </div>
-
-  <div id="confirm-container" class="hidden">
-    <p id="confirm-message"></p>
-    <ul>
-      <li>
-        <button data-event="#" id="confirm-yes-button">Yes</button>
-      </li>
-      <li><button id="confirm-no-button">No</button></li>
-    </ul>
-  </div>
-
-  <!-- TODO: add icon, like a pencil -->
-  <button id="post-form-button">Add new item..!</button>
-
-  <h1>The poor man's password app</h1>
-  <div id="form-container" class="hidden">
-    <button id="close-form-button">X</button>
-    <form id="form" data-action="">
-      <ul>
-        <li class="list-id" hidden> <input type="hidden" id="id" name="id" value="#"></li>
-        <li>
-          <span>Associated Website</span>
-          <span><input type="text" name="websiteInput" id="website-input" required></span>
-        </li>
-        <li>
-          <span>Associated email</span>
-          <span><input type="text" name="emailInput" id="email-input" required></span>
-        </li>
-        <li>
-          <span>Associated username</span>
-          <span><input type="text" name="usernameInput" id="username-input" required></span>
-        </li>
-        <li>
-          <span>Associated password</span>
-          <span><input type="text" name="passwordInput" id="password-input" required></span>
-        </li>
-        <li>
-          <span>Additional notes</span>
-          <span><textarea name="additionalDataInput" id="additional-data-input" required>No notes given</textarea></span>
-        </li>
-        <li>
-          <button type="submit">Add new info</button>
-        </li>
-      </ul>
-    </form>
-  </div>
-
-  <button id="get-items">Get websites from DB</button>
-
-  <div>
-    <p>Websites and info</p>
-    <div id="list-data-container">
-    </div>
-  </div>
-
-
-  <template id="template-list">
-    <div>
-      <ul id="list-data-unordered-list">
-        <li class="list-id" hidden></li>
-        <li><b>Website:</b> <span class="list-website"></span></li>
-        <li><b>Email:</b> <span class="list-email"></span></li>
-        <li><b>Username:</b> <span class="list-username"></span></li>
-        <li><b>Password:</b> <span class="list-password"></span></li>
-        <!-- TODO, put this into a textarea -->
-        <li><b>Notes:</b> <span class="list-additional-data"></span></li>
-        <li>
-          <button data-stored-object="#" class="edit-item-button">Edit</button>
-          <button data-delete-validation-id="#" data-delete-id="#" class="delete-item-button">Delete</button>
-        </li>
-      </ul>
-    </div>
-  </template>
-
-  <script type="module" src="./frontend/renderer.js" defer></script>
-  <script type="module" src="./frontend/listeners.js" defer></script>
-
-</body>
-
+  <head>
+    <meta charset="UTF-8">
+    <title>The vault</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="stylesheet" href="./index.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>The vault</h1>
+        <p>An offline only app for your credentials and passwords</p>
+      </header>
+      <!-- const a = document.getElementById("test") as HTMLDialogElement;
+a.close() -->
+      <dialog id="feedback-dialog">
+        <details id="feedback-container" class="success-container">
+          <summary id="feedback-message"></summary>
+          <button id="feedback-close-button">X</button>
+        </details>
+      </dialog>
+      <dialog id="create-key-dialog">
+        <div id="create-key-container">
+          <p>Create a key you will use during encryption, do NOT forget it!</p>
+          <small>The app uses crypto-js for encryption/decryption, and all info is stored in the app itself</small>
+          <ul>
+            <li>
+              <span>New key</span>
+              <span>
+                <input type="password" name="createKeyInput" id="create-key-input">
+              </span>
+            </li>
+            <li>
+              <span>Repeat key</span>
+              <span>
+                <input type="password" name="repeatKeyInput" id="repeat-key-input">
+              </span>
+            </li>
+            <li>
+              <button id="create-key-button">Create key</button>
+            </li>
+          </ul>
+        </div>
+      </dialog>
+      <dialog id="validate-key-dialog">
+        <div id="validate-key-container">
+          <p>Enter your key for decryption of your items</p>
+          <ul>
+            <li>
+              <span>Key</span>
+              <span>
+                <input type="password" name="validateKeyInput" id="validate-key-input">
+              </span>
+            </li>
+            <li>
+              <button id="validate-key-button">Try key</button>
+            </li>
+          </ul>
+        </div>
+      </dialog>
+      <dialog id="confirm-dialog">
+        <div id="confirm-container">
+          <p id="confirm-message"></p>
+          <ul>
+            <li>
+              <button data-event="#" id="confirm-yes-button">Yes</button>
+            </li>
+            <li>
+              <button id="confirm-no-button">No</button>
+            </li>
+          </ul>
+        </div>
+      </dialog>
+      <div>
+        <button id="post-form-button">Add new item..!</button>
+      </div>
+      <div id="form-container" class="hidden">
+        <button id="close-form-button">X</button>
+        <form id="form" data-action="">
+          <ul>
+            <li class="list-id" hidden>
+              <input type="hidden" id="id" name="id" value="#">
+            </li>
+            <li>
+              <span>Associated Website</span>
+              <span>
+                <input type="text" name="websiteInput" id="website-input" required>
+              </span>
+            </li>
+            <li>
+              <span>Associated email</span>
+              <span>
+                <input type="text" name="emailInput" id="email-input" required>
+              </span>
+            </li>
+            <li>
+              <span>Associated username</span>
+              <span>
+                <input type="text" name="usernameInput" id="username-input" required>
+              </span>
+            </li>
+            <li>
+              <span>Associated password</span>
+              <span>
+                <input type="text" name="passwordInput" id="password-input" required>
+              </span>
+            </li>
+            <li>
+              <span>Additional notes</span>
+              <span>
+                <textarea name="additionalDataInput" id="additional-data-input" required>No notes given</textarea>
+              </span>
+            </li>
+            <li>
+              <button type="submit">Submit</button>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <!-- TODO remove this before production -->
+      <button id="get-items">Get websites from DB</button>
+      <section>
+        <h2>Your information and credentials</h2>
+        <div id="list-data-container"></div>
+      </section>
+      <template id="template-list">
+        <section>
+          <ul id="list-data-unordered-list">
+            <li class="list-id" hidden></li>
+            <li>
+              <button data-stored-object="#" class="edit-item-button">Edit</button>
+              <button data-delete-validation-id="#" data-delete-id="#" class="delete-item-button">Delete</button>
+            </li>
+            <li>
+              <h3>Website:</h3>
+              <span class="list-website"></span>
+            </li>
+            <li>
+              <b>Email:</b>
+              <span class="list-email"></span>
+            </li>
+            <li>
+              <b>Username:</b>
+              <span class="list-username"></span>
+            </li>
+            <li>
+              <b>Password:</b>
+              <span class="list-password"></span>
+            </li>
+            <!-- TODO, put this into a textarea -->
+            <li>
+              <b>Notes:</b>
+              <span class="list-additional-data"></span>
+            </li>
+          </ul>
+        </section>
+      </template>
+    </main>
+    <script type="module" src="./frontend/renderer.js"></script>
+    <script type="module" src="./frontend/listeners.js"></script>
+  </body>
 </html>
