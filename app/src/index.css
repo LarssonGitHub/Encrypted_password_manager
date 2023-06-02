@@ -35,5 +35,20 @@ dialog {
   max-width: 400px;
 }
 
+.svg-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.svg-button-container svg {
+  width: 20px;
+  height: 20px;
+}
+
+.svg-button-container small {
+ font-size: 0.5rem;
+}
 
 
