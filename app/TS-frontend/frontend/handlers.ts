@@ -29,9 +29,9 @@ import {
   editFeedback,
 } from "./renderer.js";
 import {
- validateKeyDialog,
- createKeyDialog,
- formDialog
+  validateKeyDialog,
+  createKeyDialog,
+  formDialog
 } from "./listeners.js";
 
 // The key for decryption/encryption
@@ -58,14 +58,17 @@ export const confirmRequest = async (event: MouseEvent) => {
 }
 
 export const readyRequest = (event: MouseEvent) => {
-  const target: HTMLButtonElement | null = event.target as HTMLButtonElement;
-  if (!target) throw new Error("Couldn't find target")
-  if (target && target.classList.contains("edit-item-button")) {
-      readyUpdateDatabaseData(target);
+  const unknownHTMLTarget: HTMLElement = event.target as HTMLElement;
+  if (!unknownHTMLTarget) throw new Error("Couldn't find target")
+  const getButton: HTMLButtonElement = unknownHTMLTarget.closest('.list-button') as HTMLButtonElement
+  if (!getButton) throw new Error("Couldn't get parent of target")
+
+  if (getButton && getButton.classList.contains("edit-item-button")) {
+      readyUpdateDatabaseData(getButton);
       return
   }
-  if (target && target.classList.contains("delete-item-button")) {
-      readyDeleteDatabaseData(target);
+  if (getButton && getButton.classList.contains("delete-item-button")) {
+      readyDeleteDatabaseData(getButton);
       deleteConfirm();
       return
   }
