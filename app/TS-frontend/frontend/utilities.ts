@@ -24,7 +24,7 @@ export const isJsonString = (str: string) => {
 
 export const getDataDeleteValidationId = (target: HTMLButtonElement): string => {
   const value: string | null = target.getAttribute("data-delete-validation-id")
-  if (!value) throw "Couldn't get data action attribute";
+  if (!value) throw new Error("Couldn't get data action attribute");
   return value
 }
 
@@ -57,7 +57,7 @@ export const removeDataAction = (): void => {
 
 export const getDataAction = (target: HTMLFormElement): string => {
   const value: string | null = target.getAttribute("data-action");
-  if (!value) throw "Couldn't get data action attribute";
+  if (!value) throw new Error("Couldn't get data action attribute");
   return value
 }
 
