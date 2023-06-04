@@ -11,6 +11,7 @@ import {
     feedbackDialog
 } from "./listeners.js";
 import {
+    sortArrayAfterLetter
 } from "./utilities.js";
 
 console.log(`This app is using Chrome (v${window.API.processVersion.chrome()}), Node.js (v${window.API.processVersion.node()}), and Electron (v${window.API.processVersion.electron()})`);
@@ -29,9 +30,10 @@ export const removeListData = () => {
 
 export const InsertDataIntoTemplate = (data: userCredentialsArray | void): void => {
     if (!data || !Array.isArray(data)) throw new Error("Couldn't insert data into document");
+    const sortedData: userCredentialsArray = sortArrayAfterLetter(data)
     const clone = template.content.cloneNode(true) as DocumentFragment;
-    const listElement = clone.querySelector('[data-list-item]') as HTMLUListElement;
-    data.forEach((key) => {
+    const listElement = clone.querySelector('[data-list-component]') as HTMLUListElement;
+    sortedData.forEach((key) => {
         let insertedCloneText = listElement.cloneNode(true) as DocumentFragment;
         // TODO, update once HTML has been finalized  
         insertedCloneText.querySelector(".list-id") !.textContent = key.id;

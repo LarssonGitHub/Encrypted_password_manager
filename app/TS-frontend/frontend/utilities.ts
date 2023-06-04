@@ -1,6 +1,7 @@
 import {
   userCredentialObject,
-  eventResponse
+  eventResponse,
+  userCredentialsArray
 } from "../../@types/@type-module";
 import {
   form,
@@ -134,7 +135,7 @@ export const getFormValues = (): userCredentialObject => {
   for (let i = 0; i < formCollection.length; i++) {
       if (formCollection[i].nodeName === "INPUT" || formCollection[i].nodeName === "TEXTAREA") {
           Object.assign(obj, {
-      [(formCollection[i] as HTMLInputElement | HTMLTextAreaElement).name]: (formCollection[i] as HTMLInputElement | HTMLTextAreaElement).value
+    [(formCollection[i] as HTMLInputElement | HTMLTextAreaElement).name]: (formCollection[i] as HTMLInputElement | HTMLTextAreaElement).value
           });
       }
   }
@@ -181,4 +182,9 @@ export const createResponse = (): eventResponse => {
   return {
       success: true,
   }
+}
+
+export const sortArrayAfterLetter = (data: userCredentialsArray, ): userCredentialsArray => {
+  return data.sort((a, b) => (a.websiteInput.toLocaleLowerCase() > b.websiteInput.toLocaleLowerCase()) ? 1 : 
+  ((b.websiteInput.toLocaleLowerCase() > a.websiteInput.toLocaleLowerCase()) ? -1 : 0))
 }
