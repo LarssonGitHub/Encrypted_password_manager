@@ -1,21 +1,98 @@
+:root {
+  /* --main-color: #272227; */
+  --main-color: #322f32;
+  --second-color: #555555;
+  --third-color: #0E0E0E;
+  --main-text-color: #EDE6DD;
+  --second-text-color: #1b1818;
+  --third-text-color: #aeb5a8;
+  --main-shadow-color: #0a0909;
+  --danger-color: #ba1c15;
+  --success-color: #36743B;
+  --main-button-color: #70757F;
+
+
+  --padding-extra-small: 0.5rem;
+  --padding-small: 1rem;
+  --padding-medium: 1.5rem;
+  --padding-large: 2rem;
+  --padding-extra-large: 3rem;
+
+  --font-size-small: 0.5rem;
+  --font-size-medium: 1rem;
+  --font-size-large: 1.5rem;
+  --font-size-extra-large: 2rem;
+
+  --gap-extra-small: 0.2rem;
+  --gap-small: 0.3rem;
+  --gap-medium: 0.7rem: 
+
+}
+
+* {
+  color: var(--main-text-color);
+  padding: 0;
+  margin: 0;
+  font-size: var(--font-size-medium);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+}
+
 body {
+  background-color: var(--main-color);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
-  margin: auto;
+}
+
+button {
+  cursor: pointer;
+  background-color: var(--main-button-color);
+  border: 0;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 10px -1px rgba(10,9,9,0.42); 
+box-shadow: 1px 1px 10px -1px rgba(10,9,9,0.42);
+}
+
+h1 {
+  font-size: var(--font-size-extra-large);
+  margin: 0 0 var(--padding-small) 0;
+}
+
+h3 {
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  font-size: var(--font-size-large);
+}
+
+p {
+  margin: 0 0 var(--padding-extra-small) 0;
+}
+
+li {
+  margin: 0 0 var(--padding-extra-small) 0;
+}
+
+header {
+ background-color: var(--third-color);
+ padding: var(--padding-small) var(--padding-medium);
+ -webkit-box-shadow: 1px 1px 10px -1px rgba(10,9,9,0.42); 
+box-shadow: 1px 1px 10px -1px rgba(10,9,9,0.42);
+}
+
+main {
   max-width: 600px;
-  padding: 2rem;
+  margin: auto;
+  margin: var(--padding-large) var(--padding-small);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 * {
   box-sizing: border-box;
-}
-
-.show {
-  display: block;
-}
-
-.hidden {
-  display: none;
 }
 
 #feedback-close-button {
@@ -23,28 +100,38 @@ body {
 }
 
 .error-container {
-  background-color: red;
-  color: white;
+  color: var(--second-text-colorcolor);
+  background-color: var(--danger-color);
 }
 
 .success-container {
-  background-color: lightgreen;
+  color: var(--second-text-color);
+  background-color: var(--success-color);
 }
 
 dialog {
-  border: none !important;
+  margin: auto;
+  border: none;
   border-radius: 5px;
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(125, 122, 122, 0.25);
   width: 80%;
   /* TODO fix problem, element and margin ends up outside viewport, only this element */
   max-width: 250px;
 }
 
-.svg-add-button, .svg-item-button, .svg-close-button  {
+dialog::backdrop {
+  background-color: red;
+}
+
+.svg-add-button,
+.svg-item-button,
+.svg-close-button {
+  color: var(--second-text-color);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: var(--gap-extra-small);
 }
 
 .svg-add-button svg {
@@ -53,8 +140,8 @@ dialog {
 }
 
 .svg-add-button small {
-  font-size: 0.5rem;
- }
+  font-size: var(--font-size-small);
+}
 
 .svg-close-button svg {
   width: 15px;
@@ -68,7 +155,7 @@ dialog {
 
 .svg-item-button small {
   font-size: 0.5rem;
- }
+}
 
 .reset-ul {
   list-style-type: none;
@@ -76,33 +163,41 @@ dialog {
   padding: 0;
 }
 
-
-.list-data-item {
-  position: relative;
-  width: 100%;
-  max-width: 200px;
-  background-color: lightgray;
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-.list-data-item::before {
-  content: " ";
-  position: relative;
+.list-website {
+  font-size: var(--font-size-large);
 }
 
 .item-button-container {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0;
+  right: 0;
+  gap: var(--gap-small);
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: flex-start;
   flex-wrap: nowrap;
   align-items: center;
+  margin-top: var(--padding-small);
 }
 
-.list-data-item h3 {
-  display:inline;
+/* .show-password-li {
+  display: flex;
+  flex-direction: row;
+
+}
+
+.show-password-li b {
+  display: flex;
+  flex-direction: row;
+  padding-right: 0.4rem;
+} */
+
+.item-button-container button {
+  width: 65px;
+  height: 35px;
+}
+
+summary {
+  cursor: pointer;
 }
 
 /* TODO Find the cheat code for min-max grid */
@@ -114,6 +209,43 @@ dialog {
   gap: 1rem;
 }
 
+.list-data-item p {
+  color: var(--third-text-color);
+  word-break: break-all;
+}
+
+.list-data-item summary {
+  color: var(--third-text-color);
+}
+
+.template-list-component {
+  border-radius: 10px;
+  width: 100%;
+  max-width: 300px;
+  padding: var(--padding-small) var(--padding-medium);
+
+  /* box-shadow: 3px 3px 10px var(--main-shadow-color);
+  border-bottom: 1px rgb(70, 70, 70) solid ;
+  border-right: 1px rgb(70, 70, 70) solid ; */
+
+  /* box-shadow: 5px 5px 50px var(--main-shadow-color); */
+
+  /* -webkit-box-shadow: 3px 2px 9px 1px rgba(10,9,9,0.41); 
+box-shadow: 3px 2px 9px 1px rgba(10,9,9,0.41); */
+
+-webkit-box-shadow: 5px 5px 20px 2px rgba(10,9,9,0.25); 
+box-shadow: 5px 5px 20px 2px rgba(10,9,9,0.25);
+
+}
+
+/* .template-list-component::before {
+  content: " ";
+  position: absolute;
+} */
+
+
+
+
 #post-form-button {
   position: fixed;
   bottom: 2rem;
@@ -121,16 +253,16 @@ dialog {
 }
 
 #feedback-dialog {
-    /* TODO place feedback doalig at top level */
-    position: fixed;
+  /* TODO place feedback doalig at top level */
+  position: fixed;
   top: 2rem;
   z-index: 999999;
 }
 
 #feedback-close-button {
-position: absolute;
-right: 1rem;
-top: 1rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
 }
 
 #feedback-message {
@@ -155,7 +287,19 @@ top: 1rem;
   right: 1rem;
 }
 
-input, textarea, #validate-key-button, #submit-button, #create-key-button {
+.edit-item-button {
+  background-color: var(--main-button-color);
+}
+
+.delete-item-button {
+  background-color: var(--danger-color);
+}
+
+input,
+textarea,
+#validate-key-button,
+#submit-button,
+#create-key-button {
   width: 100%;
 }
 
@@ -164,7 +308,6 @@ textarea {
   resize: none;
 }
 
-
-#template-additional-data {
+.list-additional-data {
   white-space: pre-wrap;
 }
