@@ -16,13 +16,13 @@ const logError = (error: Error): void => {
     editFeedback(message, true)
 }
 
-const logUnknownError = (): void => {
-    console.error("An error outside the Error instance occurred")
+const logUnknownError = (error:unknown): void => {
+    console.error("An error outside the Error instance occurred", error)
 }
 
 export const sanitizeError = (error: unknown): void => {
     if (error instanceof Error) return logError(error)
-    logUnknownError()
+    logUnknownError(error)
 }
 
 const createErrorResponse = (error: unknown): errorResponse => {
