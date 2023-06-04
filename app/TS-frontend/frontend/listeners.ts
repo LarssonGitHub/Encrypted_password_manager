@@ -26,21 +26,16 @@ import {
 
 // Shows static tags are always present in the DOM 
 // Dynamic tags are handled and validated in their respective function
+// TODO find a way to define semantic elements
 export const listDataContainer = document.getElementById("list-data-container") as HTMLDivElement;
 export const template = document.getElementById("template-list") as HTMLTemplateElement;
-// export const feedbackContainer = document.getElementById("feedback-container") as HTMLDivElement;
 export const feedbackMessage = document.getElementById("feedback-message") as HTMLParagraphElement;
 export const feedbackCloseButton = document.getElementById("feedback-close-button") as HTMLButtonElement;
 export const form = document.getElementById("form") as HTMLFormElement;
-// export const formContainer = document.getElementById("form-container") as HTMLDivElement;
 export const postFormButton = document.getElementById("post-form-button") as HTMLButtonElement;
 export const closeFormButton = document.getElementById("close-form-button") as HTMLButtonElement;
-export const getItems = document.getElementById("get-items") as HTMLButtonElement;
-// export const createKeyContainer = document.getElementById("create-key-container") as HTMLDivElement;
-// export const validateKeyContainer = document.getElementById("validate-key-container") as HTMLDivElement;
 export const createKeyButton = document.getElementById("create-key-button") as HTMLButtonElement;
 export const validateKeyButton = document.getElementById("validate-key-button") as HTMLButtonElement;
-// export const confirmContainer = document.getElementById("confirm-container") as HTMLDivElement;
 export const confirmMessage = document.getElementById("confirm-message") as HTMLParagraphElement;
 export const confirmYesButton = document.getElementById("confirm-yes-button") as HTMLButtonElement;
 export const confirmNoButton = document.getElementById("confirm-no-button") as HTMLButtonElement;
@@ -59,10 +54,12 @@ form.addEventListener("submit", async (event: SubmitEvent) => {
   if (!submitEvent.success) return sanitizeError(submitEvent.error);
 })
 
-getItems.addEventListener("click", async () => {
-  const getDataEvent: errorResponse | eventResponse = await eventErrorListener(() => getDatabaseData());
-  if (!getDataEvent.success) sanitizeError(getDataEvent.error);
-});
+// TODO Remove in production, only for testing
+// export const getItems = document.getElementById("get-items") as HTMLButtonElement;
+// getItems.addEventListener("click", async () => {
+//   const getDataEvent: errorResponse | eventResponse = await eventErrorListener(() => getDatabaseData());
+//   if (!getDataEvent.success) sanitizeError(getDataEvent.error);
+// });
 
 feedbackCloseButton.addEventListener("click", () => {
   feedbackDialog.close()
@@ -79,7 +76,6 @@ closeFormButton.addEventListener("click", () => {
 });
 
 listDataContainer.addEventListener("click", async (event: MouseEvent) => {
-  event.preventDefault();
   const readyEvent: errorResponse | eventResponse = await eventErrorListener(() => readyRequest(event));
   if (!readyEvent.success) {
       resetConfirm()
@@ -87,7 +83,6 @@ listDataContainer.addEventListener("click", async (event: MouseEvent) => {
   }
 });
 
-// 
 createKeyButton.addEventListener("click", async () => {
   const getKeyEvent: errorResponse | eventResponse = await eventErrorListener(() => createKey());
   if (!getKeyEvent.success) return sanitizeError(getKeyEvent.error);
@@ -106,7 +101,6 @@ validateKeyButton.addEventListener("click", async () => {
 });
 
 confirmYesButton.addEventListener("click", async (event: MouseEvent) => {
-  event.preventDefault();
   const requestEvent: errorResponse | eventResponse = await eventErrorListener(() => confirmRequest(event));
   resetConfirm()
   if (!requestEvent.success) return sanitizeError(requestEvent.error);
