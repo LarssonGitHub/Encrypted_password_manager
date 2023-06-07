@@ -1,7 +1,7 @@
 :root {
-  /* --main-color: #272227; */
-  --main-color: #322f32;
-  --second-color: #555555;
+  --main-color: #272227;
+  /* --main-color: #322f32; */
+  --second-color: #3f3e3e;
   --third-color: #0E0E0E;
   --main-text-color: #EDE6DD;
   --second-text-color: #1b1818;
@@ -18,15 +18,16 @@
   --padding-large: 2rem;
   --padding-extra-large: 3rem;
 
-  --font-size-small: 0.5rem;
+
+  --font-size-extra-small: 0.5rem;
+  --font-size-small: 0.8rem;
   --font-size-medium: 1rem;
   --font-size-large: 1.5rem;
   --font-size-extra-large: 2rem;
 
   --gap-extra-small: 0.2rem;
   --gap-small: 0.3rem;
-  --gap-medium: 0.7rem: 
-
+  --gap-medium: 0.7rem:
 }
 
 * {
@@ -37,6 +38,7 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   letter-spacing: 0.2px;
   line-height: 1.4;
+  box-sizing: border-box;
 }
 
 body {
@@ -50,8 +52,8 @@ button {
   background-color: var(--main-button-color);
   border: 0;
   border-radius: 5px;
-  -webkit-box-shadow: 1px 1px 10px -1px rgba(10,9,9,0.42); 
-box-shadow: 1px 1px 10px -1px rgba(10,9,9,0.42);
+  -webkit-box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
+  box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
 }
 
 h1 {
@@ -67,6 +69,7 @@ h3 {
 
 p {
   margin: 0 0 var(--padding-extra-small) 0;
+
 }
 
 li {
@@ -74,10 +77,10 @@ li {
 }
 
 header {
- background-color: var(--third-color);
- padding: var(--padding-small) var(--padding-medium);
- -webkit-box-shadow: 1px 1px 10px -1px rgba(10,9,9,0.42); 
-box-shadow: 1px 1px 10px -1px rgba(10,9,9,0.42);
+  background-color: var(--third-color);
+  padding: var(--padding-small) var(--padding-medium);
+  -webkit-box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
+  box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
 }
 
 main {
@@ -91,8 +94,24 @@ main {
   align-items: center;
 }
 
-* {
-  box-sizing: border-box;
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--third-color);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+  background: var(--second-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--main-color);
 }
 
 #feedback-close-button {
@@ -100,27 +119,13 @@ main {
 }
 
 .error-container {
-  color: var(--second-text-colorcolor);
+  color: var(--second-text-color);
   background-color: var(--danger-color);
 }
 
 .success-container {
   color: var(--second-text-color);
   background-color: var(--success-color);
-}
-
-dialog {
-  margin: auto;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(125, 122, 122, 0.25);
-  width: 80%;
-  /* TODO fix problem, element and margin ends up outside viewport, only this element */
-  max-width: 250px;
-}
-
-dialog::backdrop {
-  background-color: red;
 }
 
 .svg-add-button,
@@ -140,7 +145,18 @@ dialog::backdrop {
 }
 
 .svg-add-button small {
+  font-size: var(--font-size-extra-small);
+  display: inline-block;
+}
+
+small {
   font-size: var(--font-size-small);
+  display: inline-block;
+}
+
+#create-key-warning {
+  color: var(--danger-color);
+  font-size: var(--font-size-medium);
 }
 
 .svg-close-button svg {
@@ -176,7 +192,7 @@ dialog::backdrop {
   justify-content: flex-start;
   flex-wrap: nowrap;
   align-items: center;
-  margin-top: var(--padding-small);
+  margin-top: var(--padding-medium);
 }
 
 /* .show-password-li {
@@ -232,19 +248,11 @@ summary {
 
   /* -webkit-box-shadow: 3px 2px 9px 1px rgba(10,9,9,0.41); 
 box-shadow: 3px 2px 9px 1px rgba(10,9,9,0.41); */
-
--webkit-box-shadow: 5px 5px 20px 2px rgba(10,9,9,0.25); 
-box-shadow: 5px 5px 20px 2px rgba(10,9,9,0.25);
+  /* https://html-css-js.com/css/generator/box-shadow/ */
+  -webkit-box-shadow: 5px 5px 20px 2px rgba(10, 9, 9, 0.25);
+  box-shadow: 5px 5px 20px 2px rgba(10, 9, 9, 0.25);
 
 }
-
-/* .template-list-component::before {
-  content: " ";
-  position: absolute;
-} */
-
-
-
 
 #post-form-button {
   position: fixed;
@@ -257,6 +265,43 @@ box-shadow: 5px 5px 20px 2px rgba(10,9,9,0.25);
   position: fixed;
   top: 2rem;
   z-index: 999999;
+}
+
+
+/* #validate-key-dialog, #feedback-dialog, #create-key-dialog, #confirm-dialog, #form-dialog {
+padding: var(--padding-medium) var(--padding-large);
+ background-color: var(--second-color);
+} */
+
+dialog {
+  margin: auto;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(125, 122, 122, 0.25);
+  width: 70%;
+  /* TODO fix problem, element and margin ends up outside viewport, only this element */
+  max-width: 400px;
+  padding: var(--padding-medium) var(--padding-large);
+  background-color: var(--main-color);
+}
+
+dialog::backdrop {
+  background-color: #272227;
+  opacity: 0.85;
+}
+
+dialog label {
+  display: inline-block;
+  margin: 0 0 var(--padding-extra-small);
+}
+
+#form-button-container,
+.key-button-container {
+  margin: var(--padding-medium) 0 0 0;
+}
+
+.inputs-wrapper {
+  margin: var(--padding-medium) 0 0 0;
 }
 
 #feedback-close-button {
@@ -275,9 +320,15 @@ box-shadow: 5px 5px 20px 2px rgba(10,9,9,0.25);
   flex-direction: column;
   justify-content: space-between;
   justify-content: center;
+  margin: var(--padding-medium) 0 0 0;
 }
 
-#form-dialog {
+#confirm-yes-button,
+#confirm-no-button {
+  width: 100%;
+}
+
+#form-container {
   position: relative;
 }
 
@@ -300,7 +351,14 @@ textarea,
 #validate-key-button,
 #submit-button,
 #create-key-button {
+  background-color: var(--main-text-color);
+  color: var(--second-text-color);
   width: 100%;
+  padding: var(--padding-extra-small);
+  border-radius: 5px;
+  border: none;
+  -webkit-box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
+  box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
 }
 
 textarea {
@@ -310,4 +368,20 @@ textarea {
 
 .list-additional-data {
   white-space: pre-wrap;
+}
+
+@media only screen and (max-width: 600px) {
+  dialog {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  body {
+    width: 300px;
+  }
+
+  dialog {
+    width: 300px;
+  }
 }
