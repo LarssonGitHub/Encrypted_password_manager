@@ -71,6 +71,9 @@ export const readyRequest = (event: MouseEvent) => {
       deleteConfirm();
       return
   }
+  if (getButton && getButton.classList.contains("show-password-button")) {
+    return
+}
   throw new Error("Couldn't match a handler")
 }
 
