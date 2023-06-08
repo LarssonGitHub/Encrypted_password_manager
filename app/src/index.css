@@ -9,9 +9,11 @@
   --main-shadow-color: #0a0909;
   --danger-color: #ba1c15;
   --success-color: #36743B;
-  --main-button-color: #70757F;
+  --main-button-color: #0045cf;
 
 
+
+  --padding-extra-extra-small: 0.3rem;
   --padding-extra-small: 0.5rem;
   --padding-small: 1rem;
   --padding-medium: 1.5rem;
@@ -47,15 +49,6 @@ body {
     Arial, sans-serif;
 }
 
-button {
-  cursor: pointer;
-  background-color: var(--main-button-color);
-  border: 0;
-  border-radius: 5px;
-  -webkit-box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
-  box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
-}
-
 h1 {
   font-size: var(--font-size-extra-large);
   margin: 0 0 var(--padding-small) 0;
@@ -84,38 +77,31 @@ header {
 }
 
 main {
-  max-width: 600px;
-  margin: auto;
-  margin: var(--padding-large) var(--padding-small);
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--padding-extra-large) var(--padding-large);
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: var(--third-color);
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   border-radius: 30px;
   background: var(--second-color);
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: var(--main-color);
 }
 
-#feedback-close-button {
-  cursor: pointer;
+#feedback-close-button,
+#close-form-button {
+  padding: var(--padding-extra-extra-small);
 }
 
 .error-container {
@@ -137,17 +123,65 @@ main {
   align-items: center;
   justify-content: center;
   gap: var(--gap-extra-small);
+  /* padding: var(--padding-extra-extra-small) var(--padding-extra-small); */
 }
 
 .svg-add-button svg {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+#svg-close-button {
+  background-color: var(--main-button-color);
+}
+
+/* https://evanminto.com/blog/intrinsically-responsive-css-grid-minmax-min/ */
+
+/* Here all buttons */
+/* button:hover , #validate-key-button:hover,
+#submit-button:hover,
+#create-key-button:hover,
+#feedback-close-button:hover,
+#close-form-button:hover,
+#delete-item-button:hover {
+background-color: green;
+} */
+
+/* TODO remove? */
+/* #validate-key-button,
+#submit-button,
+#create-key-button {
+  background-color: var(--main-button-color);
+} */
+
+button:hover {
+  background-color: green;
+}
+
+button:active {
+  transition: 0.2s;
+  background-color: red;
+}
+
+
+button {
+  cursor: pointer;
+  background-color: var(--main-button-color);
+  color: var(--second-text-color);
+  border: 0;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
+  box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
+  transition: 0.3s;
 }
 
 .svg-add-button small {
+  font-weight: 700;
   font-size: var(--font-size-extra-small);
   display: inline-block;
+  color: var(--second-text-color)
 }
+
 
 small {
   font-size: var(--font-size-small);
@@ -171,6 +205,7 @@ small {
 
 .svg-item-button small {
   font-size: 0.5rem;
+  color: var(--second-text-color)
 }
 
 .reset-ul {
@@ -208,7 +243,7 @@ small {
 } */
 
 .item-button-container button {
-  width: 65px;
+  width: 60px;
   height: 35px;
 }
 
@@ -218,11 +253,9 @@ summary {
 
 /* TODO Find the cheat code for min-max grid */
 #list-data-container {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
   gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
 }
 
 .list-data-item p {
@@ -237,7 +270,6 @@ summary {
 .template-list-component {
   border-radius: 10px;
   width: 100%;
-  max-width: 300px;
   padding: var(--padding-small) var(--padding-medium);
 
   /* box-shadow: 3px 3px 10px var(--main-shadow-color);
@@ -258,6 +290,7 @@ box-shadow: 3px 2px 9px 1px rgba(10,9,9,0.41); */
   position: fixed;
   bottom: 2rem;
   right: 2rem;
+  padding: var(--padding-extra-extra-small) var(--padding-extra-small);
 }
 
 #feedback-dialog {
@@ -276,16 +309,17 @@ padding: var(--padding-medium) var(--padding-large);
 dialog {
   margin: auto;
   border: none;
-  border-radius: 5px;
   box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(125, 122, 122, 0.25);
   width: 70%;
   /* TODO fix problem, element and margin ends up outside viewport, only this element */
   max-width: 400px;
   padding: var(--padding-medium) var(--padding-large);
   background-color: var(--main-color);
+  border-radius: 10px;
 }
 
 dialog::backdrop {
+  transition: 0.8s;
   background-color: #272227;
   opacity: 0.85;
 }
@@ -306,8 +340,8 @@ dialog label {
 
 #feedback-close-button {
   position: absolute;
-  right: 1rem;
-  top: 1rem;
+  right: 0.7rem;
+  top: 0.7rem;
 }
 
 #feedback-message {
@@ -326,6 +360,7 @@ dialog label {
 #confirm-yes-button,
 #confirm-no-button {
   width: 100%;
+  padding: var(--padding-extra-extra-small) var(--padding-extra-small);
 }
 
 #form-container {
@@ -334,8 +369,8 @@ dialog label {
 
 #close-form-button {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  right: -1rem;
+  top: -1rem;
 }
 
 .edit-item-button {
@@ -351,14 +386,18 @@ textarea,
 #validate-key-button,
 #submit-button,
 #create-key-button {
-  background-color: var(--main-text-color);
-  color: var(--second-text-color);
   width: 100%;
-  padding: var(--padding-extra-small);
-  border-radius: 5px;
+  padding: var(--padding-extra-extra-small) var(--padding-extra-small);
   border: none;
   -webkit-box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
   box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
+  border-radius: 5px;
+}
+
+input,
+textarea {
+  color: var(--second-text-color);
+  background-color: var(--main-text-color);
 }
 
 textarea {
@@ -371,6 +410,14 @@ textarea {
 }
 
 @media only screen and (max-width: 600px) {
+  #list-data-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex-direction: column;
+  }
+
   dialog {
     width: 100%;
   }
