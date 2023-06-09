@@ -24,14 +24,14 @@ export const isObject = (value: unknown): boolean => {
 export const generateId = () => uuidv4();
 
 export const removeItem = (id: string, data: userCredentialsArray): userCredentialsArray => {
-  if (!id) throw new Error("No id was submitted");
-  if (!Array.isArray(data)) throw new Error("Couldn't compile or delete data");
+  if (!id) throw new Error("<customThrownError::>No id was submitted");
+  if (!Array.isArray(data)) throw new Error("<customThrownError::>Couldn't compile or delete data");
   return data.filter(obj => obj.id !== id);
 };
 
 export const createAndAppendId = (dataEntries: userCredentialObject) => {
   const generatedId: string = uuidv4();
-  if (!generatedId || typeof generatedId !== "string") throw new Error("No id could be created");
+  if (!generatedId || typeof generatedId !== "string") throw new Error("<customThrownError::>No id could be created");
   return {
       ...dataEntries,
       id: generatedId,
@@ -39,9 +39,9 @@ export const createAndAppendId = (dataEntries: userCredentialObject) => {
 }
 
 export const updateItem = (newData: userCredentialObject, data: userCredentialsArray): userCredentialsArray => {
-  if (!isObject(newData) || !Array.isArray(data)) throw new Error("Couldn't compile or update data");
+  if (!isObject(newData) || !Array.isArray(data)) throw new Error("<customThrownError::>Couldn't compile or update data");
   const idExists: userCredentialsArray = data.filter(obj => obj.id === newData.id);
-  if (idExists.length <= 0) throw new Error("No id could be matched");
+  if (idExists.length <= 0) throw new Error("<customThrownError::>No id could be matched");
   return data.map((data) => (data.id === newData.id ? {
       ...data,
       ...newData
@@ -49,7 +49,7 @@ export const updateItem = (newData: userCredentialObject, data: userCredentialsA
 };
 
 export const InsertItem = (newData: userCredentialObject, data: userCredentialsArray): userCredentialsArray => {
-  if (!isObject(newData) || !Array.isArray(data)) throw new Error("Couldn't compile or insert data")
+  if (!isObject(newData) || !Array.isArray(data)) throw new Error("<customThrownError::>Couldn't compile or insert data")
   return [...data,
 newData
 ];
@@ -74,29 +74,29 @@ export const decryptData = (encryptedData: string, key: string): string => {
   try {
       return decrypt.toString(CryptoJS.enc.Utf8);
   } catch (error) {
-      throw new Error("Your key is incorrect");
+      throw new Error("<customThrownError::>Your key is incorrect");
   }
 };
 
 export const sanitizeEncryptedData = (encryptedData: string, key: string): userCredentialsArray => {
   if (!key)
-      throw new Error("No key was submitted")
+      throw new Error("<customThrownError::>No key was submitted")
   const decryptedData: string = decryptData(encryptedData, key)
-  if (!decryptedData || typeof decryptedData !== "string") throw new Error("Your key is incorrect");
+  if (!decryptedData || typeof decryptedData !== "string") throw new Error("<customThrownError::>Your key is incorrect");
   return JSON.parse(decryptedData);
 };
 
 export const encryptAndInsertDatabaseData = async (data: userCredentialsArray, key: string): Promise < boolean > => {
   if (!key)
-      throw new Error("No key was submitted")
+      throw new Error("<customThrownError::>No key was submitted")
   const stringifiedData: string = JSON.stringify(data)
-  if (typeof stringifiedData !== "string") throw new Error("Couldn't compile the data")
+  if (typeof stringifiedData !== "string") throw new Error("<customThrownError::>Couldn't compile the data")
   const encryptedData: string = encryptData(stringifiedData, key)
   if ((!encryptedData))
-      throw new Error("Couldn't encrypt the data");
+      throw new Error("<customThrownError::>Couldn't encrypt the data");
   const updatedDatabase: boolean = await insertDatabaseData(encryptedData)
   if (!updatedDatabase)
-      throw new Error("Couldn't compile and insert data into the database");
+      throw new Error("<customThrownError::>Couldn't compile and insert data into the database");
   return updatedDatabase
 }
 

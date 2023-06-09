@@ -13,8 +13,15 @@ export const createResponse = (): eventResponse => {
     }
 }
 
+const sanitizeErrorMessage = (errorString: string | undefined): string => {
+    if (!errorString) return "Error occurred; no message was given. Check the logs for more details";
+    // Used to extract error if it's a thrown statement from backend
+    if (!errorString.includes("<customThrownError::>") ) return errorString;
+    return errorString.split('<customThrownError::>')[1]
+}
+
 const logError = (error: Error): void => {
-    const message = error.message === undefined ? "Error occurred; no message was given. Check the logs for more details" : error.message;
+    const message = sanitizeErrorMessage(error.message)
     editFeedback(message, true)
     console.error(message)
 }
