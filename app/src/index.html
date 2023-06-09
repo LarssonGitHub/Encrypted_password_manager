@@ -15,6 +15,11 @@
       </header>
     <main>
       <dialog id="create-key-dialog">
+        <div class="hideFeedback success-container feedback-container">
+          <div>
+            <p class="feedback-message"></p>
+          </div>
+        </div>
         <div id="create-key-container">
           <p>Create a key you will use during encryption, <b id="create-key-warning">DO NOT</b> forget it!</p>
           <small>The app uses crypto-js for encryption/decryption, and all info is stored in the app itself</small>
@@ -34,6 +39,11 @@
         </div>
       </dialog>
       <dialog id="validate-key-dialog">
+        <div class="hideFeedback success-container feedback-container">
+          <div>
+            <p class="feedback-message"></p>
+          </div>
+        </div>
         <div id="validate-key-container">
           <p>Enter your key for decryption of your items</p>
           <small>If you have forgotten your key then your only option is to download the app again</small>
@@ -49,6 +59,11 @@
         </div>
       </dialog>
       <dialog id="form-dialog">
+        <div class="hideFeedback success-container feedback-container">
+          <div>
+            <p class="feedback-message"></p>
+          </div>
+        </div>
         <div id="form-container">
           <button id="close-form-button" class="svg-close-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -75,7 +90,7 @@
               </li>
               <li>
                 <label for="password-input">Associated password</label>
-                <input type="password" name="passwordInput" id="password-input" required>
+                <input type="password" name="passwordInput" id="password-input">
               </li>
               <li>
                 <label for="additional-data-input">Additional notes</label>
@@ -89,6 +104,11 @@
         </div>
       </dialog>
       <dialog id="confirm-dialog">
+        <div class="hideFeedback success-container feedback-container">
+          <div>
+            <p class="feedback-message"></p>
+          </div>
+        </div>
         <div id="confirm-container">
           <p id="confirm-message"></p>
           <ul id="confirm-button-container"  class="reset-ul">
@@ -158,17 +178,11 @@
           </div>
         </section>
       </template>
-      <dialog id="feedback-dialog" class="success-container">
-        <div id="feedback-container">
-          <p id="feedback-message"></p>
-          <button id="feedback-close-button" class="svg-close-button">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-              <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-            </svg>
-          </button>
+      <div class="hideFeedback success-container feedback-container">
+        <div>
+          <p class="feedback-message"></p>
         </div>
-      </dialog>
+      </div>
     </main>
     <script type="module" src="./frontend/renderer.js"></script>
     <script type="module" src="./frontend/listeners.js"></script>

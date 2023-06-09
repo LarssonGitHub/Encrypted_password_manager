@@ -8,14 +8,18 @@
   --third-text-color: #aeb5a8;
   --main-shadow-color: #0a0909;
   --danger-color: #ba1c15;
-  --success-color: #36743B;
-  --main-button-color: #0045cf;
+  /* --success-color: #36743B; */
+  --success-color: #2c512f;
+  --button-color: #cdccd8;
+  --button-hover-color: #a8a8b0;
+  --button-close-hover-color: #991610;
 
 
 
   --padding-extra-extra-small: 0.3rem;
   --padding-extra-small: 0.5rem;
-  --padding-small: 1rem;
+  --padding-small: 0.8rem;
+  --padding-medium-small: 1rem;
   --padding-medium: 1.5rem;
   --padding-large: 2rem;
   --padding-extra-large: 3rem;
@@ -29,7 +33,8 @@
 
   --gap-extra-small: 0.2rem;
   --gap-small: 0.3rem;
-  --gap-medium: 0.7rem:
+  --gap-medium: 0.5rem;
+  --gap-large: 1rem;
 }
 
 * {
@@ -51,7 +56,7 @@ body {
 
 h1 {
   font-size: var(--font-size-extra-large);
-  margin: 0 0 var(--padding-small) 0;
+  margin: 0 0 var(--padding-medium-small) 0;
 }
 
 h3 {
@@ -66,12 +71,12 @@ p {
 }
 
 li {
-  margin: 0 0 var(--padding-extra-small) 0;
+  margin: 0 0 var(--padding-small) 0;
 }
 
 header {
   background-color: var(--third-color);
-  padding: var(--padding-small) var(--padding-medium);
+  padding: var(--padding-medium-small) var(--padding-medium);
   -webkit-box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
   box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
 }
@@ -99,7 +104,6 @@ main {
   background: var(--main-color);
 }
 
-#feedback-close-button,
 #close-form-button {
   padding: var(--padding-extra-extra-small);
 }
@@ -109,9 +113,39 @@ main {
   background-color: var(--danger-color);
 }
 
+.feedback-container {
+  position: fixed;
+  top: 2rem;
+  border: none;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(125, 122, 122, 0.25);
+  width: 70%;
+  /* TODO fix problem, element and margin ends up outside viewport, only this element */
+  max-width: 400px;
+  padding: var(--padding-medium) var(--padding-large);
+  border-radius: 10px;
+}
+
+.feedback-container p {
+  margin: 0;
+}
+
 .success-container {
   color: var(--second-text-color);
   background-color: var(--success-color);
+}
+
+.hideFeedback {
+  opacity: 0;
+  transition: opacity 1s linear;
+  left: -300px;
+}
+
+.showFeedback {
+  opacity: 1;
+  transition: opacity 0.5s linear;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999999;
 }
 
 .svg-add-button,
@@ -123,16 +157,15 @@ main {
   align-items: center;
   justify-content: center;
   gap: var(--gap-extra-small);
-  /* padding: var(--padding-extra-extra-small) var(--padding-extra-small); */
 }
 
 .svg-add-button svg {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
 }
 
 #svg-close-button {
-  background-color: var(--main-button-color);
+  background-color: var(--button-color);
 }
 
 /* https://evanminto.com/blog/intrinsically-responsive-css-grid-minmax-min/ */
@@ -147,26 +180,32 @@ main {
 background-color: green;
 } */
 
-/* TODO remove? */
-/* #validate-key-button,
-#submit-button,
-#create-key-button {
-  background-color: var(--main-button-color);
-} */
-
-button:hover {
-  background-color: green;
+.delete-item-button:hover,
+#close-form-button:hover {
+  transform: scale(1.05);
+  background-color: var(--button-close-hover-color);
 }
 
-button:active {
+.delete-item-button,
+#close-form-button {
+  background-color: var(--danger-color);
+}
+
+button:hover {
+  transform: scale(1.05);
+  background-color: var(--button-hover-color);
+}
+
+button:active,
+#close-form-button:active {
   transition: 0.2s;
-  background-color: red;
+  background-color: var(--button-color);
 }
 
 
 button {
   cursor: pointer;
-  background-color: var(--main-button-color);
+  background-color: var(--button-color);
   color: var(--second-text-color);
   border: 0;
   border-radius: 5px;
@@ -221,7 +260,7 @@ small {
 .item-button-container {
   top: 0;
   right: 0;
-  gap: var(--gap-small);
+  gap: var(--gap-medium);
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -254,7 +293,7 @@ summary {
 /* TODO Find the cheat code for min-max grid */
 #list-data-container {
   display: grid;
-  gap: 1rem;
+  gap: var(--gap-large);
   grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
 }
 
@@ -268,9 +307,12 @@ summary {
 }
 
 .template-list-component {
+  background-color: var(--main-color);
   border-radius: 10px;
   width: 100%;
-  padding: var(--padding-small) var(--padding-medium);
+  max-width: 300px;
+  padding: var(--padding-medium-small) var(--padding-medium);
+
 
   /* box-shadow: 3px 3px 10px var(--main-shadow-color);
   border-bottom: 1px rgb(70, 70, 70) solid ;
@@ -283,25 +325,22 @@ box-shadow: 3px 2px 9px 1px rgba(10,9,9,0.41); */
   /* https://html-css-js.com/css/generator/box-shadow/ */
   -webkit-box-shadow: 5px 5px 20px 2px rgba(10, 9, 9, 0.25);
   box-shadow: 5px 5px 20px 2px rgba(10, 9, 9, 0.25);
+  transition: 0.4s;
+}
 
+.template-list-component:hover {
+  transform: scale(1.1);
 }
 
 #post-form-button {
+  z-index: 999999;
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  padding: var(--padding-extra-extra-small) var(--padding-extra-small);
+  padding: var(--padding-extra-extra-small) var(--padding-medium-small);
 }
 
-#feedback-dialog {
-  /* TODO place feedback doalig at top level */
-  position: fixed;
-  top: 2rem;
-  z-index: 999999;
-}
-
-
-/* #validate-key-dialog, #feedback-dialog, #create-key-dialog, #confirm-dialog, #form-dialog {
+/* #validate-key-dialog, #feedback-container, #create-key-dialog, #confirm-dialog, #form-dialog {
 padding: var(--padding-medium) var(--padding-large);
  background-color: var(--second-color);
 } */
@@ -338,12 +377,6 @@ dialog label {
   margin: var(--padding-medium) 0 0 0;
 }
 
-#feedback-close-button {
-  position: absolute;
-  right: 0.7rem;
-  top: 0.7rem;
-}
-
 #feedback-message {
   padding-right: 3rem;
 }
@@ -371,14 +404,6 @@ dialog label {
   position: absolute;
   right: -1rem;
   top: -1rem;
-}
-
-.edit-item-button {
-  background-color: var(--main-button-color);
-}
-
-.delete-item-button {
-  background-color: var(--danger-color);
 }
 
 input,
@@ -423,12 +448,15 @@ textarea {
   }
 }
 
+@media only screen and (max-width: 430px) {
+  dialog {
+    max-width: revert;
+  }
+}
+
 @media only screen and (max-width: 330px) {
   body {
     width: 300px;
   }
 
-  dialog {
-    width: 300px;
-  }
 }
