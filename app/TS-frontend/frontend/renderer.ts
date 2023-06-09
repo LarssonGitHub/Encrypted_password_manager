@@ -5,10 +5,10 @@ import {
 import {
     listDataContainer,
     template,
-    feedbackMessage,
     confirmMessage,
     confirmYesButton,
-    feedbackDialog
+    feedbackContainers,
+    feedbackMessages
 } from "./listeners.js";
 import {
     sortArrayAfterLetter
@@ -54,22 +54,43 @@ export const updateList = (data: userCredentialsArray) => {
     InsertDataIntoTemplate(data);
 }
 
-export const FeedbackResponseType = (responseStatus: boolean): void => {
-    feedbackDialog.classList.replace("error-container", "success-container")
-    if (responseStatus) feedbackDialog.classList.replace("success-container", "error-container")
+export const setFeedbackType = (responseStatus: boolean, element: HTMLElement): void => {
+    element.classList.replace("error-container", "success-container")
+    if (responseStatus) element.classList.replace("success-container", "error-container")
 }
 
-export const editFeedback = (message: string, responseStatus: boolean): void => {
-    FeedbackResponseType(responseStatus)
-    feedbackMessage.innerText = message === undefined ? "No message given" : message;
-    feedbackDialog.show()
+export const setFeedbackMessage = (message: string | undefined) => {
+    Array.from(feedbackMessages).forEach((textContainer) => {
+        textContainer.innerText = !message ? "No message given" : message;
+    });
 }
 
-export const hideFeedbackContainer = (element: HTMLDialogElement): void => {
-    element.close()
+export const setFeedbackContainer = (status: boolean) => {
+    Array.from(feedbackContainers).forEach((container) => {
+        setFeedbackType(status, container);
+        alterElementClass(container, "hideFeedback", "showFeedback")
+    });
 }
 
-export const editDocumentConfirm = (text: string, eventName: string) => {
+export const removeFeedbackContainer = () => {
+    Array.from(feedbackContainers).forEach((container) => {
+        alterElementClass(container, "showFeedback", "hideFeedback");
+    });
+}
+
+export const editFeedback = (message: string | undefined, responseStatus: boolean): void => {
+    setFeedbackMessage(message)
+    setFeedbackContainer(responseStatus)
+    setTimeout(() => {
+        removeFeedbackContainer()
+    }, 4000);
+}
+
+export const editConfirm = (text: string, eventName: string) => {
     confirmMessage.innerText = text;
     confirmYesButton.setAttribute("data-event", eventName);
+}
+
+export const alterElementClass = (element: HTMLElement, currentClass: string, newClass: string) => {
+    element.classList.replace(currentClass, newClass);
 }

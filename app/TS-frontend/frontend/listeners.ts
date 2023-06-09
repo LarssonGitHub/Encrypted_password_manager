@@ -8,9 +8,6 @@ import {
   submitFormAction
 } from "./handlers.js";
 import {
-  hideFeedbackContainer,
-} from "./renderer.js";
-import {
   setDataAction,
   resetForm,
   resetConfirm
@@ -23,14 +20,14 @@ import {
   errorResponse,
   eventResponse
 } from "../../@types/@type-module";
+import { alterElementClass } from "./renderer.js";
 
 // Shows static tags are always present in the DOM 
 // Dynamic tags are handled and validated in their respective function
 // TODO find a way to define semantic elements
 export const listDataContainer = document.getElementById("list-data-container") as HTMLDivElement;
 export const template = document.getElementById("template-list") as HTMLTemplateElement;
-export const feedbackMessage = document.getElementById("feedback-message") as HTMLParagraphElement;
-export const feedbackCloseButton = document.getElementById("feedback-close-button") as HTMLButtonElement;
+export const feedbackMessages = document.querySelectorAll(".feedback-message")  as NodeListOf<HTMLElement>;
 export const form = document.getElementById("form") as HTMLFormElement;
 export const postFormButton = document.getElementById("post-form-button") as HTMLButtonElement;
 export const closeFormButton = document.getElementById("close-form-button") as HTMLButtonElement;
@@ -42,7 +39,7 @@ export const confirmNoButton = document.getElementById("confirm-no-button") as H
 export const validateKeyInput = document.getElementById("validate-key-input") as HTMLInputElement;
 export const createKeyInput = document.getElementById("create-key-input") as HTMLInputElement;
 export const repeatKeyInput = document.getElementById("repeat-key-input") as HTMLInputElement;
-export const feedbackDialog = document.getElementById("feedback-dialog") as HTMLDialogElement;
+export const feedbackContainers = document.querySelectorAll(".feedback-container") as NodeListOf<HTMLElement>;
 export const createKeyDialog = document.getElementById("create-key-dialog") as HTMLDialogElement;
 export const validateKeyDialog = document.getElementById("validate-key-dialog") as HTMLDialogElement;
 export const formDialog = document.getElementById("form-dialog") as HTMLDialogElement;
@@ -53,17 +50,6 @@ form.addEventListener("submit", async (event: SubmitEvent) => {
   const submitEvent: errorResponse | eventResponse = await eventErrorListener(() => submitFormAction(event));
   if (!submitEvent.success) return sanitizeError(submitEvent.error);
 })
-
-// TODO Remove in production, only for testing
-// export const getItems = document.getElementById("get-items") as HTMLButtonElement;
-// getItems.addEventListener("click", async () => {
-//   const getDataEvent: errorResponse | eventResponse = await eventErrorListener(() => getDatabaseData());
-//   if (!getDataEvent.success) sanitizeError(getDataEvent.error);
-// });
-
-feedbackCloseButton.addEventListener("click", () => {
-  feedbackDialog.close()
-});
 
 postFormButton.addEventListener("click", () => {
   setDataAction("post")

@@ -11,7 +11,7 @@ import {
   createKeyInput
 } from "./listeners.js";
 import {
-  editDocumentConfirm
+  editConfirm
 } from "./renderer.js";
 
 export const isJsonString = (str: string) => {
@@ -72,16 +72,6 @@ export const compileFormData = (form: HTMLFormElement): userCredentialObject => 
   const extractedData = new FormData(form) as unknown as Iterable < [userCredentialObject, FormDataEntryValue] > ;
   return Object.fromEntries(extractedData);
 };
-
-export const hideElement = (element: HTMLElement): void => {
-  if (element.classList.contains("show"))
-      element.classList.replace("show", "hidden");
-}
-
-export const viewElement = (element: HTMLElement): void => {
-  if (element.classList.contains("hidden"))
-      element.classList.replace("hidden", "show");
-}
 
 export const resetForm = (): void => {
   form.reset();
@@ -156,7 +146,7 @@ export const getKey = (): string => {
 }
 
 export const confirm = (text: string, eventName: string) => {
-  editDocumentConfirm(text, eventName)
+  editConfirm(text, eventName)
   confirmDialog.showModal()
 }
 
@@ -173,7 +163,7 @@ export const deleteConfirm = (): void => {
 }
 
 export const resetConfirm = (): void => {
-  editDocumentConfirm("", "#")
+  editConfirm("", "#")
   removeDataDeleteId()
   confirmDialog.close()
 }
