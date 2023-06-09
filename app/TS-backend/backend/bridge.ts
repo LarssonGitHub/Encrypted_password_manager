@@ -34,7 +34,7 @@ const backend = {
   deleteData: (id: string, key: string): Promise < backendResponse > => ipcRenderer.invoke("deleteData", id, key),
   updateData: (id: string, putData: userCredentialObject, key: string): Promise < backendResponse > => ipcRenderer.invoke("updateData", id, putData, key),
   postData: (postData: userCredentialObject, key: string): Promise < backendResponse > => ipcRenderer.invoke("postData", postData, key),
-  checkDatabase: () => ipcRenderer.invoke("checkDatabase"),
+  checkDatabase: (): Promise < backendResponse > => ipcRenderer.invoke("checkDatabase"),
 }
 
 const API = {

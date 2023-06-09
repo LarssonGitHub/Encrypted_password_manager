@@ -12,8 +12,6 @@ import {
   getDatabaseData
 } from "./db/fileSystem";
 
-console.log("You shouldn't see this in frontend");
-
 // TODO find if javascript offers another way to see true objects
 export const isObject = (value: unknown): boolean => {
   return (
@@ -26,10 +24,8 @@ export const isObject = (value: unknown): boolean => {
 export const generateId = () => uuidv4();
 
 export const removeItem = (id: string, data: userCredentialsArray): userCredentialsArray => {
-  if (!id)
-      throw new Error("No id was submitted");
-  if (!Array.isArray(data))
-      throw new Error("Couldn't compile and delete data");
+  if (!id) throw new Error("No id was submitted");
+  if (!Array.isArray(data)) throw new Error("Couldn't compile or delete data");
   return data.filter(obj => obj.id !== id);
 };
 
@@ -43,7 +39,7 @@ export const createAndAppendId = (dataEntries: userCredentialObject) => {
 }
 
 export const updateItem = (newData: userCredentialObject, data: userCredentialsArray): userCredentialsArray => {
-  if (!isObject(newData) || !Array.isArray(data)) throw new Error("Couldn't compile or create data")
+  if (!isObject(newData) || !Array.isArray(data)) throw new Error("Couldn't compile or update data");
   const idExists: userCredentialsArray = data.filter(obj => obj.id === newData.id);
   if (idExists.length <= 0) throw new Error("No id could be matched");
   return data.map((data) => (data.id === newData.id ? {
@@ -53,9 +49,9 @@ export const updateItem = (newData: userCredentialObject, data: userCredentialsA
 };
 
 export const InsertItem = (newData: userCredentialObject, data: userCredentialsArray): userCredentialsArray => {
-  if (!isObject(newData) || !Array.isArray(data)) throw new Error("Couldn't compile or create data")
+  if (!isObject(newData) || !Array.isArray(data)) throw new Error("Couldn't compile or insert data")
   return [...data,
-  newData
+newData
 ];
 };
 
@@ -69,7 +65,7 @@ export const encryptData = (data: string, key: string): string => {
           padding: CryptoJS.pad.Pkcs7,
       }
   );
-  if (!encrypt) return "Couldn't decrypt data";
+  if (!encrypt) return "Couldn't decrypt the data";
   return encrypt.toString();
 };
 
@@ -94,13 +90,13 @@ export const encryptAndInsertDatabaseData = async (data: userCredentialsArray, k
   if (!key)
       throw new Error("No key was submitted")
   const stringifiedData: string = JSON.stringify(data)
-  if (typeof stringifiedData !== "string") throw new Error("Couldn't compile data into database")
+  if (typeof stringifiedData !== "string") throw new Error("Couldn't compile the data")
   const encryptedData: string = encryptData(stringifiedData, key)
   if ((!encryptedData))
-      throw new Error("No data for database submitted");
+      throw new Error("Couldn't encrypt the data");
   const updatedDatabase: boolean = await insertDatabaseData(encryptedData)
   if (!updatedDatabase)
-      throw new Error("Couldn't write encrypted data to database");
+      throw new Error("Couldn't compile and insert data into the database");
   return updatedDatabase
 }
 

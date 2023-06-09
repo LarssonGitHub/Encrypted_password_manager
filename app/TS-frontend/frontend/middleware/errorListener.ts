@@ -14,13 +14,13 @@ export const createResponse = (): eventResponse => {
 }
 
 const logError = (error: Error): void => {
-    const message = error.message === undefined ? "Error occurred; no message was given. Check the logs for more details." : error.message;
+    const message = error.message === undefined ? "Error occurred; no message was given. Check the logs for more details" : error.message;
     editFeedback(message, true)
     console.error(message)
 }
 
 const logUnknownError = (error: unknown): void => {
-    const message = "An error outside the error instance occurred; check the logs for more details.";
+    const message = "An error outside the error instance occurred; check the logs for more details";
     editFeedback(message, true)
     console.error(message, error)
 }

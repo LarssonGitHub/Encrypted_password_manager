@@ -11,7 +11,7 @@ import {
   generateId,
   encryptData,
   decryptData,
-} from "./utilities.js";
+} from "./logic.js";
 import {
   getData,
   updateData,
@@ -21,29 +21,23 @@ import {
 } from "./handlers";
 
 function createWindow() {
-  console.log(__dirname, "bridge.js");
-  // Create the browser window.
+  // console.log(__dirname, "bridge.js");
   const mainWindow = new BrowserWindow({
-      height: 600,
+      height: 700,
       webPreferences: {
           contextIsolation: true,
           preload: path.join(__dirname, "bridge.js"),
           nodeIntegration: false,
       },
-      width: 800,
+      width: 900,
   });
-
   mainWindow.loadFile(path.join(__dirname, "../index.html"));
-
   mainWindow.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {
-
   ipcMain.handle("generateId", () => generateId());
-
   ipcMain.handle("checkDatabase", async () => checkDatabase());
-
   ipcMain.handle("encryptData", (meta, data: string, secretKey: string) =>
       encryptData(data, secretKey)
   );
@@ -51,15 +45,10 @@ app.whenReady().then(() => {
       decryptData(data, secretKey)
   );
   ipcMain.handle("getData", async (meta, key: string) => getData(key));
-
   ipcMain.handle("deleteData", async (meta, objectId: string, key: string) => deleteData(objectId, key));
-
   ipcMain.handle("updateData", (meta, data: userCredentialObject, key: string) => updateData(data, key));
-
   ipcMain.handle("postData", async (meta, data: userCredentialObject, key: string) => postData(data, key));
-
   createWindow();
-
   app.on("activate", function() {
       if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
