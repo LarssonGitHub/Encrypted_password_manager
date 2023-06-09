@@ -1,7 +1,7 @@
 {
   "name": "electron-quick-start-typescript",
   "version": "1.0.0",
-  "description": "The poor man's password vault",
+  "description": "The vault",
   "main": "src/backend/index.js",
   "scripts": {
     "buildBackend": "tsc -p ./TS-backend",
