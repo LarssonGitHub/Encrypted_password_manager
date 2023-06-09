@@ -3,7 +3,7 @@ import {
 } from "../renderer.js"
 import {
     backendResponse,
-    errorResponse, 
+    errorResponse,
     eventResponse
 } from "../../../@types/@type-module";
 import {
@@ -11,13 +11,15 @@ import {
 } from "../utilities.js"
 
 const logError = (error: Error): void => {
-    console.error(error)
-    const message = error.message === undefined ? "Error occurred, no message was given" : error.message;
+    const message = error.message === undefined ? "Error occurred; no message was given. Check the logs for more details." : error.message;
     editFeedback(message, true)
+    console.error(message)
 }
 
-const logUnknownError = (error:unknown): void => {
-    console.error("An error outside the Error instance occurred", error)
+const logUnknownError = (error: unknown): void => {
+    const message = "An error outside the error instance occurred; check the logs for more details.";
+    editFeedback(message, true)
+    console.error(message, error)
 }
 
 export const sanitizeError = (error: unknown): void => {
@@ -42,7 +44,7 @@ export const backendErrorListener = async (func: Function): Promise < errorRespo
 }
 
 // Only used in frontend for called events
-export const eventErrorListener = async (func: Function): Promise <  errorResponse | eventResponse  > => {
+export const eventErrorListener = async (func: Function): Promise < errorResponse | eventResponse > => {
     try {
         await func();
         return createResponse()
