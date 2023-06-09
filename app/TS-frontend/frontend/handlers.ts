@@ -8,9 +8,6 @@ import {
   resetForm,
   updateFormValues,
   getDataStoredObject,
-  setDataAction,
-  setNewDataDeleteId,
-  removeDataAction,
   getKey,
   getAndValidateKeys,
   getFormValues,
@@ -20,19 +17,20 @@ import {
   getDataAction,
   postConfirm,
   updateConfirm
-} from "./utilities.js";
+} from "./logic.js";
 import {
   backendErrorListener,
 } from "./middleware/errorListener.js";
 import {
   updateList,
   editFeedback,
-} from "./renderer.js";
-import {
+  setDataAction,
+  setNewDataDeleteId,
+  removeDataAction,
   validateKeyDialog,
   createKeyDialog,
   formDialog
-} from "./listeners.js";
+} from "./renderer.js";
 
 // The key for decryption/encryption
 // Must only be stored as a local variable for safety
@@ -40,66 +38,60 @@ let secretKey: string;
 
 export const confirmRequest = async (event: MouseEvent) => {
   const target: HTMLButtonElement | null = event.target as HTMLButtonElement;
-  if (!target) throw new Error("Couldn't find target")
-  const handler: string = getDataEvent(target);
-  switch (handler) {
+  if (!target) throw new Error("Couldn't find a target");
+  const handlerEvent: string = getDataEvent(target);
+  switch (handlerEvent) {
       case "postDatabaseData":
-          await postDatabaseData()
+          await postDatabaseData();
           break;
       case "UpdateDatabaseData":
-          await UpdateDatabaseData()
+          await UpdateDatabaseData();
           break;
       case "deleteDatabaseData":
-          await deleteDatabaseData()
+          await deleteDatabaseData();
           break;
       default:
-          throw new Error("Couldn't match a request")
+          throw new Error("Couldn't match an event type to a handler");
   }
 }
 
 export const readyRequest = (event: MouseEvent) => {
-  const unknownHTMLTarget: HTMLElement = event.target as HTMLElement;
-  if (!unknownHTMLTarget) throw new Error("Couldn't find target")
-  const getButton: HTMLButtonElement = unknownHTMLTarget.closest('.list-button') as HTMLButtonElement
-  if (!getButton) return
-  if (getButton && getButton.classList.contains("edit-item-button")) {
-      readyUpdateDatabaseData(getButton);
-      return
-  }
-  if (getButton && getButton.classList.contains("delete-item-button")) {
-      readyDeleteDatabaseData(getButton);
+  const target: HTMLElement = event.target as HTMLElement;
+  if (!target) throw new Error("Couldn't find a target");
+  const button: HTMLButtonElement = target.closest('.list-button') as HTMLButtonElement;
+  if (!button) return;
+  if (button && button.classList.contains("show-password-button")) return
+  if (button && button.classList.contains("edit-item-button")) return readyUpdateDatabaseData(button);
+  if (button && button.classList.contains("delete-item-button")) {
+      readyDeleteDatabaseData(button);
       deleteConfirm();
       return
   }
-  if (getButton && getButton.classList.contains("show-password-button")) {
-    return
-}
-  throw new Error("Couldn't match a handler")
+  throw new Error("Couldn't match or prepare a ready request");
 }
 
 export const submitFormAction = (event: SubmitEvent) => {
-  const action: string = getDataAction(event.target as HTMLFormElement)
+  const target: HTMLFormElement | null = event.target as HTMLFormElement;
+  if (!target) throw new Error("Couldn't find a target");
+  const action: string = getDataAction(target)
   switch (action) {
       case "post":
-          postConfirm()
+          postConfirm();
           break;
       case "update":
-          updateConfirm()
+          updateConfirm();
           break;
       default:
-          throw new Error("Couldn't locate any action from the form")
+          throw new Error("Couldn't match the form to an action");
   }
 }
 
 export const postDatabaseData = async (): Promise < void > => {
-  if (!secretKey) throw new Error("No key submitted");
-  const compiledFormData: userCredentialObject = getFormValues();
-  if (Object.values(compiledFormData).includes("")) throw new Error("Please, do not leave any felids empty")
-  const postRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.postData(compiledFormData, secretKey));
-  if (!postRequest.success) {
-      throw postRequest.error
-  }
-  formDialog.close()
+  const formData: userCredentialObject = getFormValues();
+  if (Object.values(formData).includes("")) throw new Error("Please, do not leave any felids empty")
+  const postRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.postData(formData, secretKey));
+  if (!postRequest.success) throw postRequest.error
+  formDialog.close();
   resetForm();
   removeDataAction();
   editFeedback(postRequest.message, false)
@@ -107,36 +99,27 @@ export const postDatabaseData = async (): Promise < void > => {
 };
 
 export const getDatabaseData = async (): Promise < void | string > => {
-  if (!secretKey) throw new Error("No key was submitted")
   const getRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.getData(secretKey));
-  if (!getRequest.success) {
-      throw getRequest.error
-  }
-  editFeedback(getRequest.message, false)
+  if (!getRequest.success) throw getRequest.error;
+  // editFeedback(getRequest.message, false)
   updateList(getRequest.data);
 };
 
 export const deleteDatabaseData = async (): Promise < void > => {
-  if (!secretKey) throw new Error("No key was submitted")
   const id: string = getAndValidateId();
   const deleteRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.deleteData(id, secretKey));
-  if (!deleteRequest.success) {
-      throw deleteRequest.error
-  }
-  editFeedback(deleteRequest.message, false)
+  if (!deleteRequest.success) throw deleteRequest.error;
+  editFeedback(deleteRequest.message, false);
   updateList(deleteRequest.data);
 };
 
 export const UpdateDatabaseData = async (): Promise < void > => {
-  if (!secretKey) throw new Error("No key was submitted")
-  const compiledFormData: userCredentialObject = getFormValues();
-  if (Object.values(compiledFormData).includes("")) throw new Error("Please, do not leave any felids empty")
-  const updateRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.updateData(compiledFormData, secretKey))
-  if (!updateRequest.success) {
-      throw updateRequest.error;
-  }
-  formDialog.close()
-  resetForm()
+  const formData: userCredentialObject = getFormValues();
+  if (Object.values(formData).includes("")) throw new Error("Please, do not leave any felids empty")
+  const updateRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.updateData(formData, secretKey));
+  if (!updateRequest.success) throw updateRequest.error;
+  formDialog.close();
+  resetForm();
   removeDataAction();
   editFeedback(updateRequest.message, false);
   updateList(updateRequest.data);
@@ -146,12 +129,12 @@ export const readyUpdateDatabaseData = (updateButton: HTMLButtonElement): void =
   const compiledData: userCredentialObject = getDataStoredObject(updateButton);
   setDataAction("update")
   updateFormValues(compiledData);
-  formDialog.showModal()
+  formDialog.showModal();
 };
 
 export const readyDeleteDatabaseData = (deleteButton: HTMLButtonElement): void => {
   const id: string = getDataDeleteValidationId(deleteButton);
-  setNewDataDeleteId(deleteButton, id)
+  setNewDataDeleteId(deleteButton, id);
 };
 
 export const createKey = (): void => {
@@ -168,13 +151,7 @@ export const validateKey = async () => {
 
 export const checkDatabaseStatus = async (): Promise < void > => {
   const getStatus: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.checkDatabase());
-  if (!getStatus.success) {
-      throw getStatus.error
-  }
-  if (!getStatus.databaseEmpty) {
-      validateKeyDialog.showModal()
-      return;
-  }
-  createKeyDialog.showModal()
-  return;
+  if (!getStatus.success) throw getStatus.error;
+  if (!getStatus.databaseEmpty) return validateKeyDialog.showModal();
+  return createKeyDialog.showModal();
 };

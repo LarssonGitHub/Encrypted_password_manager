@@ -6,9 +6,12 @@ import {
     errorResponse,
     eventResponse
 } from "../../../@types/@type-module";
-import {
-    createResponse
-} from "../utilities.js"
+
+export const createResponse = (): eventResponse => {
+    return {
+        success: true,
+    }
+}
 
 const logError = (error: Error): void => {
     const message = error.message === undefined ? "Error occurred; no message was given. Check the logs for more details." : error.message;
