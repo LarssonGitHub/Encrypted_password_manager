@@ -1,29 +1,39 @@
 :root {
-  --main-color: #272227;
-  /* --main-color: #322f32; */
-  --second-color: #3f3e3e;
-  --third-color: #0E0E0E;
+  /* --main-color: #272227; */
+  --main-color: #1d1f21;
+  --second-color: rgb(76, 77, 79);
+  /* --third-color: rgb(20 22 23); */
+  --third-color: rgb(30 30 30);
+  --fourth-color: rgb(44 45 46);
+
+  /* TODO add gradient https://cssgradient.io/ */
+  --main-gradient: linear-gradient(0deg, rgb(35 36 36) 0%, rgb(50 53 56) 100%);
+  --second-gradient: linear-gradient(0deg, rgb(20, 23, 23) 0%, rgb(19 24 29) 100%);
+  --third-gradient: linear-gradient(0deg, rgb(20, 23, 23) 0%, rgb(19 24 29) 100%);
+
   --main-text-color: #EDE6DD;
   --second-text-color: #1b1818;
   --third-text-color: #aeb5a8;
+
   --main-shadow-color: #0a0909;
+
+  --box-shadow: rgb(16 16 16 / 20%) 0px 4px 5px;
+
   --danger-color: #ba1c15;
-  /* --success-color: #36743B; */
   --success-color: #2c512f;
-  --button-color: #cdccd8;
-  --button-hover-color: #a8a8b0;
-  --button-close-hover-color: #991610;
 
+  --button-color: #b4b5bf;
+  --button-hover-color: #676768;
+  --button-close-hover-color: #850e07;
+  --focus-color: #3b4058;
 
-
-  --padding-extra-extra-small: 0.3rem;
-  --padding-extra-small: 0.5rem;
-  --padding-small: 0.8rem;
-  --padding-medium-small: 1rem;
-  --padding-medium: 1.5rem;
-  --padding-large: 2rem;
-  --padding-extra-large: 3rem;
-
+  --spacing-extra-extra-small: 0.3rem;
+  --spacing-extra-small: 0.5rem;
+  --spacing-small: 0.8rem;
+  --spacing-medium-small: 1rem;
+  --spacing-medium: 1.5rem;
+  --spacing-large: 2rem;
+  --spacing-extra-large: 3rem;
 
   --font-size-extra-small: 0.5rem;
   --font-size-small: 0.8rem;
@@ -48,6 +58,11 @@
   box-sizing: border-box;
 }
 
+
+*:focus {
+  outline-color: var(--focus-color);
+}
+
 body {
   background-color: var(--main-color);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
@@ -56,35 +71,37 @@ body {
 
 h1 {
   font-size: var(--font-size-extra-large);
-  margin: 0 0 var(--padding-medium-small) 0;
+  margin: 0 0 var(--spacing-medium-small) 0;
 }
 
 h3 {
   font-weight: 900;
   letter-spacing: 0.8px;
   font-size: var(--font-size-large);
+  white-space: pre-wrap;
 }
 
 p {
-  margin: 0 0 var(--padding-extra-small) 0;
+  margin: 0 0 var(--spacing-extra-small) 0;
 
 }
 
 li {
-  margin: 0 0 var(--padding-small) 0;
+  margin: 0 0 var(--spacing-small) 0;
 }
 
 header {
-  background-color: var(--third-color);
-  padding: var(--padding-medium-small) var(--padding-medium);
-  -webkit-box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
-  box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
+  background: var(--third-color);
+  padding: var(--spacing-medium-small) var(--spacing-medium);
+  -webkit-box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow);
 }
 
 main {
-  max-width: 900px;
+  height: 100vh;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: var(--padding-extra-large) var(--padding-large);
+  padding: var(--spacing-extra-large) 4rem;
 }
 
 ::-webkit-scrollbar {
@@ -92,20 +109,20 @@ main {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--third-color);
+  background: red;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 30px;
-  background: var(--second-color);
+  background: green;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--main-color);
+  background: blue;
 }
 
 #close-form-button {
-  padding: var(--padding-extra-extra-small);
+  padding: var(--spacing-extra-extra-small);
 }
 
 .error-container {
@@ -115,14 +132,14 @@ main {
 
 .feedback-container {
   position: fixed;
-  top: 2rem;
+  bottom: 2rem;
   border: none;
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(125, 122, 122, 0.25);
   width: 70%;
-  /* TODO fix problem, element and margin ends up outside viewport, only this element */
-  max-width: 400px;
-  padding: var(--padding-medium) var(--padding-large);
+  max-width: 500px;
+  padding: var(--spacing-medium) var(--spacing-large);
   border-radius: 10px;
+  -webkit-box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow);
 }
 
 .feedback-container p {
@@ -136,7 +153,7 @@ main {
 
 .hideFeedback {
   opacity: 0;
-  transition: opacity 1s linear;
+  transition: opacity 0s linear;
   left: -300px;
 }
 
@@ -145,7 +162,7 @@ main {
   transition: opacity 0.5s linear;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 999999;
+  z-index: 9999999;
 }
 
 .svg-add-button,
@@ -157,7 +174,9 @@ main {
   align-items: center;
   justify-content: center;
   gap: var(--gap-extra-small);
+  padding: var(--spacing-extra-extra-small);
 }
+
 
 .svg-add-button svg {
   width: 20px;
@@ -168,21 +187,30 @@ main {
   background-color: var(--button-color);
 }
 
-/* https://evanminto.com/blog/intrinsically-responsive-css-grid-minmax-min/ */
+#post-form-button:hover,
+.edit-item-button:hover,
+.delete-item-button:hover {
+  transform: scale(1.15);
+}
 
-/* Here all buttons */
-/* button:hover , #validate-key-button:hover,
-#submit-button:hover,
-#create-key-button:hover,
-#feedback-close-button:hover,
-#close-form-button:hover,
-#delete-item-button:hover {
-background-color: green;
+.delete-item-button:hover {
+  background-color: var(--button-close-hover-color);
+}
+
+/* TODO transition makes element blurry, find a fix 
+   This code doesn't seem to work */
+/* #close-form-button {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
 } */
 
-.delete-item-button:hover,
 #close-form-button:hover {
-  transform: scale(1.05);
+
+  transform: scale(1.1);
   background-color: var(--button-close-hover-color);
 }
 
@@ -209,9 +237,9 @@ button {
   color: var(--second-text-color);
   border: 0;
   border-radius: 5px;
-  -webkit-box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
-  box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
   transition: 0.3s;
+  -webkit-box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow);
 }
 
 .svg-add-button small {
@@ -244,7 +272,8 @@ small {
 
 .svg-item-button small {
   font-size: 0.5rem;
-  color: var(--second-text-color)
+  color: var(--second-text-color);
+  font-weight: 700;
 }
 
 .reset-ul {
@@ -255,6 +284,10 @@ small {
 
 .list-website {
   font-size: var(--font-size-large);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: var(--spacing-large);
 }
 
 .item-button-container {
@@ -266,23 +299,11 @@ small {
   justify-content: flex-start;
   flex-wrap: nowrap;
   align-items: center;
-  margin-top: var(--padding-medium);
+  margin-top: var(--spacing-medium);
 }
-
-/* .show-password-li {
-  display: flex;
-  flex-direction: row;
-
-}
-
-.show-password-li b {
-  display: flex;
-  flex-direction: row;
-  padding-right: 0.4rem;
-} */
 
 .item-button-container button {
-  width: 60px;
+  width: 75px;
   height: 35px;
 }
 
@@ -290,11 +311,10 @@ summary {
   cursor: pointer;
 }
 
-/* TODO Find the cheat code for min-max grid */
 #list-data-container {
   display: grid;
   gap: var(--gap-large);
-  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
 }
 
 .list-data-item p {
@@ -306,75 +326,87 @@ summary {
   color: var(--third-text-color);
 }
 
-.template-list-component {
-  background-color: var(--main-color);
+.list-inner-wrapper {
+  height: 70px;
+  overflow: hidden;
+  /* background-color: var(--main-color); */
+  background: var(--fourth-color);
   border-radius: 10px;
   width: 100%;
-  max-width: 300px;
-  padding: var(--padding-medium-small) var(--padding-medium);
+  padding: var(--spacing-medium-small) var(--spacing-medium);
+  transition: 0s;
+  -webkit-box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow);
+}
 
+.template-list-component {
+  position: relative;
+}
 
-  /* box-shadow: 3px 3px 10px var(--main-shadow-color);
-  border-bottom: 1px rgb(70, 70, 70) solid ;
-  border-right: 1px rgb(70, 70, 70) solid ; */
-
-  /* box-shadow: 5px 5px 50px var(--main-shadow-color); */
-
-  /* -webkit-box-shadow: 3px 2px 9px 1px rgba(10,9,9,0.41); 
-box-shadow: 3px 2px 9px 1px rgba(10,9,9,0.41); */
-  /* https://html-css-js.com/css/generator/box-shadow/ */
-  -webkit-box-shadow: 5px 5px 20px 2px rgba(10, 9, 9, 0.25);
-  box-shadow: 5px 5px 20px 2px rgba(10, 9, 9, 0.25);
+.list-inner-wrapper:hover {
+  /* transform: scale(1.10);
+  transform-origin: 50% 110px; */
+  transform: scale(1.05);
+  transform-origin: 50% 60px;
+  z-index: 99999;
+  height: auto;
+  position: absolute;
   transition: 0.4s;
 }
 
-.template-list-component:hover {
-  transform: scale(1.1);
+.list-inner-wrapper:hover .list-website {
+  word-break: break-all;
+  text-overflow: revert;
+  white-space: revert;
+
 }
 
+
 #post-form-button {
-  z-index: 999999;
+  z-index: 99999999;
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  padding: var(--padding-extra-extra-small) var(--padding-medium-small);
+  padding: var(--spacing-extra-extra-small) var(--spacing-medium-small);
 }
 
-/* #validate-key-dialog, #feedback-container, #create-key-dialog, #confirm-dialog, #form-dialog {
-padding: var(--padding-medium) var(--padding-large);
- background-color: var(--second-color);
-} */
+#form-dialog {
+  padding: var(--spacing-large);
+}
 
 dialog {
   margin: auto;
   border: none;
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(125, 122, 122, 0.25);
   width: 70%;
-  /* TODO fix problem, element and margin ends up outside viewport, only this element */
   max-width: 400px;
-  padding: var(--padding-medium) var(--padding-large);
-  background-color: var(--main-color);
+  padding: var(--spacing-large) var(--spacing-medium);
+  /* background-color: var(--main-color); */
+  background: var(--fourth-color);
   border-radius: 10px;
+  -webkit-box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow);
 }
 
 dialog::backdrop {
-  transition: 0.8s;
-  background-color: #272227;
-  opacity: 0.85;
+  transition: 0.4s;
+  background: var(--third-color);
+  background-color: rgb(20 22 23);
+  /* background-color: var(--main-color); */
+  opacity: 0.90;
 }
 
 dialog label {
   display: inline-block;
-  margin: 0 0 var(--padding-extra-small);
+  margin: 0 0 var(--spacing-extra-small);
 }
 
 #form-button-container,
 .key-button-container {
-  margin: var(--padding-medium) 0 0 0;
+  margin: var(--spacing-medium) 0 0 0;
 }
 
 .inputs-wrapper {
-  margin: var(--padding-medium) 0 0 0;
+  margin: var(--spacing-medium) 0 0 0;
 }
 
 #feedback-message {
@@ -387,13 +419,18 @@ dialog label {
   flex-direction: column;
   justify-content: space-between;
   justify-content: center;
-  margin: var(--padding-medium) 0 0 0;
+  margin: var(--spacing-medium) 0 0 0;
 }
+
+#confirm-button-container li:last-child {
+  margin-bottom: 0;
+}
+
 
 #confirm-yes-button,
 #confirm-no-button {
   width: 100%;
-  padding: var(--padding-extra-extra-small) var(--padding-extra-small);
+  padding: var(--spacing-extra-extra-small) var(--spacing-extra-small);
 }
 
 #form-container {
@@ -412,11 +449,11 @@ textarea,
 #submit-button,
 #create-key-button {
   width: 100%;
-  padding: var(--padding-extra-extra-small) var(--padding-extra-small);
+  padding: var(--spacing-extra-extra-small) var(--spacing-extra-small);
   border: none;
-  -webkit-box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
-  box-shadow: 1px 1px 10px -1px rgba(10, 9, 9, 0.42);
   border-radius: 5px;
+  -webkit-box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow);
 }
 
 input,
@@ -434,19 +471,18 @@ textarea {
   white-space: pre-wrap;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   #list-data-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: nowrap;
-    align-items: center;
-    flex-direction: column;
+    grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
   }
+}
 
+@media only screen and (max-width: 600px) {
   dialog {
     width: 100%;
   }
 }
+
 
 @media only screen and (max-width: 430px) {
   dialog {
