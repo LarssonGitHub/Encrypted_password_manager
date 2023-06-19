@@ -364,6 +364,55 @@ summary {
 
 }
 
+.blurred-list-content {
+  filter: blur(0.8rem);
+  position: relative;
+}
+
+.list-inner-wrapper:hover .padlock {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.padlock {
+  background: transparent;
+  padding: var(--spacing-medium-small);
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.padlock svg {
+  width: 50px;
+  height: 50px;
+  transition: 0.4s;
+  fill: var(--button-one);
+}
+
+.padlock p {
+  color: var(--button-one);
+  margin-top: var(--spacing-extra-small);
+  transition: 0.4s;
+}
+
+.padlock:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.padlock:hover svg {
+  fill: var(--button-hover-three);
+}
+
+.padlock:hover p {
+  color: var(--button-hover-three);
+}
 
 #post-form-button {
   z-index: 99999999;

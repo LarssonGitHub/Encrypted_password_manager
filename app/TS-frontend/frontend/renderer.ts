@@ -133,3 +133,13 @@ export const removeDataDeleteId = (): void => {
 export const alterElementClass = (element: HTMLElement, currentClass: string, newClass: string) => {
     element.classList.replace(currentClass, newClass);
 }
+
+export const viewListContent = (delegationParent: HTMLDivElement): void => {
+    const removePadlock: HTMLDivElement | null = delegationParent.querySelector('.padlock')
+    if (!removePadlock) throw new Error("Couldn't modify content");
+    removePadlock.remove();
+    const removeBlurEffect: HTMLDivElement | null = delegationParent.querySelector('.blurred-list-content');
+    if (!removeBlurEffect) throw new Error("Couldn't modify content");
+    removeBlurEffect.classList.remove("blurred-list-content");
+    delegationParent.classList.remove("list-content-hidden");
+}

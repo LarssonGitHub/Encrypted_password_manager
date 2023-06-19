@@ -29,7 +29,8 @@ import {
   removeDataAction,
   validateKeyDialog,
   createKeyDialog,
-  formDialog
+  formDialog,
+  viewListContent
 } from "./renderer.js";
 
 // The key for decryption/encryption
@@ -55,14 +56,24 @@ export const confirmRequest = async (event: MouseEvent) => {
   }
 }
 
-export const readyRequest = (event: MouseEvent) => {
+export const sanitizeListEventDelegation = (event: MouseEvent): void => {
   const target: HTMLElement = event.target as HTMLElement;
-  if (!target) throw new Error("Couldn't find a target");
-  const button: HTMLButtonElement = target.closest('.list-button') as HTMLButtonElement;
-  if (!button) return;
-  if (button && button.classList.contains("show-password-button")) return
-  if (button && button.classList.contains("edit-item-button")) return readyUpdateDatabaseData(button);
-  if (button && button.classList.contains("delete-item-button")) {
+  const delegationParent: HTMLDivElement | null = target.closest('.template-list-component');
+  if (!delegationParent) throw new Error("Couldn't get targets");
+  const revealContent: boolean | null = Boolean(delegationParent.closest('.list-content-hidden') && target.closest('.padlock'))
+  if (revealContent) return viewListContent(delegationParent);
+  const contentVisible: boolean | null = Boolean(!delegationParent.closest('.list-content-hidden'));
+  if (!contentVisible) return
+  createRequest(target);
+}
+
+export const createRequest = (target: HTMLElement) => {
+  const button: HTMLButtonElement | null = target.closest('.list-button');
+  if (!button || button.classList.contains("show-password-button")) return;
+  const prepareUpdate: boolean = Boolean(button.classList.contains("edit-item-button"));
+  if (prepareUpdate) return readyUpdateDatabaseData(button);
+  const prepareDelete: boolean = Boolean(button.classList.contains("delete-item-button"));
+  if (prepareDelete) {
       readyDeleteDatabaseData(button);
       deleteConfirm();
       return
