@@ -23,8 +23,8 @@
         </div>
       </div>
       <div id="create-key-container">
-        <p>Create a key you will use during encryption, <b id="create-key-warning">DO NOT</b> forget it!</p>
-        <small>The app uses crypto-js for encryption/decryption, and all info is stored in the app itself</small>
+        <p>Create your personal key you will use during encryption, <b id="create-key-warning">DO NOT</b> forget it!</p>
+        <small>The app uses the advanced encryption standard (AES) to encrypt your data. All the information you have submitted is only stored locally in the app itself and is not hosted online.</small>
         <ul class="reset-ul inputs-wrapper">
           <li>
             <label for="create-key-input">New key</label>
@@ -47,8 +47,8 @@
         </div>
       </div>
       <div id="validate-key-container">
-        <p>Enter your key for decryption of your items</p>
-        <small>If you have forgotten your key, then your data is lost.</small>
+        <p>Enter the personal key you've created to decrypt your data!</p>
+        <small>Your info cannot sadly be recovered if you have forgotten the key.</small>
         <ul class="reset-ul inputs-wrapper">
           <li>
             <label for="validate-key-input">Key</label>
@@ -80,19 +80,19 @@
               <input type="hidden" id="id" name="id" value="#">
             </li>
             <li>
-              <label for="website-input">Associated Website</label>
-              <input type="text" name="websiteInput" id="website-input" required>
+              <label for="title-input">Title</label>
+              <input type="text" name="titleInput" id="title-input" required>
             </li>
             <li>
-              <label for="email-input">Associated email</label>
+              <label for="email-input">Email</label>
               <input type="text" name="emailInput" id="email-input" required>
             </li>
             <li>
-              <label for="username-input">Associated username</label>
+              <label for="username-input">Username</label>
               <input type="text" name="usernameInput" id="username-input" required>
             </li>
             <li>
-              <label for="password-input">Associated password</label>
+              <label for="password-input">Password</label>
               <!-- TODO put a require on this in production -->
               <input type="password" name="passwordInput" id="password-input" required>
             </li>
@@ -140,7 +140,7 @@
     <template id="template-list">
       <section data-list-component class="template-list-component list-content-hidden">
         <div class="list-inner-wrapper">
-          <h3 class="list-website"></h3>
+          <h3 class="list-title"></h3>
           <div class="blurred-list-content">
             <ul class="reset-ul list-data-item">
               <li class="list-id" hidden></li>

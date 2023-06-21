@@ -5,7 +5,7 @@ export interface searchQueryBody {
 
 export interface userCredentialObject {
   id: string;
-  websiteInput: string;
+  titleInput: string;
   emailInput: string;
   usernameInput: string;
   passwordInput: string;

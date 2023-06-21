@@ -88,7 +88,7 @@ export const getFormValues = (): userCredentialObject => {
   const formCollection: HTMLFormControlsCollection = form.elements;
   const obj: userCredentialObject = {
       id: "#",
-      websiteInput: "",
+      titleInput: "",
       emailInput: "",
       usernameInput: "",
       passwordInput: "",
@@ -141,6 +141,6 @@ export const resetConfirm = (): void => {
 }
 
 export const sortArrayAfterLetter = (data: userCredentialsArray, ): userCredentialsArray => {
-  return data.sort((a, b) => (a.websiteInput.toLocaleLowerCase() > b.websiteInput.toLocaleLowerCase()) ? 1 :
-      ((b.websiteInput.toLocaleLowerCase() > a.websiteInput.toLocaleLowerCase()) ? -1 : 0));
+  return data.sort((a, b) => (a.titleInput.toLocaleLowerCase() > b.titleInput.toLocaleLowerCase()) ? 1 :
+      ((b.titleInput.toLocaleLowerCase() > a.titleInput.toLocaleLowerCase()) ? -1 : 0));
 }
