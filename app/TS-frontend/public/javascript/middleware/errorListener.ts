@@ -5,7 +5,7 @@ import {
     backendResponse,
     errorResponse,
     eventResponse
-} from "../../../@types/@type-module";
+} from "../../../../@types/@type-module.js";
 
 export const createResponse = (): eventResponse => {
     return {

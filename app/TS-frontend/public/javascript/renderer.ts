@@ -1,7 +1,7 @@
 import {
     API,
     userCredentialsArray
-} from "../../@types/@type-module";
+} from "../../../@types/@type-module";
 import {
     sortArrayAfterLetter
 } from "./logic.js";

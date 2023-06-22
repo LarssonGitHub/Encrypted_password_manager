@@ -23,7 +23,7 @@ import {
 function createWindow() {
   const mainWindow = new BrowserWindow({
       height: 700,
-      icon: path.join(__dirname, "../assets/favicons/favicon.ico"),
+      icon: path.join(__dirname, "../public/assets/favicons/favicon.ico"),
       webPreferences: {
           contextIsolation: true,
           preload: path.join(__dirname, "bridge.js"),
@@ -31,7 +31,7 @@ function createWindow() {
       },
       width: 900,
   });
-  mainWindow.loadFile(path.join(__dirname, "../index.html"));
+  mainWindow.loadFile(path.join(__dirname, "../public/index.html"));
   mainWindow.webContents.openDevTools();
 }
 

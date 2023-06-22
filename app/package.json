@@ -2,14 +2,14 @@
   "name": "the-padlock-vault",
   "version": "1.0.0",
   "description": "A local-only app that securely stores encrypted information, passwords, and credentials submitted by the user.",
-  "main": "src/backend/index.js",
+  "main": "src/server/index.js",
   "scripts": {
     "buildBackend": "tsc -p ./TS-backend",
     "buildFrontend": "tsc -p ./TS-frontend",
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run buildBackend &&  npm run buildFrontend && electron ./src/backend/index.js",
-    "startWithoutBuild": "electron ./src/backend/index.js",
+    "start": "npm run buildBackend &&  npm run buildFrontend && electron ./src/server/index.js",
+    "startWithoutBuild": "electron ./src/server/index.js",
     "CreateExeFile": " electron-packager ./ the-padlock-vault --platform=win32 --arch=x64 --overwrite"
   },
   "repository": "https://github.com/LarssonGitHub/The_vault",

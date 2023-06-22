@@ -2,7 +2,7 @@ import {
   userCredentialObject,
   backendResponse,
   errorResponse
-} from "../../@types/@type-module";
+} from "../../../@types/@type-module";
 import {
   getAndValidateId,
   resetForm,

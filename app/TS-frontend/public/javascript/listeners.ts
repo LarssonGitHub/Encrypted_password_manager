@@ -14,11 +14,11 @@ import {
 import {
   eventErrorListener,
   sanitizeError
-} from "./middleware/errorListener.js";
+} from "./middleware/errorListener.js"
 import {
   errorResponse,
   eventResponse
-} from "../../@types/@type-module";
+} from "../../../@types/@type-module";
 import {
   setDataAction
 } from "./renderer.js";

@@ -1,7 +1,7 @@
 import {
   userCredentialObject,
   userCredentialsArray
-} from "../../@types/@type-module";
+} from "../../../@types/@type-module";
 import {
   form,
   confirmDialog,
