@@ -12,7 +12,7 @@ Create an app in node.js that can store chipered passwords, usernames for websit
 * ~~Furthermore, all data, code, packages, modules, or databases must be in the app itself and shall not be hosted online in any manner. ~~
 * ~~User should be able to edit, delete, and add new data as he sees fit.~~
 * ~~Apply CSS, tables, or other styling to make the app more presentable.~~
-* Create custom icon for app
+* ~~Create custom icon for app.~~
 
 ### Nice to have: *(More can be added later.)*
 

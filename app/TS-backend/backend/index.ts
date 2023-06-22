@@ -21,9 +21,9 @@ import {
 } from "./handlers";
 
 function createWindow() {
-  // console.log(__dirname, "bridge.js");
   const mainWindow = new BrowserWindow({
       height: 700,
+      icon: path.join(__dirname, "../assets/favicons/favicon.ico"),
       webPreferences: {
           contextIsolation: true,
           preload: path.join(__dirname, "bridge.js"),
