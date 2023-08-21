@@ -21,3 +21,8 @@ Create an app in node.js that can store chipered passwords, usernames for websit
 ### Tools, packages, and frameworks used as of now in the project. *(These will be added or removed as the project grows!)*
 
 * TS, Electron, Crypto-js with AES, Node.js
+
+### Known bugs and needed fixes
+
+* Once the app is compiled into an application and the user tries to save a password, their anti-virus might flag the app as dangerous. (Most likely happening because the db contains a txt-file which is being edited.) 
+- Temporary solution: whitelist the application in the anti-virus OR run it in dev environment with the start script.  
