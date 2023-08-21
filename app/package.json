@@ -10,7 +10,23 @@
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "start": "npm run buildBackend &&  npm run buildFrontend && electron ./src/server/index.js",
     "startWithoutBuild": "electron ./src/server/index.js",
-    "CreateExeFile": " electron-packager ./ the-padlock-vault --platform=win32 --arch=x64 --overwrite"
+    "createWindowsApp": " electron-packager ./ the-padlock-vault --platform=win32 --arch=x64 --overwrite",
+    "createLinuxApp": "electron-builder build --linux AppImage"
+  },
+  "build": {
+    "win": {
+      "icon": "./src/public/assets/favicons/favicon.ico"
+    },
+    "linux": {
+      "category": "password-manager-app",
+      "icon":"./src/public/assets/favicons/android-chrome-512x512.png",
+      "executableName": "The-padlock-vault",
+        "target": [
+          "deb",
+          "snap",
+          "rpm"
+        ]
+    }
   },
   "repository": "https://github.com/LarssonGitHub/The_vault",
   "keywords": [
@@ -24,14 +40,15 @@
   "author": "Martin Larsson",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "electron": "^22.2.0",
     "electron-packager": "^17.1.1",
+    "electron-builder": "^24.6.3",
     "eslint": "^7.32.0",
-    "typescript": "^4.8.3",
-    "@types/crypto-js": "^4.1.1"
+    "typescript": "^4.8.3"
   },
   "dependencies": {
     "crypto-js": "^4.1.1",

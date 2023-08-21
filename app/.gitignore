@@ -32,6 +32,7 @@
 windows-win32-x64
 
 # misc
+/dist
 /server/.env
 /src/server
 /src/public/javascript
