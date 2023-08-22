@@ -9,23 +9,28 @@
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "start": "npm run buildBackend &&  npm run buildFrontend && electron ./src/server/index.js",
-    "startWithoutBuild": "electron ./src/server/index.js",
-    "createWindowsApp": " electron-packager ./ the-padlock-vault --platform=win32 --arch=x64 --overwrite",
-    "createLinuxApp": "electron-builder build --linux AppImage"
+    "startWithoutTsc": "electron ./src/server/index.js",
+    "buildWindowsApp": "electron-builder build --win",
+    "buildLinuxApp": "electron-builder build --linux",
+    "buildMacApp": "electron-builder build --mac"
   },
   "build": {
+    "appId": "The-padlock-vault",
+    "mac": {
+      "target": "dmg",
+      "icon": "./src/public/assets/favicons/favicon.png"
+    },
     "win": {
-      "icon": "./src/public/assets/favicons/favicon.ico"
+      "target": "portable",
+      "icon": "./src/public/assets/favicons/favicon.png"
     },
     "linux": {
       "category": "password-manager-app",
-      "icon":"./src/public/assets/favicons/android-chrome-512x512.png",
+      "icon": "./src/public/assets/favicons/favicon.png",
       "executableName": "The-padlock-vault",
-        "target": [
-          "deb",
-          "snap",
-          "rpm"
-        ]
+      "target": [
+        "appImage"
+      ]
     }
   },
   "repository": "https://github.com/LarssonGitHub/The_vault",
@@ -45,13 +50,14 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "electron": "^22.2.0",
-    "electron-packager": "^17.1.1",
     "electron-builder": "^24.6.3",
+    "electron-packager": "^17.1.1",
     "eslint": "^7.32.0",
     "typescript": "^4.8.3"
   },
   "dependencies": {
     "crypto-js": "^4.1.1",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "write": "^2.0.0"
   }
 }
