@@ -1,22 +1,42 @@
 import * as path from "path";
 import fs from "fs";
-import util from 'util';
+import util from "util";
+import { app } from "electron";
+const appPath = app.getPath("userData");
 
-export const getDatabaseData = async (): Promise < string > => {
-    const readfile = util.promisify(fs.readFile);
-    return readfile(path.resolve(__dirname, "./data.txt"), "utf8");
-}
+// https://www.electronjs.org/docs/latest/api/app
+const checkDatabaseFileStatus = async () => {
+  try {
+    await fs.promises.access(path.resolve(`${appPath}/${"./data.txt"}`));
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
 
-export const insertDatabaseData = async (encryptedData: string): Promise < boolean > => {
-    const writeFile = util.promisify(fs.writeFile);
-    await writeFile(path.resolve(__dirname, "./data.txt"), encryptedData);
-    // Custom value, as writeFile returns nothing
-    return true
-}
+const createDatabaseFile = async () => {
+  await fs.promises.appendFile(path.resolve(`${appPath}/${"./data.txt"}`), "");
+};
+export const getDatabaseData = async (): Promise<string> => {
+  const fileExists: boolean = await checkDatabaseFileStatus();
+  if (!fileExists) await createDatabaseFile();
+  const getBufferedFile = await fs.promises.readFile(
+    `${appPath}/${"./data.txt"}`
+  );
+  const string: string = getBufferedFile.toString();
+  return string;
+};
 
-export const cleanDatabase = async (): Promise < boolean > => {
-    const writeFile = util.promisify(fs.writeFile);
-    await writeFile(path.resolve(__dirname, "./data.txt"), "");
-    // Custom value, as writeFile returns nothing
-    return true
-}
+export const insertDatabaseData = async (
+  encryptedData: string
+): Promise<boolean> => {
+  const writeFile = util.promisify(fs.writeFile);
+  await writeFile(path.resolve(appPath, "./data.txt"), encryptedData);
+  return true;
+};
+
+export const cleanDatabase = async (): Promise<boolean> => {
+  const writeFile = util.promisify(fs.writeFile);
+  await writeFile(path.resolve(appPath, "./data.txt"), "");
+  return true;
+};
