@@ -10,9 +10,9 @@
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "start": "npm run buildBackend &&  npm run buildFrontend && electron ./src/server/index.js",
     "startWithoutTsc": "electron ./src/server/index.js",
-    "buildWindowsApp": "electron-builder build --win",
-    "buildLinuxApp": "electron-builder build --linux",
-    "buildMacApp": "electron-builder build --mac"
+    "buildWindowsApp": "npm run buildBackend &&  npm run buildFrontend && electron-builder build --win",
+    "buildLinuxApp": "npm run buildBackend &&  npm run buildFrontend && electron-builder build --linux",
+    "buildMacApp": "npm run buildBackend &&  npm run buildFrontend && electron-builder build --mac"
   },
   "build": {
     "appId": "The-padlock-vault",
