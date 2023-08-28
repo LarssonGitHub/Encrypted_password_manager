@@ -4,30 +4,36 @@
   --second-text: #1b1818;
   --third-text: #aeb5a8;
   --danger: #ba1c15;
-  --success: #2c512f; 
+  --success: #2c512f;
   --header: #36393e;
   --component-one: #1d1f21;
   --component-two: rgb(76, 77, 79);
   --component-three: rgb(41, 41, 41);
   --component-four: rgb(49 51 52);
-  --button-one: #c9c8c8;
-  --button-two: #b4b5bf;
-  --button-three: #93949c;
-  --button-hover-one: #b6b3b3;
-  --button-hover-two: #a2a3ab;
-  --button-hover-three: #8d8e96;
-  --button-close-one: #d70a00;
-  --button-close-two: #ab0600;
-  --button-close-hover-one: #cb1209;
-  --button-close-hover-two: #8d0b05;
+  --button-one: #868383;
+  --button-two: #646464;
+  --item-button: #383838;
+  --item-button-active: #414040;
+  ;
+  --button-hover-one: #959292;
+  --button-hover-two: #6e6c6c;
+  --button-close-one: #e7170d;
+  --button-close-two: #ee4343;
+  ;
+  --button-close-hover-one: #db3830;
+  --button-close-hover-two: #c51b13;
 
   --component-gradient: linear-gradient(0deg, var(--component-three) 0%, var(--component-four) 100%);
-  --button-gradient: linear-gradient(to bottom, var(--button-one) 0%, var(--button-two) 60%, var(--button-two) 100%);
-  --button-gradient-hover: linear-gradient(to bottom, var(--button-hover-one) 0%, var(--button-hover-two) 60%, var(--button-hover-three) 100%);
+  --button-gradient: linear-gradient(to bottom, var(--button-one) 0%, var(--button-two) 100%);
+  /* All hover effects are disabled, instead it only changes background on active. */
+  /* --button-gradient-hover: linear-gradient(to bottom, var(--button-hover-one) 0%, var(--button-hover-two) 100%); */
+  --button-gradient-active: linear-gradient(to bottom, var(--button-hover-one) 0%, var(--button-hover-two) 100%);
   --button-close-gradient: linear-gradient(to bottom, var(--button-close-one) 0%, var(--button-close-two) 100%);
-  --button-close-gradient-hover: linear-gradient(to bottom, var(--button-close-hover-one) 0%, var(--button-close-hover-two) 100%);
+  /* --button-close-gradient-hover: linear-gradient(to bottom, var(--button-close-hover-one) 0%, var(--button-close-hover-two) 100%); */
+  --button-close-gradient-active: linear-gradient(to bottom, var(--button-close-hover-one) 0%, var(--button-close-hover-two) 100%);
 
-  --box-shadow: rgb(16 16 16 / 20%) 0px 4px 5px;
+  /* --box-shadow: rgb(16 16 16 / 20%) 0px 4px 5px; */
+  --box-shadow: rgb(16 16 16 / 10%) 0px 4px 5px;
 
   --spacing-extra-extra-small: 0.3rem;
   --spacing-extra-small: 0.5rem;
@@ -37,15 +43,15 @@
   --spacing-large: 2rem;
   --spacing-extra-large: 3rem;
 
-  --font-size-extra-small: 0.6rem;
-  --font-size-small: 0.8rem;
+  --font-size-small: 0.85rem;
+  --font-size-extra-small: 0.8rem;
   --font-size-medium: 1rem;
   --font-size-large: 1.15rem;
   --font-size-extra-large: 2rem;
 
   --gap-extra-small: 0.25rem;
   --gap-small: 0.3rem;
-  --gap-medium: 0.5rem;
+  --gap-medium: 0.6rem;
   --gap-large: 1rem;
 }
 
@@ -115,7 +121,7 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 5px;
+  border-radius: 3px;
   background: #6a6a6d;
 }
 
@@ -134,8 +140,8 @@ main {
   border: none;
   width: 70%;
   max-width: 500px;
-  padding: var(--spacing-medium) var(--spacing-large);
-  border-radius: 10px;
+  border-radius: 5px;
+  padding: var(--spacing-small) var(--spacing-medium);
   -webkit-box-shadow: var(--box-shadow);
   box-shadow: var(--box-shadow);
 }
@@ -168,53 +174,88 @@ main {
 .svg-close-button {
   color: var(--second-text);
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: stretch;
   justify-content: center;
-  gap: var(--gap-extra-small);
-  padding: var(--spacing-extra-extra-small);
+  gap: var(--gap-small);
 }
 
-.svg-add-button {
-  width: 110px;
+#post-form-button svg {
+  width: 18px;
+  height: auto;
 }
 
-.svg-add-button svg {
-  width: 19px;
-  height: 19px;
+#post-form-button small {
+  font-size: 1rem;
+  font-weight: 400;
 }
+
 
 #close-form-button {
   position: absolute;
   right: -1rem;
   top: -1rem;
-  padding: var(--spacing-extra-extra-small);
-}
-
-#close-form-button,
-.delete-item-button {
+  padding: 0.2rem;
   background: var(--button-close-gradient);
+  fill: var(--second-text);
 }
 
 #close-form-button:hover {
   transform: scale(1.1);
-  background: var(--button-close-gradient-hover);
+  /* background: var(--button-close-gradient-hover); */
 }
 
-.delete-item-button:hover {
-  background: var(--button-close-gradient-hover);
+#close-form-button:active {
+  /* background: var(--button-close-gradient); */
+  background: var(--button-close-gradient-active);
 }
 
-#close-form-button:active,
-.delete-item-button:active {
-  background: var(--button-close-gradient);
+.delete-item-button small,
+.delete-item-button svg {
+  color: var(--button-close-two);
+  fill: var(--button-close-two);
 }
 
-#post-form-button:hover,
+/* Does it need to change color on hover? */
+/* .delete-item-button:hover small, .delete-item-button:hover svg {
+  color: var(--button-close-one);
+  fill: var(--button-close-one);
+} */
+
+/* .delete-item-button:active small, .delete-item-button:active svg  {
+  fill: var(--button-close-hover-two);
+  color: var(--button-close-hover-two);
+}
+
+.edit-item-button:active small, .edit-item-button:active svg {
+  fill: var(--third-text);
+  color: var(--third-text);
+} */
+
+.edit-item-button small,
+.edit-item-button svg,
+#post-form-button,
+button {
+  fill: var(--main-text);
+  color: var(--main-text);
+}
+
+#post-form-button:hover {
+  transform: scale(1.08);
+  /* background: var(--button-gradient-active); */
+}
+
+#post-form-button:active {
+  transform: scale(1.08);
+  /* background: var(--button-gradient); */
+  background: var(--button-gradient-active);
+}
+
 .edit-item-button:hover,
 .delete-item-button:hover {
-  transform: scale(1.06);
+  transform: scale(1.12);
 }
+
 
 /* TODO transition makes element blurry, find a fix 
    This code doesn't seem to work */
@@ -230,33 +271,26 @@ main {
 button {
   cursor: pointer;
   background: var(--button-gradient);
-  color: var(--second-text);
+  color: var(--main-text);
   border: 0;
   border-radius: 5px;
   transition: 0.4s;
   -webkit-box-shadow: var(--box-shadow);
   box-shadow: var(--box-shadow);
-  font-weight: 500;
+  font-weight: 400;
 }
 
+
 button:hover {
-  transform: scale(1.02);
-  background: var(--button-gradient-hover);
+  transform: scale(1.04);
 }
 
 button:active {
-  background: var(--button-gradient);
-}
-
-.svg-add-button small {
-  font-weight: 700;
-  font-size: var(--font-size-extra-small);
-  display: inline-block;
-  color: var(--second-text)
+  background: var(--button-gradient-active);
 }
 
 small {
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-extra-small);
   display: inline-block;
 }
 
@@ -271,14 +305,14 @@ small {
 }
 
 .svg-item-button svg {
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: auto;
 }
 
 .svg-item-button small {
-  font-size: var(--font-size-extra-small);
-  color: var(--second-text);
-  font-weight: 700;
+  font-size: var(--font-size-small);
+  display: inline-block;
+  font-weight: 400;
 }
 
 .reset-ul {
@@ -301,14 +335,21 @@ small {
   gap: var(--gap-medium);
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   align-items: center;
   margin-top: var(--spacing-medium);
 }
 
 .item-button-container button {
-  width: 85px;
+  /* box-shadow:none;
+  background: none;  */
+  background: var(--item-button);
+  padding: 0.2rem 0.6rem;
+}
+
+.item-button-container button:active {
+  background: var(--item-button-active);
 }
 
 summary {
@@ -334,7 +375,7 @@ summary {
   height: 60px;
   overflow: hidden;
   background: var(--component-gradient);
-  border-radius: 10px;
+  border-radius: 6px;
   width: 100%;
   padding: var(--spacing-medium-small) var(--spacing-medium);
   transition: 0s;
@@ -406,20 +447,25 @@ summary {
   transform: translate(-50%, -50%) scale(1.05);
 }
 
-.padlock:hover svg {
+/* .padlock:hover svg {
   fill: var(--button-hover-three);
-}
+} */
 
-.padlock:hover p {
+/* .padlock:hover p {
   color: var(--button-hover-three);
-}
+} */
 
 #post-form-button {
+  font-weight: 400;
+  /* background: none; */
+  box-shadow: none;
   z-index: 99999999;
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  padding: var(--spacing-extra-extra-small) var(--spacing-medium-small);
+  width: 90px;
+  padding: var(--spacing-extra-extra-small);
+  background: var(--button-gradient);
 }
 
 #form-dialog {
@@ -490,7 +536,15 @@ dialog label {
 
 
 input,
-textarea,
+textarea {
+  width: 100%;
+  padding: var(--spacing-extra-extra-small) var(--spacing-extra-small);
+  border: none;
+  border-radius: 5px;
+  -webkit-box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow);
+}
+
 #validate-key-button,
 #submit-button,
 #create-key-button {
