@@ -108,7 +108,7 @@ main {
   height: 100vh;
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--spacing-extra-large) 4rem;
+  padding: 1rem 1.5rem;
 }
 
 ::-webkit-scrollbar {
@@ -468,9 +468,9 @@ summary {
   background: var(--button-gradient);
 }
 
-#form-dialog {
+/* #form-dialog {
   padding: var(--spacing-large);
-}
+} */
 
 dialog {
   margin: auto;
@@ -581,6 +581,10 @@ textarea {
   dialog {
     width: 100%;
   }
+
+  #list-data-container {
+    grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  }
 }
 
 
@@ -590,9 +594,20 @@ textarea {
   }
 }
 
-@media only screen and (max-width: 330px) {
+@media only screen and (max-width: 260px) {
   body {
-    width: 300px;
+    width: 260px;
   }
 
+  #validate-key-container,
+  #create-key-container,
+  #form-container,
+  #confirm-container {
+    width: 155px;
+  }
+
+  #post-form-button {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
 }
