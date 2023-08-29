@@ -101,6 +101,7 @@ export const getFormValues = (): userCredentialObject => {
           });
       }
   }
+  if (!obj.additionalDataInput) obj.additionalDataInput = "No additional information given"
   return obj;
 }
 

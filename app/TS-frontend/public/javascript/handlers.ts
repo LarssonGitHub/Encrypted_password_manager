@@ -99,6 +99,7 @@ export const submitFormAction = (event: SubmitEvent) => {
 
 export const postDatabaseData = async (): Promise < void > => {
   const formData: userCredentialObject = getFormValues();
+  console.log(formData)
   if (Object.values(formData).includes("")) throw new Error("Please, do not leave any felids empty")
   const postRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.postData(formData, secretKey));
   if (!postRequest.success) throw postRequest.error
@@ -126,6 +127,7 @@ export const deleteDatabaseData = async (): Promise < void > => {
 
 export const UpdateDatabaseData = async (): Promise < void > => {
   const formData: userCredentialObject = getFormValues();
+  console.log(formData)
   if (Object.values(formData).includes("")) throw new Error("Please, do not leave any felids empty")
   const updateRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.updateData(formData, secretKey));
   if (!updateRequest.success) throw updateRequest.error;
