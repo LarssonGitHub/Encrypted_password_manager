@@ -23,16 +23,18 @@
         </div>
       </div>
       <div id="create-key-container">
-        <p>Create your personal key you will use during encryption, <b id="create-key-warning">DO NOT</b> forget it!</p>
-        <small>The app uses the advanced encryption standard (AES) to encrypt your data. All the information you have submitted is only stored locally in the app itself and is not hosted online.</small>
+        <p class="dialog-intro">Create your personal key you will use during encryption, <b class="text-warning">DO
+            NOT</b> forget it!</p>
+        <small>The app uses the advanced encryption standard (AES) to encrypt your data. All the information you have
+          submitted is only stored locally in the app itself and is not hosted online.</small>
         <ul class="reset-ul inputs-wrapper">
           <li>
             <label for="create-key-input">New key</label>
-            <input type="password" name="createKeyInput" id="create-key-input">
+            <input type="password" name="createKeyInput" id="create-key-input" placeholder="Create your key">
           </li>
           <li>
             <label for="repeat-key-input">Repeat key</label>
-            <input type="password" name="repeatKeyInput" id="repeat-key-input">
+            <input type="password" name="repeatKeyInput" id="repeat-key-input" placeholder="Repeat your key">
           </li>
           <li class="key-button-container">
             <button id="create-key-button">Create key</button>
@@ -47,12 +49,13 @@
         </div>
       </div>
       <div id="validate-key-container">
-        <p>Enter the personal key you've created to decrypt your data!</p>
-        <small>Your info cannot sadly be recovered if you have forgotten the key.</small>
+        <p class="dialog-intro">Enter the personal key you've created to decrypt your data!</p>
+        <small>Your info <b class="text-warning">CAN NOT</b> be recovered if you have forgotten the key.</small>
         <ul class="reset-ul inputs-wrapper">
           <li>
             <label for="validate-key-input">Key</label>
-            <input type="password" name="validateKeyInput" id="validate-key-input">
+            <input type="password" name="validateKeyInput" id="validate-key-input"
+              placeholder="Enter your personal key">
           </li>
           <li class="key-button-container">
             <button id="validate-key-button">Try key</button>
@@ -61,45 +64,48 @@
       </div>
     </dialog>
     <dialog id="form-dialog">
+      <button id="close-form-button" class="svg-close-button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+          <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+          <path
+            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+        </svg>
+      </button>
       <div class="hideFeedback success-container feedback-container">
         <div>
           <p class="feedback-message"></p>
         </div>
       </div>
       <div id="form-container">
-        <button id="close-form-button" class="svg-close-button">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-            <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-            <path
-              d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-          </svg>
-        </button>
+        <div id="validate-key-container">
+          <p class="dialog-intro">Create or edit user and said credentials, the data is saved locally!</p>
+        </div>
         <form id="form" data-action="">
-          <ul class="reset-ul">
+          <ul class="reset-ul inputs-wrapper">
             <li class="list-id" hidden>
               <input type="hidden" id="id" name="id" value="#">
             </li>
             <li>
               <label for="title-input">Title</label>
-              <input type="text" name="titleInput" id="title-input" required>
+              <input type="text" name="titleInput" id="title-input" required placeholder="Title">
             </li>
             <li>
               <label for="email-input">Email</label>
-              <input type="text" name="emailInput" id="email-input" required>
+              <input type="text" name="emailInput" id="email-input" required placeholder="Email">
             </li>
             <li>
               <label for="username-input">Username</label>
-              <input type="text" name="usernameInput" id="username-input" required>
+              <input type="text" name="usernameInput" id="username-input" required placeholder="Username">
             </li>
             <li>
               <label for="password-input">Password</label>
               <!-- TODO put a require on this in production -->
-              <input type="password" name="passwordInput" id="password-input" required>
+              <input type="password" name="passwordInput" id="password-input" required placeholder="Password">
             </li>
             <li>
               <label for="additional-data-input">Additional notes</label>
               <textarea name="additionalDataInput" id="additional-data-input" rows="4"
-                required>No notes given</textarea>
+                placeholder="Optional info about post"></textarea>
             </li>
             <li id="form-button-container">
               <button id="submit-button" type="submit">Submit</button>
@@ -115,13 +121,11 @@
         </div>
       </div>
       <div id="confirm-container">
-        <p id="confirm-message"></p>
-        <ul id="confirm-button-container" class="reset-ul">
-          <li>
-            <button data-event="#" id="confirm-yes-button">Yes</button>
-          </li>
-          <li> <button id="confirm-no-button">No</button></li>
-        </ul>
+        <p id="confirm-message" class="dialog-intro"></p>
+        <div id="confirm-button-container" class="inputs-wrapper">
+        <button data-event="#" id="confirm-yes-button">Yes</button>
+        <button id="confirm-no-button">No</button>
+        </div>
       </div>
     </dialog>
     <div>
@@ -145,22 +149,22 @@
             <ul class="reset-ul list-data-item">
               <li class="list-id" hidden></li>
               <li>
-                <b>Email:</b>
+                <b>Email</b>
                 <p class="list-email"></p>
               </li>
               <li>
-                <b>Username:</b>
+                <b>Username</b>
                 <p class="list-username"></p>
               </li>
               <li class="show-password-li">
-                <b>Password:</b>
+                <b>Password</b>
                 <details>
                   <summary class="list-button show-password-button">Show password</summary>
                   <p class="list-password"></p>
                 </details>
               </li>
               <li>
-                <b>Notes:</b>
+                <b>Notes</b>
                 <p class="list-additional-data"></p>
               </li>
             </ul>
@@ -174,14 +178,14 @@
                 <small>Edit</small>
               </button>
               <button data-delete-validation-id="#" data-delete-id="#"
-              class="delete-item-button svg-item-button list-button">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                <path
-                  d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
-              </svg>
-              <small>Delete</small>
-            </button>
+                class="delete-item-button svg-item-button list-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                  <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                  <path
+                    d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
+                </svg>
+                <small>Delete</small>
+              </button>
             </div>
           </div>
           <div class="padlock">
