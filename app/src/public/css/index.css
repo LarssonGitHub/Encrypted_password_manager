@@ -536,12 +536,6 @@ dialog label {
   padding: var(--spacing-extra-extra-small) var(--spacing-extra-small);
 }
 
-#form-container {
-  /* position: relative; */
-}
-
-
-
 input,
 textarea {
   color: var(--fourth-text);
@@ -555,27 +549,23 @@ textarea {
   transition: 0.2s;
 }
 
-input:focus,  textarea:focus {
+input::placeholder, textarea::placeholder {
+  color: var(--fourth-text);
+  transition: 0.2s;
+}
+
+input:focus,  textarea:focus, input:hover,  textarea:hover  {
   transition: 0.2s;
   border-color: var(--third-text);
   color:  var(--third-text);
   /* outline: none; */
 }
 
-input:hover,  textarea:hover {
-  /* cursor: pointer; */
-  border-color: var(--third-text);
-}
 
-input:focus::placeholder, textarea:focus::placeholder {
+input:focus::placeholder, textarea:focus::placeholder, input:hover::placeholder, textarea:hover::placeholder {
   transition: 0.2s;
   border-color: var(--third-text);
   color:  var(--third-text);
-}
-
-input::placeholder, textarea::placeholder {
-  color: var(--fourth-text);
-  transition: 0.2s;
 }
 
 #validate-key-button,
