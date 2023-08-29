@@ -69,7 +69,7 @@
   box-sizing: border-box;
 }
 
-*:focus {
+button:focus {
   outline-color: var(--focus);
 }
 
@@ -544,7 +544,7 @@ dialog label {
 
 input,
 textarea {
-  color: var(--main-text);
+  color: var(--fourth-text);
   background: none;
   width: 100%;
   padding: var(--spacing-extra-extra-small) 0rem;
@@ -552,22 +552,30 @@ textarea {
   outline: 0;
   border-width: 0 0 1.5px;
   border-color: var(--fourth-text);
- /* font-size: 0.8rem; */
-  /* -webkit-box-shadow: var(--box-shadow);
-  box-shadow: var(--box-shadow);  */
+  transition: 0.2s;
 }
 
 input:focus,  textarea:focus {
-  /* border-color: var(--main-text); */
-  /* outline: 1px dotted #000 */
-  outline: none;
+  transition: 0.2s;
+  border-color: var(--third-text);
+  color:  var(--third-text);
+  /* outline: none; */
+}
+
+input:hover,  textarea:hover {
+  /* cursor: pointer; */
+  border-color: var(--third-text);
+}
+
+input:focus::placeholder, textarea:focus::placeholder {
+  transition: 0.2s;
+  border-color: var(--third-text);
+  color:  var(--third-text);
 }
 
 input::placeholder, textarea::placeholder {
   color: var(--fourth-text);
-  /* opacity: 0.8; */
-  /* font-size: 0.9rem; */
-  /* text-transform: uppercase; */
+  transition: 0.2s;
 }
 
 #validate-key-button,
