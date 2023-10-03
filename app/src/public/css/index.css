@@ -1,10 +1,9 @@
 :root {
   --focus: #181b27;
-  /* --main-text: #EDE6DD; */
   --main-text: #dfddda;
   --second-text: #1b1818;
-  --third-text: #aeb5a8;
-  --fourth-text: #5b5a5a;
+  --third-text: #b8bdb4;
+  --fourth-text: #7d7c7c;
   --danger: #ba1c15;
   --success: #2c512f;
   --header: #36393e;
@@ -12,30 +11,26 @@
   --component-two: rgb(76, 77, 79);
   --component-three: rgb(41, 41, 41);
   --component-four: rgb(49 51 52);
-  --button-one: #868383;
-  --button-two: #646464;
+  --button-one: rgb(76, 73, 73);
+  --button-two: rgb(49, 49, 49);
+  --add-button-one: #767474;
+  --add-button-two: #585555;
   --item-button: #383838;
   --item-button-active: #414040;
-  
-  
   --button-hover-one: #959292;
   --button-hover-two: #6e6c6c;
   --button-close-one: #e7170d;
   --button-close-two: #ee4343;
-  
   --button-close-hover-one: #db3830;
   --button-close-hover-two: #c51b13;
-
   --component-gradient: linear-gradient(0deg, var(--component-three) 0%, var(--component-four) 100%);
   --button-gradient: linear-gradient(to bottom, var(--button-one) 0%, var(--button-two) 100%);
-  /* All hover effects are disabled, instead it only changes background on active. */
-  /* --button-gradient-hover: linear-gradient(to bottom, var(--button-hover-one) 0%, var(--button-hover-two) 100%); */
+  --add-button-gradient: linear-gradient(to bottom, var(--add-button-one) 0%, var(--add-button-two) 100%);
   --button-gradient-active: linear-gradient(to bottom, var(--button-hover-one) 0%, var(--button-hover-two) 100%);
   --button-close-gradient: linear-gradient(to bottom, var(--button-close-one) 0%, var(--button-close-two) 100%);
-  /* --button-close-gradient-hover: linear-gradient(to bottom, var(--button-close-hover-one) 0%, var(--button-close-hover-two) 100%); */
+
   --button-close-gradient-active: linear-gradient(to bottom, var(--button-close-hover-one) 0%, var(--button-close-hover-two) 100%);
 
-  /* --box-shadow: rgb(16 16 16 / 20%) 0px 4px 5px; */
   --box-shadow: rgb(16 16 16 / 10%) 0px 4px 5px;
 
   --spacing-extra-extra-small: 0.3rem;
@@ -138,8 +133,11 @@ main {
 }
 
 .error-container {
-  color: var(--second-text);
   background-color: var(--danger);
+}
+
+.error-container p {
+  color: var(--main-text);
 }
 
 .feedback-container {
@@ -224,28 +222,25 @@ main {
   fill: var(--button-close-two);
 }
 
-/* Does it need to change color on hover? */
-/* .delete-item-button:hover small, .delete-item-button:hover svg {
-  color: var(--button-close-one);
-  fill: var(--button-close-one);
-} */
-
-/* .delete-item-button:active small, .delete-item-button:active svg  {
-  fill: var(--button-close-hover-two);
-  color: var(--button-close-hover-two);
-}
-
-.edit-item-button:active small, .edit-item-button:active svg {
-  fill: var(--third-text);
-  color: var(--third-text);
-} */
-
 .edit-item-button small,
 .edit-item-button svg,
 #post-form-button,
 button {
   fill: var(--main-text);
   color: var(--main-text);
+}
+
+#post-form-button {
+  font-weight: 400;
+  /* background: none; */
+  box-shadow: none;
+  z-index: 99999999;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 90px;
+  padding: var(--spacing-extra-extra-small);
+  background: var(--add-button-gradient);
 }
 
 #post-form-button:hover {
@@ -264,18 +259,6 @@ button {
   transform: scale(1.12);
 }
 
-
-/* TODO transition makes element blurry, find a fix 
-   This code doesn't seem to work */
-/* #close-form-button {
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    backface-visibility: hidden;
-} */
-
 button {
   cursor: pointer;
   background: var(--button-gradient);
@@ -286,7 +269,7 @@ button {
   font-size: 1.3;
   -webkit-box-shadow: var(--box-shadow);
   box-shadow: var(--box-shadow);
-  font-weight: 500;
+  font-weight: 400;
 }
 
 
@@ -351,8 +334,6 @@ small {
 }
 
 .item-button-container button {
-  /* box-shadow:none;
-  background: none;  */
   background: var(--item-button);
   padding: 0.2rem 0.6rem;
 }
@@ -466,19 +447,6 @@ summary {
   transform: translate(-50%, -50%) scale(1.05);
 }
 
-#post-form-button {
-  font-weight: 400;
-  /* background: none; */
-  box-shadow: none;
-  z-index: 99999999;
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 90px;
-  padding: var(--spacing-extra-extra-small);
-  background: var(--button-gradient);
-}
-
 dialog {
   margin: auto;
   border: none;
@@ -486,15 +454,16 @@ dialog {
   max-width: 400px;
   padding: 2.2rem 1.7rem;
   background: none;
-    /* padding: var(--spacing-large) var(--spacing-medium); */
-    /* background: var(--component-gradient); */
-  /* border-radius: 10px; */
-  /* -webkit-box-shadow: var(--box-shadow);
-  box-shadow: var(--box-shadow); */
 }
 
-dialog p, dialog small {
-    color: var(--third-text)
+dialog[open] {
+  animation: fade-in 0.5s forwards;
+  -webkit-animation: fade-in 0.5s forwards;
+}
+
+dialog p,
+dialog small {
+  color: var(--third-text)
 }
 
 dialog::backdrop {
@@ -520,10 +489,6 @@ dialog label {
   margin: 1.1rem 0 0 0;
 }
 
-#feedback-message {
-  padding-right: 3rem;
-}
-
 #confirm-button-container {
   display: flex;
   flex-direction: column;
@@ -545,29 +510,36 @@ textarea {
   background: none;
   width: 100%;
   padding: var(--spacing-extra-extra-small) 0rem;
-  font-weight: 500;
+  font-weight: 400;
   outline: 0;
   border-width: 0 0 1.5px;
   border-color: var(--fourth-text);
   transition: 0.2s;
 }
 
-input::placeholder, textarea::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: var(--fourth-text);
   transition: 0.2s;
 }
 
-input:focus,  textarea:focus, input:hover,  textarea:hover  {
+input:focus,
+textarea:focus,
+input:hover,
+textarea:hover {
   transition: 0.2s;
   border-color: var(--third-text);
-  color:  var(--third-text);
+  color: var(--third-text);
   /* outline: none; */
 }
 
-input:focus::placeholder, textarea:focus::placeholder, input:hover::placeholder, textarea:hover::placeholder {
+input:focus::placeholder,
+textarea:focus::placeholder,
+input:hover::placeholder,
+textarea:hover::placeholder {
   transition: 0.2s;
   border-color: var(--third-text);
-  color:  var(--third-text);
+  color: var(--third-text);
 }
 
 #validate-key-button,
@@ -628,5 +600,15 @@ textarea {
   #post-form-button {
     bottom: 1.5rem;
     right: 1.5rem;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
