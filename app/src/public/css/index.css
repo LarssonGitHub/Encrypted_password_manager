@@ -17,8 +17,10 @@
   --add-button-two: #585555;
   --item-button: #383838;
   --item-button-active: #414040;
-  --button-hover-one: #959292;
-  --button-hover-two: #6e6c6c;
+  --button-active-one: #525151;
+  --button-active-two: #3a3939;
+  --add-button-active-one: #959292;
+  --add-button-active-two: #6e6c6c;
   --button-close-one: #e7170d;
   --button-close-two: #ee4343;
   --button-close-hover-one: #db3830;
@@ -26,7 +28,8 @@
   --component-gradient: linear-gradient(0deg, var(--component-three) 0%, var(--component-four) 100%);
   --button-gradient: linear-gradient(to bottom, var(--button-one) 0%, var(--button-two) 100%);
   --add-button-gradient: linear-gradient(to bottom, var(--add-button-one) 0%, var(--add-button-two) 100%);
-  --button-gradient-active: linear-gradient(to bottom, var(--button-hover-one) 0%, var(--button-hover-two) 100%);
+  --button-gradient-active: linear-gradient(to bottom, var(--button-active-one) 0%, var(--button-active-two) 100%);
+  --add-button-gradient-active: linear-gradient(to bottom, var(--add-button-active-one) 0%, var(--add-button-active-two) 100%);
   --button-close-gradient: linear-gradient(to bottom, var(--button-close-one) 0%, var(--button-close-two) 100%);
 
   --button-close-gradient-active: linear-gradient(to bottom, var(--button-close-hover-one) 0%, var(--button-close-hover-two) 100%);
@@ -245,13 +248,11 @@ button {
 
 #post-form-button:hover {
   transform: scale(1.08);
-  /* background: var(--button-gradient-active); */
 }
 
 #post-form-button:active {
   transform: scale(1.08);
-  /* background: var(--button-gradient); */
-  background: var(--button-gradient-active);
+  background: var(--add-button-gradient-active);
 }
 
 .edit-item-button:hover,
