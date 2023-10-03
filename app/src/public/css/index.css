@@ -200,7 +200,7 @@ main {
 }
 
 
-#close-form-button {
+#close-form-button, #close-item-button {
   position: fixed;
   right: 2rem;
   top: 2rem;
@@ -209,24 +209,24 @@ main {
   fill: var(--second-text);
 }
 
-#close-form-button:hover {
+#close-form-button:hover, #close-item-button:hover {
   transform: scale(1.1);
   /* background: var(--button-close-gradient-hover); */
 }
 
-#close-form-button:active {
+#close-form-button:active, #close-item-button:active {
   /* background: var(--button-close-gradient); */
   background: var(--button-close-gradient-active);
 }
 
-.delete-item-button small,
-.delete-item-button svg {
+#delete-item-button small,
+#delete-item-button svg {
   color: var(--button-close-two);
   fill: var(--button-close-two);
 }
 
-.edit-item-button small,
-.edit-item-button svg,
+#edit-item-button small,
+#edit-item-button svg,
 #post-form-button,
 button {
   fill: var(--main-text);
@@ -255,8 +255,8 @@ button {
   background: var(--add-button-gradient-active);
 }
 
-.edit-item-button:hover,
-.delete-item-button:hover {
+#edit-item-button:hover,
+#delete-item-button:hover {
   transform: scale(1.12);
 }
 
@@ -372,6 +372,9 @@ summary {
 .list-inner-wrapper {
   transition: 0.6s;
   height: 60px;
+}
+
+.list-inner-wrapper, .dialog-list-inner-wrapper {
   overflow: hidden;
   background: var(--component-gradient);
   border-radius: 6px;
@@ -379,7 +382,6 @@ summary {
   padding: var(--spacing-medium-small) var(--spacing-medium);
   -webkit-box-shadow: var(--box-shadow);
   box-shadow: var(--box-shadow);
-
 }
 
 .template-list-component {
@@ -392,7 +394,7 @@ summary {
   transform: scale(1.05);
   transform-origin: 50% 60px;
   z-index: 99999;
-  height: auto;
+  height: 130px;
   position: absolute;
   transition: 0.6s;
 
@@ -405,10 +407,10 @@ summary {
 
 }
 
-.blurred-list-content {
+/* .blurred-list-content {
   filter: blur(0.8rem);
   position: relative;
-}
+} */
 
 .list-inner-wrapper:hover .padlock {
   display: flex;
