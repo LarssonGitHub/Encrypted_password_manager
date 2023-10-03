@@ -25,6 +25,8 @@ export const generateId = () => uuidv4();
 
 export const removeItem = (id: string, data: userCredentialsArray): userCredentialsArray => {
   if (!id) throw new Error("<customThrownError::>No id was submitted");
+  const idExistsInArray = data.filter((object)=> object.id === id);
+  if (idExistsInArray.length === 0) throw new Error("<customThrownError::>No such id exists");
   if (!Array.isArray(data)) throw new Error("<customThrownError::>Couldn't compile or delete data");
   return data.filter(obj => obj.id !== id);
 };
