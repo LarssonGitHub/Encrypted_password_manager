@@ -200,7 +200,8 @@ main {
 }
 
 
-#close-form-button, #close-item-button {
+#close-form-button,
+#close-item-button {
   position: fixed;
   right: 2rem;
   top: 2rem;
@@ -209,12 +210,14 @@ main {
   fill: var(--second-text);
 }
 
-#close-form-button:hover, #close-item-button:hover {
+#close-form-button:hover,
+#close-item-button:hover {
   transform: scale(1.1);
   /* background: var(--button-close-gradient-hover); */
 }
 
-#close-form-button:active, #close-item-button:active {
+#close-form-button:active,
+#close-item-button:active {
   /* background: var(--button-close-gradient); */
   background: var(--button-close-gradient-active);
 }
@@ -374,7 +377,8 @@ summary {
   height: 60px;
 }
 
-.list-inner-wrapper, .dialog-list-inner-wrapper {
+.list-inner-wrapper,
+.dialog-list-inner-wrapper {
   overflow: hidden;
   background: var(--component-gradient);
   border-radius: 6px;
@@ -389,16 +393,18 @@ summary {
 }
 
 .list-inner-wrapper:hover {
-  /* transform: scale(1.10);
-  transform-origin: 50% 110px; */
   transform: scale(1.05);
   transform-origin: 50% 60px;
   z-index: 99999;
-  height: 130px;
+  height: 90px;
   position: absolute;
   transition: 0.6s;
-
 }
+
+.list-inner-wrapper:hover .padlock {
+  animation: padlock-initiate 0.8s forwards;
+}
+
 
 .list-inner-wrapper:hover .list-title {
   word-break: break-all;
@@ -413,12 +419,17 @@ summary {
 } */
 
 .list-inner-wrapper:hover .padlock {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   text-align: center;
-  align-items: center;
-  justify-content: stretch;
-  gap: 0;
+  align-content: center;
+  gap: var(--gap-medium);
+  justify-items: center;
+  align-items: stretch;
+  gap: var(--gap-medium);
+}
+
+.list-inner-wrapper:hover .padlock:hover {
+  animation: padlock-open 0.5s forwards;
 }
 
 .padlock {
@@ -428,12 +439,13 @@ summary {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.5);
   cursor: pointer;
   transition: 0.4s;
 }
 
 .padlock svg {
+  grid-area: 1 / 1;
   width: 50px;
   height: 50px;
   transition: 0.4s;
@@ -441,14 +453,15 @@ summary {
 }
 
 .padlock p {
+  grid-area: 1 / 1;
   color: var(--button-one);
   margin-top: var(--spacing-extra-small);
   transition: 0.4s;
 }
 
-.padlock:hover {
-  transform: translate(-50%, -50%) scale(1.05);
-}
+/* .padlock:hover {
+  animation: padlock-open 0.5s forwards;
+} */
 
 dialog {
   margin: auto;
@@ -459,10 +472,27 @@ dialog {
   background: none;
 }
 
-dialog[open] {
-  animation: fade-in 0.5s forwards;
-  -webkit-animation: fade-in 0.5s forwards;
+/* dialog[open] {
+  animation: form-open 0.5s forwards;
+  -webkit-animation: form-open 0.5s forwards;
+} */
+
+/* Style like this to make transform work and not screw up the close and feedback button! */
+dialog[open] #form-container {
+  animation: form-open 0.5s forwards;
+  -webkit-animation: form-open 0.5s forwards;
 }
+
+dialog[open] #confirm-container {
+  animation: confirm-open 0.5s forwards;
+  -webkit-animation: confirm-open 0.5s forwards;
+}
+
+dialog[open] .dialog-list-inner-wrapper {
+  animation: card-open 0.5s forwards;
+  -webkit-animation: card-open 0.5s forwards;
+}
+
 
 dialog p,
 dialog small {
@@ -606,12 +636,76 @@ textarea {
   }
 }
 
-@keyframes fade-in {
+@keyframes form-open {
   0% {
     opacity: 0;
+    -webkit-transform: scale(0.6);
+    transform: scale(0.6);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
   }
 
   100% {
     opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+}
+
+@keyframes confirm-open {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes padlock-initiate {
+  0% {
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(0.75);
+  }
+}
+
+/* TODO update, padlock slides away */
+@keyframes padlock-open {
+  0% {  opacity: 1;}
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes card-open {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
   }
 }
