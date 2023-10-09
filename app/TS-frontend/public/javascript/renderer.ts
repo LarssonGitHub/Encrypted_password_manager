@@ -156,11 +156,11 @@ export const appendItemValuesToForm = (): void => {
 };
 
 export const InsertDataIntoDialog = (data: userCredentialObject): void => {
-	(itemDialog.querySelector(".list-title") as HTMLLIElement).textContent = data.titleInput;
-	(itemDialog.querySelector(".list-username") as HTMLLIElement).textContent = data.emailInput;
-	(itemDialog.querySelector(".list-email") as HTMLLIElement).textContent = data.usernameInput;
-	(itemDialog.querySelector(".list-password") as HTMLLIElement).textContent = data.passwordInput;
-	(itemDialog.querySelector(".list-additional-data") as HTMLLIElement).textContent = data.additionalDataInput;
+	(itemDialog.querySelector("#dialog-list-title") as HTMLLIElement).textContent = data.titleInput;
+	(itemDialog.querySelector("#dialog-list-username") as HTMLLIElement).textContent = data.emailInput;
+	(itemDialog.querySelector("#dialog-list-email") as HTMLLIElement).textContent = data.usernameInput;
+	(itemDialog.querySelector("#dialog-list-password") as HTMLLIElement).textContent = data.passwordInput;
+	(itemDialog.querySelector("#dialog-list-additional-data") as HTMLLIElement).textContent = data.additionalDataInput;
 	(itemDialog.querySelector("#edit-item-button") as HTMLButtonElement).setAttribute("data-stored-object", JSON.stringify(data));
 	(itemDialog.querySelector("#delete-item-button") as HTMLButtonElement).setAttribute("data-delete-id", data.id);
 }

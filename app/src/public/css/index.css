@@ -356,6 +356,13 @@ summary {
   grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
 }
 
+
+#dialog-list-title {
+  font-size: var(--font-size-large);
+  word-wrap: break-word;
+  margin-bottom: var(--spacing-medium);
+}
+
 .list-data-item p {
   color: var(--third-text);
   overflow-wrap: break-word;
