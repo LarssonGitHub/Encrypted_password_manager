@@ -47,13 +47,13 @@
   --font-size-small: 0.85rem;
   --font-size-extra-small: 0.8rem;
   --font-size-medium: 1rem;
-  --font-size-large: 1.15rem;
+  --font-size-large: 1.20rem;
   --font-size-extra-large: 2rem;
 
   --gap-extra-small: 0.25rem;
   --gap-small: 0.3rem;
   --gap-medium: 0.6rem;
-  --gap-large: 1rem;
+  --gap-large: 1.2rem;
 }
 
 * {
@@ -83,9 +83,6 @@ h1 {
 }
 
 h3 {
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  font-size: var(--font-size-large);
   white-space: pre-wrap;
 }
 
@@ -99,7 +96,6 @@ p {
 }
 
 li {
-  /* margin: 0 0 var(--spacing-small) 0; */
   margin: 0 0 1.2rem 0;
 }
 
@@ -318,11 +314,12 @@ small {
 }
 
 .list-title {
+  font-weight: 500;
   font-size: var(--font-size-large);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  margin-bottom: var(--spacing-medium);
+  margin-bottom: 0;
 }
 
 .item-button-container {
@@ -358,9 +355,10 @@ summary {
 
 
 #dialog-list-title {
+  font-weight: 700;
   font-size: var(--font-size-large);
   word-wrap: break-word;
-  margin-bottom: var(--spacing-medium);
+  margin: 0 0 1.2rem 0;
 }
 
 .list-data-item p {
@@ -381,16 +379,30 @@ summary {
 
 .list-inner-wrapper {
   transition: 0.6s;
-  height: 60px;
+  height: 70px;
 }
 
-.list-inner-wrapper,
-.dialog-list-inner-wrapper {
+.list-inner-wrapper {
+  display: flex;
   overflow: hidden;
   background: var(--component-gradient);
   border-radius: 6px;
   width: 100%;
   padding: var(--spacing-medium-small) var(--spacing-medium);
+  -webkit-box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow);
+  align-content: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.dialog-list-inner-wrapper {
+  overflow: hidden;
+  background: var(--component-gradient);
+  border-radius: 6px;
+  width: 100%;
+  /* padding: var(--spacing-medium-small) var(--spacing-medium); */
+  padding: var(--spacing-medium) var(--spacing-large);
   -webkit-box-shadow: var(--box-shadow);
   box-shadow: var(--box-shadow);
 }
@@ -400,9 +412,9 @@ summary {
 }
 
 .list-inner-wrapper:hover {
-  transform: scale(1.10);
+  transform: scale(1.09);
   z-index: 99999;
-  height: 60px;
+  /* height: 60px; */
   transition: 0.6s;
 }
 
@@ -430,16 +442,17 @@ summary {
 
 .list-inner-wrapper .padlock:hover svg {
   transition: 0.4s;
-  transform: scale(0.5) translateY(-25px);
+  transform: scale(0.6) translateY(-24px);
 }
 
 .list-inner-wrapper .padlock:hover p {
   transition: 0.8s;
   opacity: 1;
-  transform: translateY(19px) scale(1.05);
+  transform: translateY(30px) scale(1.07);
 }
 
 .padlock {
+  opacity: 0.7;
   background: transparent;
   padding: var(--spacing-medium-small);
   display: none;
@@ -453,8 +466,8 @@ summary {
 
 .padlock svg {
   grid-area: 1 / 1;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   transition: 0.4s;
   fill: var(--fourth-text);
 }
@@ -681,7 +694,7 @@ textarea {
   }
 
   30% {
-    opacity: 1;
+    opacity: 0.7;
 
   }
 
@@ -693,17 +706,17 @@ textarea {
 @keyframes card-open {
   0% {
     opacity: 0;
-    -webkit-transform: scale(0.5);
-    transform: scale(0.5);
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
+    -webkit-transform: scale(0.4);
+    transform: scale(0.4);
+    /* -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%; */
   }
 
   100% {
     opacity: 1;
     -webkit-transform: scale(1);
     transform: scale(1);
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
+    /* -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%; */
   }
 }
