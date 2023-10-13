@@ -240,8 +240,8 @@ button {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  width: 90px;
-  padding: var(--spacing-extra-extra-small);
+  /* width: 90px; */
+  padding: var(--spacing-extra-extra-small) var(--spacing-small);
   background: var(--add-button-gradient);
 }
 
@@ -639,6 +639,10 @@ textarea {
 }
 
 @media only screen and (max-width: 260px) {
+  #post-form-button {
+    width: 190px;
+  }
+
   body {
     width: 260px;
   }
