@@ -5,26 +5,16 @@ import {
 	validateKey,
 	confirmRequest,
 	sanitizeListEventDelegation,
-	submitFormAction
-} from "./handlers.js";
-import {
-	resetForm,
-	resetConfirm,
-	deleteConfirm,
-} from "./logic.js";
-import {
+	submitFormAction,
+  } from "./handlers.js";
+  import { resetForm, resetConfirm, deleteConfirm } from "./logic.js";
+  import {
 	eventErrorListener,
-	sanitizeError
-} from "./middleware/errorListener.js"
-import {
-	errorResponse,
-	eventResponse
-} from "../../../@types/@type-module";
-import {
-	setDataAction,
-	appendItemValuesToForm
-} from "./renderer.js";
-import {
+	sanitizeError,
+  } from "./middleware/errorListener.js";
+  import { errorResponse, eventResponse } from "../../../@types/@type-module";
+  import { setDataAction, appendItemValuesToForm } from "./renderer.js";
+  import {
 	form,
 	postFormButton,
 	formDialog,
@@ -39,74 +29,90 @@ import {
 	deleteItemButton,
 	closeItemButton,
 	itemDialog,
-	editItemButton
-} from "./renderer.js";
-
-form.addEventListener("submit", async (event: SubmitEvent) => {
+	editItemButton,
+  } from "./renderer.js";
+  
+  form.addEventListener("submit", async (event: SubmitEvent) => {
 	event.preventDefault();
-	const submitEvent: errorResponse | eventResponse = await eventErrorListener(() => submitFormAction(event));
+	const submitEvent: errorResponse | eventResponse = await eventErrorListener(
+	  () => submitFormAction(event)
+	);
 	if (!submitEvent.success) sanitizeError(submitEvent.error);
-})
-
-postFormButton.addEventListener("click", () => {
+  });
+  
+  postFormButton.addEventListener("click", () => {
 	setDataAction("post");
 	formDialog.showModal();
-});
-
-closeFormButton.addEventListener("click", () => {
+  });
+  
+  closeFormButton.addEventListener("click", () => {
 	formDialog.close();
 	resetForm();
-});
-
-closeItemButton.addEventListener("click", async () => {
+  });
+  
+  closeItemButton.addEventListener("click", async () => {
 	itemDialog.close();
-});
-
-listDataContainer.addEventListener("click", async (event: MouseEvent) => {
-	const readyEvent: errorResponse | eventResponse = await eventErrorListener(() => sanitizeListEventDelegation(event));
+  });
+  
+  listDataContainer.addEventListener("click", async (event: MouseEvent) => {
+	const readyEvent: errorResponse | eventResponse = await eventErrorListener(
+	  () => sanitizeListEventDelegation(event)
+	);
 	if (!readyEvent.success) {
-		resetConfirm();
-		sanitizeError(readyEvent.error);
+	  resetConfirm();
+	  sanitizeError(readyEvent.error);
 	}
-});
-
-deleteItemButton.addEventListener("click", async () => {
+  });
+  
+  deleteItemButton.addEventListener("click", async () => {
 	deleteConfirm();
-});
-
-editItemButton.addEventListener("click", async () => {
-	const validateKeyEvent: errorResponse | eventResponse = await eventErrorListener(() => appendItemValuesToForm());
+  });
+  
+  editItemButton.addEventListener("click", async () => {
+	const validateKeyEvent: errorResponse | eventResponse =
+	  await eventErrorListener(() => appendItemValuesToForm());
 	if (!validateKeyEvent.success) return sanitizeError(validateKeyEvent.error);
-});
-
-
-createKeyButton.addEventListener("click", async () => {
-	const getKeyEvent: errorResponse | eventResponse = await eventErrorListener(() => createKey());
+  });
+  
+  createKeyButton.addEventListener("click", async () => {
+	const getKeyEvent: errorResponse | eventResponse = await eventErrorListener(
+	  () => createKey()
+	);
 	if (!getKeyEvent.success) return sanitizeError(getKeyEvent.error);
-	const getDataEvent: errorResponse | eventResponse = await eventErrorListener(() => getDatabaseData());
+	const getDataEvent: errorResponse | eventResponse = await eventErrorListener(
+	  () => getDatabaseData()
+	);
 	if (!getDataEvent.success) return sanitizeError(getDataEvent.error);
 	createKeyDialog.close();
-});
-
-validateKeyButton.addEventListener("click", async () => {
-	const validateKeyEvent: errorResponse | eventResponse = await eventErrorListener(() => validateKey());
+  });
+  
+  validateKeyButton.addEventListener("click", async () => {
+	const validateKeyEvent: errorResponse | eventResponse =
+	  await eventErrorListener(() => validateKey());
 	if (!validateKeyEvent.success) return sanitizeError(validateKeyEvent.error);
-	const getData: errorResponse | eventResponse = await eventErrorListener(() => getDatabaseData());
+	const getData: errorResponse | eventResponse = await eventErrorListener(() =>
+	  getDatabaseData()
+	);
 	if (!getData.success) return sanitizeError(getData.error);
 	validateKeyDialog.close();
-});
-
-confirmYesButton.addEventListener("click", async (event: MouseEvent) => {
-	const requestEvent: errorResponse | eventResponse = await eventErrorListener(() => confirmRequest(event));
-	resetConfirm()
-	if (!requestEvent.success) return sanitizeError(requestEvent.error);
-});
-
-confirmNoButton.addEventListener("click", async () => {
+  });
+  
+  confirmYesButton.addEventListener("click", async (event: MouseEvent) => {
+	const requestEvent: errorResponse | eventResponse = await eventErrorListener(
+	  () => confirmRequest(event)
+	);
 	resetConfirm();
-});
-
-document.onreadystatechange = async function() {
-	const checkDatabaseEvent: errorResponse | eventResponse = await eventErrorListener(() => checkDatabaseStatus());
-	if (!checkDatabaseEvent.success) return sanitizeError(checkDatabaseEvent.error);
-};
+	if (!requestEvent.success) return sanitizeError(requestEvent.error);
+  });
+  
+  confirmNoButton.addEventListener("click", async () => {
+	resetConfirm();
+  });
+  
+  document.onreadystatechange = async function () {
+	const checkDatabaseEvent: errorResponse | eventResponse =
+	  await eventErrorListener(() => checkDatabaseStatus());
+	if (!checkDatabaseEvent.success)
+	  return sanitizeError(checkDatabaseEvent.error);
+  };
+  
