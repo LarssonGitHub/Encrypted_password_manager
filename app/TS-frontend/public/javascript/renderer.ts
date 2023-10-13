@@ -48,7 +48,7 @@ export const deleteItemButton = document.getElementById("delete-item-button") as
 export const editItemButton = document.getElementById("edit-item-button") as HTMLButtonElement;
 
 export const InsertDataIntoTemplate = (data: userCredentialsArray | void): void => {
-	if (!data || !Array.isArray(data)) throw new Error("Couldn't insert data into the document");
+	if (!data || !Array.isArray(data)) throw new Error("Couldn't insert data into the record");
 	const sortedData: userCredentialsArray = sortArrayAfterLetter(data);
 	const clone = template.content.cloneNode(true) as DocumentFragment;
 	const listElement = clone.querySelector('[data-list-component]') as HTMLUListElement;
@@ -141,9 +141,9 @@ export const alterElementClass = (element: HTMLElement, currentClass: string, ne
 
 export const getDataFromElement = (element: HTMLElement): userCredentialObject => {
 	const getStorageElement: HTMLDivElement | null = element.querySelector('.data-storage')
-	if (!getStorageElement) throw new Error("Couldn't get object");
+	if (!getStorageElement) throw new Error("Couldn't get object-storage from the element");
 	const objectData = getStorageElement.getAttribute('data-stored-object')
-	if (!objectData) throw new Error("No object data found");
+	if (!objectData) throw new Error("No data-stored-object found");
 	const objectDataJson: userCredentialObject = JSON.parse(objectData)
 	return objectDataJson;
 }
@@ -157,8 +157,8 @@ export const appendItemValuesToForm = (): void => {
 
 export const InsertDataIntoDialog = (data: userCredentialObject): void => {
 	(itemDialog.querySelector("#dialog-list-title") as HTMLLIElement).textContent = data.titleInput;
-	(itemDialog.querySelector("#dialog-list-username") as HTMLLIElement).textContent = data.emailInput;
-	(itemDialog.querySelector("#dialog-list-email") as HTMLLIElement).textContent = data.usernameInput;
+	(itemDialog.querySelector("#dialog-list-username") as HTMLLIElement).textContent = data.usernameInput;
+	(itemDialog.querySelector("#dialog-list-email") as HTMLLIElement).textContent = data.emailInput;
 	(itemDialog.querySelector("#dialog-list-password") as HTMLLIElement).textContent = data.passwordInput;
 	(itemDialog.querySelector("#dialog-list-additional-data") as HTMLLIElement).textContent = data.additionalDataInput;
 	(itemDialog.querySelector("#edit-item-button") as HTMLButtonElement).setAttribute("data-stored-object", JSON.stringify(data));

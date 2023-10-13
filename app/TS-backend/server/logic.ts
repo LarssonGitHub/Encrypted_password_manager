@@ -27,13 +27,13 @@ export const removeItem = (id: string, data: userCredentialsArray): userCredenti
   if (!id) throw new Error("<customThrownError::>No id was submitted");
   const idExistsInArray = data.filter((object)=> object.id === id);
   if (idExistsInArray.length === 0) throw new Error("<customThrownError::>No such id exists");
-  if (!Array.isArray(data)) throw new Error("<customThrownError::>Couldn't compile or delete data");
+  if (!Array.isArray(data)) throw new Error("<customThrownError::>Couldn't compile or delete record");
   return data.filter(obj => obj.id !== id);
 };
 
 export const createAndAppendId = (dataEntries: userCredentialObject) => {
   const generatedId: string = uuidv4();
-  if (!generatedId || typeof generatedId !== "string") throw new Error("<customThrownError::>No id could be created");
+  if (!generatedId || typeof generatedId !== "string") throw new Error("<customThrownError::>Id couldn't be created");
   return {
       ...dataEntries,
       id: generatedId,
@@ -41,9 +41,9 @@ export const createAndAppendId = (dataEntries: userCredentialObject) => {
 }
 
 export const updateItem = (newData: userCredentialObject, data: userCredentialsArray): userCredentialsArray => {
-  if (!isObject(newData) || !Array.isArray(data)) throw new Error("<customThrownError::>Couldn't compile or update data");
+  if (!isObject(newData) || !Array.isArray(data)) throw new Error("<customThrownError::>Couldn't compile or update record");
   const idExists: userCredentialsArray = data.filter(obj => obj.id === newData.id);
-  if (idExists.length <= 0) throw new Error("<customThrownError::>No id could be matched");
+  if (idExists.length <= 0) throw new Error("<customThrownError::>No id could be matched to submitted record");
   return data.map((data) => (data.id === newData.id ? {
       ...data,
       ...newData
@@ -51,7 +51,7 @@ export const updateItem = (newData: userCredentialObject, data: userCredentialsA
 };
 
 export const InsertItem = (newData: userCredentialObject, data: userCredentialsArray): userCredentialsArray => {
-  if (!isObject(newData) || !Array.isArray(data)) throw new Error("<customThrownError::>Couldn't compile or insert data")
+  if (!isObject(newData) || !Array.isArray(data)) throw new Error("<customThrownError::>Couldn't compile or insert new data into record")
   return [...data,
 newData
 ];
@@ -92,13 +92,13 @@ export const encryptAndInsertDatabaseData = async (data: userCredentialsArray, k
   if (!key)
       throw new Error("<customThrownError::>No key was submitted")
   const stringifiedData: string = JSON.stringify(data)
-  if (typeof stringifiedData !== "string") throw new Error("<customThrownError::>Couldn't compile the data")
+  if (typeof stringifiedData !== "string") throw new Error("<customThrownError::>Couldn't compile the record")
   const encryptedData: string = encryptData(stringifiedData, key)
   if ((!encryptedData))
-      throw new Error("<customThrownError::>Couldn't encrypt the data");
+      throw new Error("<customThrownError::>Couldn't encrypt the record");
   const updatedDatabase: boolean = await insertDatabaseData(encryptedData)
   if (!updatedDatabase)
-      throw new Error("<customThrownError::>Couldn't compile and insert data into the database");
+      throw new Error("<customThrownError::>Couldn't compile and insert record into the database");
   return updatedDatabase
 }
 

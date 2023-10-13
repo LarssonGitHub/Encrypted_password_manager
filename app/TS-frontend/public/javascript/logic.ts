@@ -32,13 +32,13 @@ export const isJsonString = (str: string) => {
 
 export const getDataStoredObject = (target: HTMLButtonElement): userCredentialObject => {
 	const dataObject: string | null = target.getAttribute("data-stored-object");
-	if (!dataObject || !isJsonString(dataObject)) throw new Error("Couldn't get the data stored object attribute");
+	if (!dataObject || !isJsonString(dataObject)) throw new Error("Couldn't get the data-stored-object attribute");
 	return JSON.parse(dataObject);
 }
 
 export const getDataAction = (target: HTMLFormElement): string => {
 	const value: string | null = target.getAttribute("data-action");
-	if (!value) throw new Error("Couldn't get the data action attribute");
+	if (!value) throw new Error("Couldn't get the data-action attribute");
 	return value;
 }
 
@@ -93,7 +93,7 @@ export const getFormValues = (): userCredentialObject => {
 			});
 		}
 	}
-	if (!obj.additionalDataInput) obj.additionalDataInput = "No additional information given"
+	if (!obj.additionalDataInput) obj.additionalDataInput = "No optional information submitted"
 	return obj;
 }
 

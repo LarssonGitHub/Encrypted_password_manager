@@ -78,7 +78,7 @@ export const submitFormAction = (event: SubmitEvent) => {
 
 export const postDatabaseData = async (): Promise < void > => {
 	const formData: userCredentialObject = getFormValues();
-	if (Object.values(formData).includes("")) throw new Error("Please, do not leave any felids empty")
+	if (Object.values(formData).includes("")) throw new Error("Please, do not leave any fields empty")
 	const postRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.postData(formData, secretKey));
 	if (!postRequest.success) throw postRequest.error
 	formDialog.close();
@@ -106,7 +106,7 @@ export const deleteDatabaseData = async (): Promise < void > => {
 
 export const UpdateDatabaseData = async (): Promise < void > => {
 	const formData: userCredentialObject = getFormValues();
-	if (Object.values(formData).includes("")) throw new Error("Please, do not leave any felids empty")
+	if (Object.values(formData).includes("")) throw new Error("Please, do not leave any fields empty")
 	const updateRequest: errorResponse | backendResponse = await backendErrorListener(() => window.API.backend.updateData(formData, secretKey));
 	if (!updateRequest.success) throw updateRequest.error;
 	formDialog.close();
@@ -119,13 +119,13 @@ export const UpdateDatabaseData = async (): Promise < void > => {
 
 export const createKey = (): void => {
 	const key: string = getAndValidateKeys();
-	if (!key) throw new Error("Problem occurred when creating new key");
+	if (!key) throw new Error("You need to submit your key before we can start the encryption!");
 	secretKey = key;
 }
 
 export const validateKey = async () => {
 	const key: string = getKey();
-	if (!key) throw new Error("Problem occurred when fetching key");
+	if (!key) throw new Error("You need to submit your key before we can decrypt your records!");
 	secretKey = key;
 }
 

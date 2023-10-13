@@ -13,7 +13,7 @@
 <body>
   <header>
     <h1>The padlock vault</h1>
-    <p>An offline only app for your accounts, credentials and passwords</p>
+    <p>Your new favorite app for storage of your account info, credentials, and passwords!</p>
   </header>
   <main>
     <dialog id="create-key-dialog">
@@ -23,10 +23,8 @@
         </div>
       </div>
       <div id="create-key-container">
-        <p class="dialog-intro">Create your personal key you will use during encryption, <b class="text-warning">DO
-            NOT</b> forget it!</p>
-        <small>The app uses the advanced encryption standard (AES) to encrypt your data. All the information you have
-          submitted is only stored locally in the app itself and is not hosted online.</small>
+       <p class="dialog-intro">Create your personal key, but <b class="text-warning">DO NOT</b> forget it as your information will not be recoverable.</p>
+        <small>The app uses the advanced encryption standard (AES) to encrypt your data. All the information you submit is not hosted online in any way.</small>
         <ul class="reset-ul inputs-wrapper">
           <li>
             <label for="create-key-input">New key</label>
@@ -37,7 +35,7 @@
             <input type="password" name="repeatKeyInput" id="repeat-key-input" placeholder="Repeat your key">
           </li>
           <li class="key-button-container">
-            <button id="create-key-button">Create key</button>
+            <button id="create-key-button">Let's encrypt!</button>
           </li>
         </ul>
       </div>
@@ -50,7 +48,7 @@
       </div>
       <div id="validate-key-container">
         <p class="dialog-intro">Enter the personal key you've created to decrypt your data!</p>
-        <small>Your info <b class="text-warning">CAN NOT</b> be recovered if you have forgotten the key.</small>
+        <small>Your information <b class="text-warning">CAN NOT</b> be recovered if you have forgotten it.</small>
         <ul class="reset-ul inputs-wrapper">
           <li>
             <label for="validate-key-input">Key</label>
@@ -58,7 +56,7 @@
               placeholder="Enter your personal key">
           </li>
           <li class="key-button-container">
-            <button id="validate-key-button">Try key</button>
+            <button id="validate-key-button">Let's decrypt!</button>
           </li>
         </ul>
       </div>
@@ -78,7 +76,7 @@
       </div>
       <div id="form-container">
         <div id="validate-key-container">
-          <p class="dialog-intro">Create or edit user and said credentials, the data is saved locally!</p>
+          <p class="dialog-intro">Create or edit credentials!</p>
         </div>
         <form id="form" data-action="">
           <ul class="reset-ul inputs-wrapper">
@@ -103,12 +101,12 @@
               <input type="password" name="passwordInput" id="password-input" required placeholder="Password">
             </li>
             <li>
-              <label for="additional-data-input">Additional notes</label>
+              <label for="additional-data-input">Optional notes</label>
               <textarea name="additionalDataInput" id="additional-data-input" rows="4"
-                placeholder="Optional info about post"></textarea>
+                placeholder="Optional information goes here"></textarea>
             </li>
             <li id="form-button-container">
-              <button id="submit-button" type="submit">Submit</button>
+              <button id="submit-button" type="submit">Submit record</button>
             </li>
           </ul>
         </form>
@@ -192,7 +190,7 @@
           <path
             d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z" />
         </svg>
-        <small>Add</small>
+        <small>Create new record</small>
       </button>
     </div>
     <section>
