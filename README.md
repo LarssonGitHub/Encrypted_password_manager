@@ -1,7 +1,6 @@
-# The_padlock_vault
+# The padlock vault
 
-Create an app in node.js that can store chipered passwords, usernames for websites and services, **which must** be able
-to run as a stand-alone application without the need for a browser.
+Create an app with the electron framework that can store encrypted credentials for websites and services, which must be able to run as a stand-alone application without the need for a browser.
 
 ## How to install and run
 
@@ -54,4 +53,4 @@ online in any manner.~~
 
 ##### Tools, packages, and frameworks used as of now in the project. *(These will be added or removed as the project grows.)*
 
-* TypeScript, Electron, Crypto-js with AES encryption and Node.js
+* TypeScript, Electron and Crypto-js with AES encryption.
