@@ -7,7 +7,6 @@ import {
 } from "../../@types/@type-module";
 import { insertDatabaseData, getDatabaseData } from "./db/fileSystem";
 
-// TODO find if javascript offers another way to see true objects
 export const isObject = (value: unknown): boolean => {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 };

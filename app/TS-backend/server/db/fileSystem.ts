@@ -4,7 +4,6 @@ import util from "util";
 import { app } from "electron";
 const appPath = app.getPath("userData");
 
-// https://www.electronjs.org/docs/latest/api/app
 const checkDatabaseFileStatus = async () => {
   try {
     await fs.promises.access(path.resolve(`${appPath}/${"./data.txt"}`));

@@ -14,7 +14,7 @@ export const createResponse = (): eventResponse => {
 const sanitizeErrorMessage = (errorString: string | undefined): string => {
   if (!errorString)
     return "Error occurred; no message was given. Check the logs for more details";
-  // Used to extract error if it's a thrown statement from backend
+  // Used to extract error if it's a thrown statement from the backend
   if (!errorString.includes("<customThrownError::>")) return errorString;
   return errorString.split("<customThrownError::>")[1];
 };
@@ -44,7 +44,6 @@ const createErrorResponse = (error: unknown): errorResponse => {
   };
 };
 
-// Only used for backend requests.
 export const backendErrorListener = async (
   func: Function
 ): Promise<errorResponse | backendResponse> => {
@@ -55,7 +54,6 @@ export const backendErrorListener = async (
   }
 };
 
-// Only used in frontend for called events
 export const eventErrorListener = async (
   func: Function
 ): Promise<errorResponse | eventResponse> => {

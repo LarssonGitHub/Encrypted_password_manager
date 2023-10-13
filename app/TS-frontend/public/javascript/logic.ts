@@ -21,12 +21,6 @@ import {
 	return true;
   };
   
-  // export const getDataDeleteValidationId = (target: HTMLButtonElement): string => {
-  //   const value: string | null = target.getAttribute("data-delete-validation-id");
-  //   if (!value) throw new Error("Couldn't get the data action attribute");
-  //   return value;
-  // }
-  
   export const getDataStoredObject = (
 	target: HTMLButtonElement
   ): userCredentialObject => {

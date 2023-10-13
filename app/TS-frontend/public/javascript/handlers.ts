@@ -99,7 +99,6 @@ import {
 	const getRequest: errorResponse | backendResponse =
 	  await backendErrorListener(() => window.API.backend.getData(secretKey));
 	if (!getRequest.success) throw getRequest.error;
-	// editFeedback(getRequest.message, false)
 	updateList(getRequest.data);
   };
   
