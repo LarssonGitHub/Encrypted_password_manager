@@ -1,6 +1,8 @@
-# The padlock vault
+# Encrypted password manager (The password vault)
 
-Create an app with the electron framework that can store encrypted credentials for websites and services, which must be able to run as a stand-alone application without the need for a browser.
+A desktop password manager that will securely store the user's passwords and credentials. The app is built with the Electron framework and uses the Advanced Encryption Standard (AES) for encrypting data.
+
+No information is stored online, and no sign-up process is needed to use it. Just download the source code, build it, and get started.
 
 ## How to install and run
 
@@ -10,15 +12,14 @@ Download or clone the repo, install node_modules, and run the build script for y
  <br>
 - npm run buildLinuxApp | for Linux
  <br>
-- npm run buildMacApp | for iOS
+- npm run buildMacApp | for Mac 
 
 **Note**: See the section "Known bugs and needed fixes" for potential problems related to your OS.
 
 ### Known bugs and needed fixes
 
 #### Windows:
-* Once the app has been built as an executable on Windows, and the user tries to start the app, their anti-virus might
-flag it as dangerous.
+* Once the app has been built as an executable on Windows, and the user tries to start the app, their anti-virus might flag it as dangerous.
 
 Temporary solutions:
 
@@ -32,17 +33,20 @@ Temporary solutions:
 
 ####  Mac: 
 
-* Build needs further testing on its native OS.
+* Build is unreliable and needs further testing.
 
 #
 
 ### Requirement list and development info
 
+Goal: Create an app with the electron framework that can store encrypted credentials for websites and services, which must be able to run as a stand-alone application without the need for a browser.
+
+**Notes:** The database file which contains the encrypted data is saved in the [userData](https://www.electronjs.org/docs/latest/api/app#:~:text=userData%20The%20directory%20for%20storing%20your%20app%27s%20configuration%20files%2C%20which%20by%20default%20is%20the%20appData) directory. 
+
 ##### Must have: (A paragraph with a strikethrough means the requirement has been fulfilled.)
 
 * ~~The application must be written in TS.~~
-* ~~App, once compiled, must be able to run on Linux, Mac, and Windows as an executable file without the need for a web
-browser.~~
+* ~~App, once compiled, must be able to run on Linux, Mac, and Windows as an executable file without the need for a web browser.~~
 * ~~All information submitted by each user must be cipred, hashed, and/or encrypted and shall only be decryptable with a password set by the user.~~
 * ~~The app itself must be hosted 100% locally, a user should be able to download it and use it right away.~~
 * ~~Furthermore, all data, code, packages, modules, or databases must be in the app itself and shall not be hosted
