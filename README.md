@@ -39,9 +39,9 @@ Temporary solutions:
 
 ### Requirement list and development info
 
-Goal: Create an app with the electron framework that can store encrypted credentials for websites and services, which must be able to run as a stand-alone application without the need for a browser.
+**Goal:** Create an app with the electron framework that can store encrypted credentials for websites and services, which must be able to run as a stand-alone application without the need for a browser.
 
-**Notes:** The database file which contains the encrypted data is saved in the [userData](https://www.electronjs.org/docs/latest/api/app#:~:text=userData%20The%20directory%20for%20storing%20your%20app%27s%20configuration%20files%2C%20which%20by%20default%20is%20the%20appData) directory. 
+**Notes:** The database file which contains the encrypted data string is saved in the [user's app data](https://www.electronjs.org/docs/latest/api/app#:~:text=userData%20The%20directory%20for%20storing%20your%20app%27s%20configuration%20files%2C%20which%20by%20default%20is%20the%20appData) directory.
 
 ##### Must have: (A paragraph with a strikethrough means the requirement has been fulfilled.)
 
