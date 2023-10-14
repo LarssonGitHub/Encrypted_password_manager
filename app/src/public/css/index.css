@@ -135,8 +135,12 @@ main {
   background-color: var(--danger);
 }
 
-.error-container p, .success-container p {
-  color: var(--main-text) !important;
+.feedback-container p {
+  color: var(--main-text);
+}
+
+.success-container {
+  background-color: var(--success);
 }
 
 .feedback-container {
@@ -153,10 +157,6 @@ main {
 
 .feedback-container p {
   margin: 0;
-}
-
-.success-container {
-  background-color: var(--success);
 }
 
 .hideFeedback {
