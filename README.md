@@ -30,6 +30,7 @@ Temporary solutions:
 #### Linux: 
 
 * Favicon doesn't seem to appear in the Linux OS builds.
+* AppImage doesn't always run when asked; the executable in the unpacked folder does, however.
 
 ####  Mac: 
 
