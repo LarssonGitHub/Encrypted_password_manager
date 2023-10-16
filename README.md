@@ -6,7 +6,7 @@ No information is stored online, and no sign-up process is needed to use it. Jus
 
 ## How to install and run
 
-Download or clone the repo, install node_modules, and run the build script for your desired OS.
+Download or clone the repo, install node_modules, and run the build script for your desired OS. The compiled app can then be found in the dist folder.
 
 - npm run buildWindowsApp | for Windows
  <br>
