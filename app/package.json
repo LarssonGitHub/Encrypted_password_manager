@@ -1,7 +1,7 @@
 {
-  "name": "the-padlock-vault",
-  "version": "1.0.0",
-  "description": "A local-only app that securely stores encrypted information, passwords, and credentials submitted by the user.",
+  "name": "encrypted-password-manager",
+  "version": "2.0.0",
+  "description": "A desktop password manager that will securely store the user's passwords and credentials. The app is built with the Electron framework and uses the Advanced Encryption Standard (AES) for encrypting data.",
   "main": "src/server/index.js",
   "scripts": {
     "buildBackend": "tsc -p ./TS-backend",
@@ -15,7 +15,7 @@
     "buildMacApp": "npm run buildBackend &&  npm run buildFrontend && electron-builder build --mac"
   },
   "build": {
-    "appId": "The-padlock-vault",
+    "appId": "Encrypted password manager (The password vault)",
     "mac": {
       "target": "dmg",
       "icon": "./src/public/assets/favicons/favicon.png"
@@ -25,25 +25,23 @@
       "icon": "./src/public/assets/favicons/favicon.png"
     },
     "linux": {
-      "category": "password-manager-app",
+      "category": "Encrypted-password-manager-app",
       "icon": "./src/public/assets/favicons/favicon.png",
-      "executableName": "The-padlock-vault",
+      "executableName": "Encrypted password manager (The password vault)",
       "target": [
         "appImage"
       ]
     }
   },
-  "repository": "https://github.com/LarssonGitHub/The_vault",
+  "repository": "https://github.com/LarssonGitHub/Encrypted_password_manager",
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo",
-    "typescript"
+    "encryption",
+    "typescript",
+    "password manager"
   ],
   "author": "Martin Larsson",
-  "license": "CC0-1.0",
+  "license": "CC BY-NC 3.0 DEED",
   "devDependencies": {
     "@types/crypto-js": "^4.1.1",
     "@types/uuid": "^9.0.1",
@@ -57,7 +55,6 @@
   },
   "dependencies": {
     "crypto-js": "^4.1.1",
-    "uuidv4": "^6.2.13",
-    "write": "^2.0.0"
+    "uuidv4": "^6.2.13"
   }
 }
