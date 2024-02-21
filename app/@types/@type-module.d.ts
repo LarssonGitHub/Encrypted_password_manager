@@ -31,8 +31,12 @@ export interface eventResponse {
   success: true;
 }
 
-
 export type userCredentialsArray = userCredentialObject[];
+
+export interface credentialsHandlers {
+  setKey: (key: string) => void;
+  getKey: () => string; 
+}
 
 export type API = {
   processVersion: {
@@ -41,10 +45,11 @@ export type API = {
     electron: () => string;
   };
   backend: {
-    getData: (key: string) => Promise<backendResponse>;
-    deleteData: (id: string | null, key: string) => Promise<backendResponse>;
-    updateData: (putData: userCredentialObject, key: string) => Promise<backendResponse>;
-    postData: (postData: userCredentialObject, key: string) => Promise<backendResponse>;
+    getData: () => Promise<backendResponse>;
+    deleteData: (id: string | null) => Promise<backendResponse>;
+    updateData: (putData: userCredentialObject) => Promise<backendResponse>;
+    postData: (postData: userCredentialObject) => Promise<backendResponse>;
     checkDatabase: () =>  Promise < backendResponse >;
+    setNewKey: (key: string) => Promise<backendResponse>;
   };
 }

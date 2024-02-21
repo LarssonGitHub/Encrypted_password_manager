@@ -26,10 +26,6 @@ import {
 	viewListContent,
   } from "./renderer.js";
   
-  // The key for decryption/encryption
-  // Must only be stored as a local variable for safety
-  let secretKey: string;
-  
   export const confirmRequest = async (event: MouseEvent) => {
 	const target: HTMLButtonElement | null = event.target as HTMLButtonElement;
 	if (!target) throw new Error("Couldn't find a target");
@@ -85,7 +81,7 @@ import {
 	  throw new Error("Please, do not leave any fields empty");
 	const postRequest: errorResponse | backendResponse =
 	  await backendErrorListener(() =>
-		window.API.backend.postData(formData, secretKey)
+		window.API.backend.postData(formData)
 	  );
 	if (!postRequest.success) throw postRequest.error;
 	formDialog.close();
@@ -97,7 +93,7 @@ import {
   
   export const getDatabaseData = async (): Promise<void | string> => {
 	const getRequest: errorResponse | backendResponse =
-	  await backendErrorListener(() => window.API.backend.getData(secretKey));
+	  await backendErrorListener(() => window.API.backend.getData());
 	if (!getRequest.success) throw getRequest.error;
 	updateList(getRequest.data);
   };
@@ -106,7 +102,7 @@ import {
 	const id: string = getAndValidateId();
 	const deleteRequest: errorResponse | backendResponse =
 	  await backendErrorListener(() =>
-		window.API.backend.deleteData(id, secretKey)
+		window.API.backend.deleteData(id)
 	  );
 	if (!deleteRequest.success) throw deleteRequest.error;
 	itemDialog.close();
@@ -120,7 +116,7 @@ import {
 	  throw new Error("Please, do not leave any fields empty");
 	const updateRequest: errorResponse | backendResponse =
 	  await backendErrorListener(() =>
-		window.API.backend.updateData(formData, secretKey)
+		window.API.backend.updateData(formData)
 	  );
 	if (!updateRequest.success) throw updateRequest.error;
 	formDialog.close();
@@ -131,22 +127,30 @@ import {
 	updateList(updateRequest.data);
   };
   
-  export const createKey = (): void => {
+  export const callSetKey = async (key:string): Promise<void> => {
+	const settingNewKey: errorResponse | backendResponse =
+	  await backendErrorListener(() =>
+	    window.API.backend.setNewKey(key)
+	   );
+	if (!settingNewKey.success) throw settingNewKey.error;
+  };
+
+  export const createKey = async (): Promise<void> => {
 	const key: string = getAndValidateKeys();
 	if (!key)
 	  throw new Error(
 		"You need to submit your key before we can start the encryption!"
 	  );
-	secretKey = key;
+	  await callSetKey(key)
   };
   
-  export const validateKey = async () => {
+  export const validateKey = async (): Promise<void> => {
 	const key: string = getKey();
 	if (!key)
 	  throw new Error(
 		"You need to submit your key before we can decrypt your records!"
 	  );
-	secretKey = key;
+	  await callSetKey(key)
   };
   
   export const checkDatabaseStatus = async (): Promise<void> => {

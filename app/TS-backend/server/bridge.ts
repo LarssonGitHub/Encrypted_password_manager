@@ -29,6 +29,8 @@ const processVersion = {
 const backend = {
   getData: (key: string): Promise<backendResponse> =>
     ipcRenderer.invoke("getData", key),
+  setNewKey: (key: string): Promise<backendResponse> =>
+    ipcRenderer.invoke("setNewKey", key),
   deleteData: (id: string, key: string): Promise<backendResponse> =>
     ipcRenderer.invoke("deleteData", id, key),
   updateData: (

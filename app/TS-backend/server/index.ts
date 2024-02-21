@@ -8,6 +8,7 @@ import {
   postData,
   deleteData,
   checkDatabase,
+  initiateCredentials
 } from "./handlers";
 
 function createWindow() {
@@ -34,17 +35,20 @@ app.whenReady().then(() => {
   ipcMain.handle("decryptData", (meta, data: string, secretKey: string) =>
     decryptData(data, secretKey)
   );
-  ipcMain.handle("getData", async (meta, key: string) => getData(key));
-  ipcMain.handle("deleteData", async (meta, objectId: string, key: string) =>
-    deleteData(objectId, key)
+  ipcMain.handle("setNewKey", async (meta, key: string) =>
+    initiateCredentials(key)
+  );
+  ipcMain.handle("getData", async (meta) => getData());
+  ipcMain.handle("deleteData", async (meta, objectId: string) =>
+    deleteData(objectId)
   );
   ipcMain.handle(
     "updateData",
-    (meta, data: userCredentialObject, key: string) => updateData(data, key)
+    (meta, data: userCredentialObject) => updateData(data)
   );
   ipcMain.handle(
     "postData",
-    async (meta, data: userCredentialObject, key: string) => postData(data, key)
+    async (meta, data: userCredentialObject) => postData(data)
   );
   createWindow();
   app.on("activate", function () {
